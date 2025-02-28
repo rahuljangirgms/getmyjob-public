@@ -15,8 +15,12 @@ import {
 const validationSchema = Yup.object().shape({
   name: Yup.string().required("Training Name is required"),
   instituteName: Yup.string().required("Institute Name is required"),
-  from: Yup.date().required("Start date is required"),
-  to: Yup.date().nullable(),
+  from: Yup.date()
+     .required("Start date is required"),
+   
+   to: Yup.date()
+     .nullable()
+     .min(Yup.ref('from'), "End date should be greater than Start date"), 
   skills: Yup.array().min(1, "At least one skill is required"),
   description: Yup.string()
     .required("Description is required")

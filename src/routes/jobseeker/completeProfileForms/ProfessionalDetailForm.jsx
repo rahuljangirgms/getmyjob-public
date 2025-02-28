@@ -48,7 +48,7 @@ function ProfessionalDetailForm() {
     if (tempSavedList.length > 0){
       setIsDirty(true);
     }
-  }, [tempSavedList, finalSavedList]);
+  }, [tempSavedList,finalSavedList ]);
 
   const handleExperienceSubmit = (data) => {
     setIsModalOpen(false); // Close modal after submission

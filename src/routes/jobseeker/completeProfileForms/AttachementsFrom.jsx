@@ -9,7 +9,7 @@ import AcadamicAttachModal from "../../../components/JobSeekerComponents/ModalFo
 function AttachmentsForm() {
   const dispatch = useDispatch();
   const availFiles = useSelector((state) => state.profileForms.attachmentDocuments);
-  const filteredFiles = availFiles.filter((file) => file && file.name);
+  // const filteredFiles = availFiles.filter((file) => file && file.name);
 
   // Track the current file being uploaded
   const [currentFile, setCurrentFile] = useState(null);

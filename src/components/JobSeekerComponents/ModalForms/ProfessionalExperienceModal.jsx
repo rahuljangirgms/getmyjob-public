@@ -16,8 +16,12 @@ const validationSchema = Yup.object().shape({
     .typeError("CTC must be a number")
     .positive("CTC must be a positive number"),
     // .required("CTC is required"),
-  from: Yup.date().required("Start date is required"),
-  to: Yup.date().nullable(),
+    from: Yup.date()
+    .required("Start date is required"),
+  
+  to: Yup.date()
+    .nullable()
+    .min(Yup.ref('from'), "End date should be greater than Start date"),
   currentlyWorking: Yup.boolean(),
   country: Yup.string().required("Country is required"),
   state: Yup.string().required("State is required"),

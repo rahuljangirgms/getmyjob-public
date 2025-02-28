@@ -58,8 +58,7 @@ const MobileNavigationBar = ({ sidebarItems, isFormDirty, setIsFormDirty }) => {
   return (
     <>
       {/* ✅ Mobile Navigation Bar */}
-      <div className="md:hidden fixed top-16 left-0 right-0 bg-white border-b border-gray-300 shadow-md p-3 flex items-center justify-between">
-        {/* Back Button */}
+      <div className="block md:mt-4 lg:hidden fixed top-16 left-0 right-0 bg-white border-b border-gray-300 shadow-md p-3 flex items-center justify-between">        {/* Back Button */}
         <button
           onClick={goToPrevious}
           disabled={currentIndex === 0}

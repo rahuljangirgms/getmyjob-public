@@ -10,9 +10,8 @@ import {
   editOtherDetails,
 } from "./../../../store/slices/profileFormsSlice";
 import { ToastContainer, toast } from "react-toastify";
-import { useOutletContext } from "react-router-dom"; // Import useOutletContext
+import { useNavigate, useOutletContext } from "react-router-dom"; // Import useOutletContext
 import { processFinalData } from './Form_Functions/processFinalData ';
-import ConfirmationModal from './../../../components/JobSeekerComponents/ReusableComponents/ConfirmationModal';
 
 
 // Yup validation schema
@@ -25,6 +24,8 @@ const validationSchema = Yup.object().shape({
 
 function OtherDetailsForm() {
   const dispatch = useDispatch();
+
+  const navigate = useNavigate();
 
   // Get the initial form values from the Redux store
   const otherDetails = useSelector((state) => state.profileForms.otherDetails);
@@ -55,6 +56,7 @@ function OtherDetailsForm() {
       extraCurricular: values.extraCurricular.filter(
         (item) => item.trim() !== ""
       ),
+
     };
 
     const isValid = processFinalData(dispatch);
@@ -82,6 +84,9 @@ function OtherDetailsForm() {
     }
     setIsFormDirty(false); 
     console.log("Form Submitted:", cleanedValues); // Log the cleaned data
+    setTimeout(() => {
+      navigate('/jobseeker/resume-builder');
+    }, 5000); // 3 seconds delay
   };
 
 

@@ -15,13 +15,12 @@ import {
 const validationSchema = Yup.object().shape({
   name: Yup.string().required("Project Name is required"),
   projectLink: Yup.string().url("Enter a valid URL").nullable(),
-  from: Yup.date().required("Start date is required"),
-  to: Yup.date()
-    .nullable()
-    .test("is-required", "End date is required", function (value) {
-      const { from } = this.parent;
-      return value ? new Date(value) > new Date(from) : true;
-    }),
+  from: Yup.date()
+     .required("Start date is required"),
+   
+   to: Yup.date()
+     .nullable()
+     .min(Yup.ref('from'), "End date should be greater than Start date"),
   mentor: Yup.string().nullable(),
   teamSize: Yup.number()
     .typeError("Team Size must be a number")

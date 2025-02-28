@@ -81,7 +81,7 @@ function CompleteProfileFormSection() {
 
       <div className="flex flex-row w-full">
         {/* Sticky Sidebar (Visible on Desktop & Tablet) */}
-        <div className="hidden md:block md:w-1/6 bg-white border-r border-gray-200 h-screen sticky top-0">
+        <div className="hidden lg:block lg:w-1/6 bg-white border-r border-gray-200 h-screen sticky top-0">
           <nav className="flex flex-col py-4">
             {sidebarItems.map((item) => (
               <button
@@ -102,7 +102,7 @@ function CompleteProfileFormSection() {
         </div>
 
         {/* Scrollable Main Content */}
-        <div className="flex-1 h-[calc(100vh-80px)] overflow-y-auto p-4 mt-10 md:mt-0">
+        <div className="flex-1 h-[calc(100vh-80px)] overflow-y-auto p-4 mt-10 md:mt-8">
           <Outlet context={{ setIsFormDirty }} />
         </div>
       </div>

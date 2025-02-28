@@ -34,6 +34,8 @@ import RecruiterLayout from './pages/layout/recruiter/RecruiterLayout'
 import JobManagement from './pages/dashboard/recruiter/Jobmanagement/JobManagement'
 import CreateJob from './pages/dashboard/recruiter/Jobmanagement/CreateJob'
 import EditJob from './pages/dashboard/recruiter/Jobmanagement/EditJob'
+import ResumeBuilder from './routes/jobseeker/ResumeBuilder/ResumeBuilder';
+
 
 const App = () => {
   return (
@@ -49,6 +51,7 @@ const App = () => {
          <Route path='/jobseeker' element={<JobseekerLayout/>}>
              <Route path='dashboard' element={<JobseekerDashboard/>}/>
              <Route path='job-detail' element={<JobDetailsPage/>}/>
+             <Route path='resume-builder' element={<ResumeBuilder/>}/>
              <Route path='complete-profile-form' element={<CompleteProfileFormSection/>}>
                 <Route path='personal-info' element={<PersonalInfoForm/>}/>
                 <Route path='contact-info' element={<ContactDetailsForm/>}/>

@@ -3,7 +3,7 @@ import { RiDeleteBinLine } from "react-icons/ri";
 import { MdOutlineEdit } from "react-icons/md";
 
 function ExperienceDetailsDisplay({ title, data, onDelete, onEdit }) {
-  console.log(data);
+  
 
   function formatDate(dateString) {
     if (!dateString) return "";

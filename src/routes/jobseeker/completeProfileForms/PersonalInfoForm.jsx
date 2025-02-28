@@ -156,7 +156,7 @@ function PersonalInfoForm() {
 
                 <div className="grid gap-6 md:grid-cols-2">
                   <InputField label="Email Address" name="email" type="email" />
-                  <InputField label="Phone Number" name="phoneNumber" />
+                  <InputField label="Phone Number" name="phoneNumber" type="number" />
                 </div>
 
                 <div className="grid gap-6 md:grid-cols-2">
