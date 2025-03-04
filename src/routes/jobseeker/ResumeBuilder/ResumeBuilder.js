@@ -1,10 +1,11 @@
 import { useState } from "react";
 import Stepper from "./../../../components/JobSeekerComponents/ReusableComponents/Stepper";
-import ResTemplateFilter from "./../../../components/JobSeekerComponents/FilterComponents/ResTemplateFilter";
-
+import { toast, ToastContainer } from "react-toastify";
 import ResumeDisplay from "./../../../components/JobSeekerComponents/BuildResume_Components/ResumeDisplay";
 import ViewMyResume from "./../../../components/JobSeekerComponents/BuildResume_Components/ViewMyResume";
 import ReadyForJobs from "./../../../components/JobSeekerComponents/BuildResume_Components/ReadyForJobs";
+import { useSelector } from 'react-redux';
+import { setTeamplateSelect } from './../../../store/slices/resumeSlice';
 
 function ResumeBuilder() {
   const steps = [
@@ -15,10 +16,29 @@ function ResumeBuilder() {
 
   const [currentStep, setCurrentStep] = useState(0);
   const [selectedTemplate, setSelectedTemplate] = useState(null);
+  // const isTemplateSelected = useSelector(state => state.resume.isTeamplateSelected);
 
   const handleTemplateSelect = (template) => {
+    // setSelectedTemplate(template);
     setSelectedTemplate(template);
+    setTeamplateSelect(true);
     setCurrentStep(1); // Move to ViewMyResume
+  };
+
+  const handleStepChange = (newStep) => {
+    if (newStep > currentStep && !selectedTemplate) {
+      toast.warn("Please select a template before proceeding!", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        theme: "dark",
+      });
+      return;
+    }
+    setCurrentStep(newStep);
   };
 
   const renderComponent = () => {
@@ -34,37 +54,10 @@ function ResumeBuilder() {
     }
   };
 
-  const renderTitle = () => {
-    switch (currentStep) {
-      case 0:
-        return (
-          <p className="text-2xl text-black font-bold py-4">
-            Choose From Our Resume Templates
-          </p>
-        );
-      case 1:
-        return (
-          <p className="text-2xl text-black font-bold py-4">
-            Customize Your Resume as per your need
-          </p>
-        );
-      case 2:
-        return (
-          <p className="text-2xl text-black font-bold py-4">
-            Your Ready for applying jobs with Resume
-          </p>
-        );
-      default:
-        return (
-          <p className="text-2xl text-black font-bold py-4">
-            Choose From Our Resume Templates
-          </p>
-        );
-    }
-  };
-
   return (
-    <div className="flex-1 h-auto overflow-y-auto p-4 mt-10 md:mt-16">
+    <div className="flex-1 overflow-y-auto p-4 mt-10 md:mt-16 h-lvh">
+      <ToastContainer />
+      
       {/* Header Section */}
       <div className="w-full flex justify-center items-center flex-col text-center my-6">
         <p className="text-lg text-gray-700 font-semibold py-4">
@@ -72,10 +65,12 @@ function ResumeBuilder() {
         </p>
 
         <div className="flex w-full justify-center items-center py-4">
-        <Stepper steps={steps} currentStep={currentStep} onStepChange={setCurrentStep} />
+          <Stepper steps={steps} currentStep={currentStep} onStepChange={handleStepChange} />
         </div>
 
-        {renderTitle()}
+        <p className="text-2xl text-black font-bold py-4">
+          {steps[currentStep].title}
+        </p>
         <p className="text-medium text-gray-500">
           You can always change your template later.
         </p>
@@ -83,12 +78,6 @@ function ResumeBuilder() {
 
       {/* Main Content Section */}
       <div className="flex flex-col lg:flex-row w-full px-6 gap-6 justify-center">
-        {/* Filter Section */}
-        {/* <div className="lg:w-1/4 md:w-1/3 sm:w-full flex justify-center">
-          <ResTemplateFilter />
-        </div> */}
-
-        {/* Resume Templates Section */}
         <div className="w-full flex justify-center px-24 h-auto">
           {renderComponent()}
         </div>

@@ -3,6 +3,8 @@ import { FaPhoneAlt } from "react-icons/fa";
 import { IoMailSharp } from "react-icons/io5";
 import { GrLinkedin } from "react-icons/gr";
 import { BsGithub } from "react-icons/bs";
+import ResumeSkeloton from './../ResumeSkeloton';
+
 
 const ResumeWrapper = styled.div`
   width: 100%;
@@ -26,24 +28,13 @@ const Section = styled.div`
 `;
 
 const SectionTitle = styled.h2`
-  font-size: 1rem;
+  font-size: 1.3rem;
   font-weight: bold;
   text-transform: capitalize;
   letter-spacing: 1px;
   margin-bottom: 5px;
 `;
 
-const BulletList = styled.ul`
-  list-style-type: disc;
-  padding-left: 20px;
-`;
-
-const BulletPoint = styled.li`
-  font-size: 0.9rem;
-  margin-bottom: 5px;
-`;
-
-/** ✅ Converts camelCase or snake_case to Proper Sentence Case */
 const formatLabel = (text) => {
   return text
     .replace(/([A-Z])/g, " $1") // Add space before uppercase letters
@@ -54,7 +45,9 @@ const formatLabel = (text) => {
 
 const Template1 = ({ data = {}, style }) => {
   if (!data || Object.keys(data).length === 0) {
-    return <h2 className="text-center text-xl">No Data Available</h2>;
+    return <div className="flex w-full h-lvh">
+      <ResumeSkeloton/>
+    </div>;
   }
 
   return (
@@ -66,41 +59,63 @@ const Template1 = ({ data = {}, style }) => {
             {data.personalInformation.firstName || "First Name"}{" "}
             {data.personalInformation.lastName || "Last Name"}
           </h1>
-          <p className="text-gray-700 uppercase text-sm">
+          {/* <p className="text-gray-700 uppercase text-sm">
             {data.personalInformation.specialization || "Your Role"}
-          </p>
-          <div className="text-sm text-gray-600 flex gap-2 justify-center items-center">
+          </p> */}
+          <div className="text-sm text-gray-600 flex gap-2 justify-center items-center py-2">
             <FaPhoneAlt />
             {data.personalInformation.phoneNumber || "Phone"} | <IoMailSharp />
-            {data.personalInformation.email || "Email"} | <GrLinkedin />
+            {data.personalInformation.email || "Email"} | 
             {data.contactDetails?.linkedInUrl && (
-              <a
-                href={data.contactDetails.linkedInUrl}
-                className="text-blue-500 underline"
-              >
-                LinkedIn <span className="text-black">|</span>
-              </a>
+              <div className="flex gap-2 items-center">
+                <GrLinkedin />
+                <a href={data.contactDetails.linkedInUrl} className="text-blue-500 underline">
+                  LinkedIn <span className="text-black">|</span>
+                </a>
+              </div>
             )}
-            {/* githubUrl */}
-            <BsGithub />
             {data.contactDetails?.githubUrl && (
-              <a
-                href={data.contactDetails.linkedInUrl}
-                className="text-blue-500 underline"
-              >
-                GitHub <span className="text-black"></span>
-              </a>
+              <div className="flex gap-2 items-center">
+                <BsGithub />
+                <a href={data.contactDetails.githubUrl} className="text-blue-500 underline">
+                  GitHub
+                </a>
+              </div>
             )}
           </div>
           <Divider />
         </div>
       )}
 
-      {/* ✅ Dynamic Sections */}
+      {/* ✅ Other Details (Summary at Top, Expertise below it) */}
+      {data.otherDetails && (
+        <Section>
+          {/* Summary at the top */}
+          {data.otherDetails.summary && (
+            <>
+              <SectionTitle>Summary</SectionTitle>
+              <p className="text-gray-700">{data.otherDetails.summary}</p>
+              <Divider />
+            </>
+          )}
+
+          {/* Expertise right after Summary */}
+          {data.otherDetails.expertise && (
+            <>
+              <SectionTitle>Expertise</SectionTitle>
+              <p className="text-gray-700">{data.otherDetails.expertise.join(", ")}</p>
+              <Divider />
+            </>
+          )}
+        </Section>
+      )}
+
+      {/* ✅ Dynamic Sections (All Other Details except Achievements & Extracurricular) */}
       {Object.entries(data).map(([sectionKey, sectionValue]) => {
         if (
           sectionKey === "personalInformation" ||
-          sectionKey === "contactDetails"
+          sectionKey === "contactDetails" ||
+          sectionKey === "otherDetails" // Skip Other Details (Handled Separately Above)
         )
           return null;
 
@@ -116,32 +131,26 @@ const Template1 = ({ data = {}, style }) => {
             {/* ✅ Handle Objects */}
             {typeof sectionValue === "object" &&
               !Array.isArray(sectionValue) && (
-                <BulletList>
+                <div className="pl-4">
                   {Object.entries(sectionValue).map(([key, value]) => (
-                    <BulletPoint key={key}>
-                      <b className="text-gray-800">{formatLabel(key)}:</b>{" "}
+                    <p key={key} className="text-gray-700 text-sm">
+                      <b>{formatLabel(key)}:</b>{" "}
                       {Array.isArray(value) ? value.join(", ") : value}
-                    </BulletPoint>
+                    </p>
                   ))}
-                </BulletList>
+                </div>
               )}
 
-            {/* ✅ Handle Arrays */}
+            {/* ✅ Handle Arrays (For Experience, Education, Projects, etc.) */}
             {Array.isArray(sectionValue) && sectionValue.length > 0 && (
               <div className="space-y-3">
                 {sectionValue.map((item, index) => (
                   <div key={index} className="mb-3">
-                    {/* ✅ Special Handling for Education Details */}
+                    {/* ✅ Education Details Formatting */}
                     {sectionKey === "educationDetails" ? (
                       <div className="text-left">
                         <p className="font-bold">
-                          {item.data.qualification} |{" "}
-                          <span>
-                            {item.data.aggregate}{" "}
-                            {item.data.aggregateType === "percentage"
-                              ? "%"
-                              : "CGPA"}
-                          </span>
+                          {item.data.qualification}
                         </p>
                         <p className="italic text-gray-600">
                           {item.data.college}, {item.data.collegeCity}
@@ -151,12 +160,30 @@ const Template1 = ({ data = {}, style }) => {
                         </p>
                       </div>
                     ) : (
-                      Object.entries(item).map(([key, value]) => (
-                        <p key={key} className="text-gray-700 text-sm">
-                          <b>{formatLabel(key)}:</b>{" "}
-                          {Array.isArray(value) ? value.join(", ") : value}
+                      /* ✅ Formatting for Other Sections */
+                      <div className="text-left">
+                        <p className="font-bold">
+                          {item.designation || item.name || item.title}
                         </p>
-                      ))
+                        {item.organisation && (
+                          <p className="italic text-gray-600">
+                            {item.organisation}, {item.city}
+                          </p>
+                        )}
+                        {item.from && item.to && (
+                          <p className="text-gray-700 text-sm">
+                            {item.from} - {item.to}
+                          </p>
+                        )}
+                        {item.description && (
+                          <p className="text-gray-700 text-sm">{item.description}</p>
+                        )}
+                        {item.skills && (
+                          <p className="text-gray-700 text-sm">
+                            <b>Skills:</b> {item.skills.join(", ")}
+                          </p>
+                        )}
+                      </div>
                     )}
                   </div>
                 ))}
@@ -167,6 +194,27 @@ const Template1 = ({ data = {}, style }) => {
           </Section>
         );
       })}
+
+      {/* ✅ Achievements & Extracurricular at Bottom */}
+      {data.otherDetails && (
+        <Section>
+          {data.otherDetails.achievements && (
+            <>
+              <SectionTitle>Achievements</SectionTitle>
+              <p className="text-gray-700">{data.otherDetails.achievements.join(", ")}</p>
+              <Divider />
+            </>
+          )}
+
+          {data.otherDetails.extraCurricular && (
+            <>
+              <SectionTitle>Extra Curricular</SectionTitle>
+              <p className="text-gray-700">{data.otherDetails.extraCurricular.join(", ")}</p>
+              <Divider />
+            </>
+          )}
+        </Section>
+      )}
     </ResumeWrapper>
   );
 };
