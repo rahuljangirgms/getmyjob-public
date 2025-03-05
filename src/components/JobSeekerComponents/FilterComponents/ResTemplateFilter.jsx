@@ -25,11 +25,12 @@ function ResTemplateFilter() {
   };
 
   return (
-    <div className="p-4 sm:p-6 bg-white shadow-md rounded-lg w-full ">
+    <div className="p-4 sm:p-6 bg-white shadow-md rounded-lg w-full md:w-md mx-auto">
       {/* Color Section */}
       <div className="mb-6">
         <h3 className="text-sm font-semibold text-gray-500 mb-3">COLOR</h3>
-        <div className="grid grid-cols-5 gap-2">
+        {/* 3 columns on mobile and 5 columns on small screens and up */}
+        <div className="grid grid-cols-3 sm:grid-cols-5 gap-2">
           {colors.map((color) => (
             <button
               key={color.name}
@@ -37,7 +38,7 @@ function ResTemplateFilter() {
                 selectedColor === color.name ? "border-black" : "border-transparent"
               }`}
               style={{ backgroundColor: color.hex }}
-              onClick={() => setSelectedColor(color.hex)} 
+              onClick={() => setSelectedColor(color.name)}
               aria-label={`Select ${color.name} color`}
             >
               {selectedColor === color.name && (
@@ -62,7 +63,10 @@ function ResTemplateFilter() {
       {/* Filters Section */}
       <div className="mb-4 flex justify-between items-center">
         <h3 className="text-sm font-semibold text-gray-500">FILTERS</h3>
-        <button className="text-blue-500 text-sm hover:text-blue-600" onClick={handleClearFilters}>
+        <button
+          className="text-blue-500 text-sm hover:text-blue-600"
+          onClick={handleClearFilters}
+        >
           Clear Filters
         </button>
       </div>

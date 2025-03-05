@@ -1,23 +1,52 @@
 import React, { useEffect, useState } from "react";
 import ResumeEditor from "./ResumeEditor";
 import Template1 from "./ResumeTemplates/Template1";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { IoClose } from "react-icons/io5";
-import { GoChevronDown } from "react-icons/go";
-import { GoChevronUp } from "react-icons/go";
+import { GoChevronDown, GoChevronUp } from "react-icons/go";
 import { toast } from "react-toastify";
+import SortableList, { SortableItem } from "react-easy-sort";
+import { arrayMoveImmutable } from "array-move";
+import { FaRegSave } from "react-icons/fa";
+import SaveResumeModal from "./SaveResumeModal";
+import { addResume } from "./../../../store/slices/resumeSlice";
 
-function ViewMyResume({ template }) {
+function ViewMyResume({ template, onSaveComplete }) {
+  // profileData follows your provided structure
   const profileData = useSelector((state) => state.profileForms.finalData);
-
-  // const electedTemplate= useSelector(state => state.resume.isTeamplateSelected);
-
   console.log("PROFILE DATA: ", profileData);
+
+  const dispatch = useDispatch();
 
   const [style, setStyle] = useState({ color: "#000", fontFamily: "Arial" });
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [formattedData, setFormattedData] = useState({}); // Processed data for resume
-  const [expandedSections, setExpandedSections] = useState({}); // Track expanded sections
+  const [formattedData, setFormattedData] = useState({});
+  const [expandedSections, setExpandedSections] = useState({});
+  const [selectedFields, setSelectedFields] = useState({});
+
+  // Outer draggable order for sections and inner order for subsections
+  const [sectionOrder, setSectionOrder] = useState([]);
+  const [subSectionOrder, setSubSectionOrder] = useState({});
+
+  // State for Save Resume Modal
+  const [modalResOpen, setModalResOpen] = useState(false);
+  const [savedName, setSavedName] = useState("");
+
+  // Callback when resume is saved (with a name)
+  const handleSave = (name) => {
+    setSavedName(name);
+    setModalResOpen(false);
+    dispatch(
+      addResume({
+        name: name,
+        data: formattedData,
+      })
+    );
+    toast.success("Resume Stored Successfully");
+    if (typeof onSaveComplete === "function") {
+      onSaveComplete();
+    }
+  };
 
   const requiredFields = [
     "firstName",
@@ -26,7 +55,6 @@ function ViewMyResume({ template }) {
     "email",
     "phoneNumber",
   ];
-
   const requiredSections = [
     "contactDetails",
     "professionalDetails",
@@ -35,18 +63,38 @@ function ViewMyResume({ template }) {
     "otherDetails",
   ];
 
+  // Open the fields modal on mount
   useEffect(() => {
     setModalIsOpen(true);
   }, []);
 
-  // ✅ Open and Close Modal
+  // Initialize outer and inner orders when profileData is available
+  useEffect(() => {
+    if (profileData) {
+      const sections = Object.keys(profileData);
+      setSectionOrder(sections);
+      const initialSubOrders = {};
+      sections.forEach((section) => {
+        const data = profileData[section];
+        if (Array.isArray(data)) {
+          // For array sections, order by indices
+          initialSubOrders[section] = data.map((_, index) => index);
+        } else if (data && typeof data === "object") {
+          // For object sections, order by keys
+          initialSubOrders[section] = Object.keys(data);
+        }
+      });
+      setSubSectionOrder(initialSubOrders);
+      console.log("Initial subSectionOrder:", initialSubOrders);
+    }
+  }, [profileData]);
+
   const openModal = () => {
     setSelectedFields({});
     setModalIsOpen(true);
   };
   const closeModal = () => setModalIsOpen(false);
 
-  // ✅ Handle Section Expand/Collapse
   const toggleSection = (section) => {
     setExpandedSections((prev) => ({
       ...prev,
@@ -54,7 +102,7 @@ function ViewMyResume({ template }) {
     }));
   };
 
-  // ✅ Handle Checkbox Change (for Individual Fields)
+  // Toggle a checkbox for a given field in a section
   const handleCheckboxChange = (section, field) => {
     setSelectedFields((prev) => ({
       ...prev,
@@ -65,19 +113,23 @@ function ViewMyResume({ template }) {
     }));
   };
 
-  // ✅ Handle Section Selection (Select/Deselect All Fields in a Section)
+  // Toggle select/deselect all fields within a section
   const handleSectionSelect = (section) => {
-    const allFieldsSelected = selectedFields[section]
-      ? Object.values(selectedFields[section]).every((value) => value)
-      : false;
+    const allSelected =
+      selectedFields[section] &&
+      Object.values(selectedFields[section]).every((value) => value);
 
-    const updatedFields = Object.keys(profileData[section] || {}).reduce(
-      (acc, field) => {
-        acc[field] = !allFieldsSelected;
-        return acc;
-      },
-      {}
-    );
+    const updatedFields = {};
+    const data = profileData[section];
+    if (Array.isArray(data)) {
+      data.forEach((_, idx) => {
+        updatedFields[idx] = !allSelected;
+      });
+    } else if (data && typeof data === "object") {
+      Object.keys(data).forEach((key) => {
+        updatedFields[key] = !allSelected;
+      });
+    }
 
     setSelectedFields((prev) => ({
       ...prev,
@@ -85,91 +137,81 @@ function ViewMyResume({ template }) {
     }));
   };
 
-  // ✅ Generate Formatted Data for Resume
+  // Generate formatted resume data based on selected fields and the dragged order
   const generateResume = () => {
     let filteredData = {};
 
+    // Loop over each section that has selections
     Object.keys(selectedFields).forEach((section) => {
-      const sectionData = profileData[section];
+      const data = profileData[section];
 
-      // Check if section data is an array
-      if (Array.isArray(sectionData)) {
-        filteredData[section] = sectionData.filter(
-          (_, index) => selectedFields[section]?.[index]
-        );
-      } else {
-        // Otherwise, pick only selected fields
-        filteredData[section] = {};
-        Object.keys(selectedFields[section]).forEach((field) => {
-          if (selectedFields[section][field]) {
-            filteredData[section][field] = profileData[section][field];
+      if (Array.isArray(data)) {
+        if (subSectionOrder[section]) {
+          // Use the subSectionOrder to filter and reorder the array.
+          const filteredArray = subSectionOrder[section]
+            .filter((origIndex) => selectedFields[section]?.[origIndex])
+            .map((origIndex) => data[origIndex]);
+          if (filteredArray.length > 0) {
+            filteredData[section] = filteredArray;
+          }
+        } else {
+          const filteredArray = data.filter(
+            (_, idx) => selectedFields[section]?.[idx]
+          );
+          if (filteredArray.length > 0) {
+            filteredData[section] = filteredArray;
+          }
+        }
+      } else if (data && typeof data === "object") {
+        const orderedKeys = subSectionOrder[section] || Object.keys(data);
+        const obj = {};
+        orderedKeys.forEach((key) => {
+          if (selectedFields[section]?.[key]) {
+            obj[key] = data[key];
           }
         });
-      }
-
-      // Remove empty sections
-      if (Object.keys(filteredData[section]).length === 0) {
-        delete filteredData[section];
+        if (Object.keys(obj).length > 0) {
+          filteredData[section] = obj;
+        }
       }
     });
 
-    console.log("Formatted Resume Data:", filteredData);
-    setFormattedData(filteredData);
+    // Reorder the outer sections using sectionOrder
+    let orderedFilteredData = {};
+    sectionOrder.forEach((section) => {
+      if (filteredData[section]) {
+        orderedFilteredData[section] = filteredData[section];
+      }
+    });
+
+    console.log("Formatted Resume Data:", orderedFilteredData);
+    setFormattedData(orderedFilteredData);
     setModalIsOpen(false);
   };
 
+  // Utility to format field/section labels
   const formatLabel = (text) => {
     return text
-      .replace(/([A-Z])/g, " $1") // Add space before uppercase letters
-      .replace(/[_-]/g, " ") // Replace underscores/dashes with spaces
+      .replace(/([A-Z])/g, " $1")
+      .replace(/[_-]/g, " ")
       .trim()
-      .replace(/\b\w/g, (char) => char.toUpperCase()); // Capitalize first letter of each word
+      .replace(/\b\w/g, (char) => char.toUpperCase());
   };
 
-  // ✅ Render Resume with Formatted Data
-  const renderTemplate = () => {
-    switch (template?.id) {
-      case "template1":
-        return <Template1 data={formattedData} style={style} />;
-      default:
-        return <h2 className="text-center text-xl">No Template Selected</h2>;
-    }
-  };
-
-  const initialSelectedFields = {};
-
-  const [selectedFields, setSelectedFields] = useState(initialSelectedFields);
-
-  requiredFields.forEach((field) => {
-    if (!initialSelectedFields["personalInformation"]) {
-      initialSelectedFields["personalInformation"] = {};
-    }
-    initialSelectedFields["personalInformation"][field] = true;
-  });
-
-  requiredSections.forEach((section) => {
-    initialSelectedFields[section] = {}; // Ensure the section exists
-  });
-
+  // Validate required selections before applying changes
   const validateSelectionBeforeApplying = () => {
     let missingFields = [];
-
-    // ✅ Check required fields in "personalInformation"
     requiredFields.forEach((field) => {
       if (!selectedFields.personalInformation?.[field]) {
         missingFields.push(formatLabel(field));
       }
     });
-
-    // ✅ Check required fields in "contactDetails"
     const requiredContactFields = ["linkedInUrl", "githubUrl"];
     requiredContactFields.forEach((field) => {
       if (!selectedFields.contactDetails?.[field]) {
         missingFields.push(formatLabel(field));
       }
     });
-
-    // ✅ Check required sections
     requiredSections.forEach((section) => {
       if (
         !selectedFields[section] ||
@@ -178,7 +220,6 @@ function ViewMyResume({ template }) {
         missingFields.push(formatLabel(section));
       }
     });
-
     if (missingFields.length > 0) {
       toast.error(
         `Please select the required fields: ${missingFields.join(", ")}`,
@@ -194,46 +235,77 @@ function ViewMyResume({ template }) {
       );
       return;
     }
+    generateResume();
+  };
 
-    generateResume(); // ✅ Proceed if all required fields are selected
+  // Outer drag handler for sections
+  const onOuterSortEnd = (oldIndex, newIndex) => {
+    setSectionOrder(arrayMoveImmutable(sectionOrder, oldIndex, newIndex));
+  };
+
+  // Inner drag handler for subsections (per section)
+  const onInnerSortEnd = (section, oldIndex, newIndex) => {
+    setSubSectionOrder((prev) => {
+      const newOrder = arrayMoveImmutable(prev[section], oldIndex, newIndex);
+      console.log(`New subSection order for ${section}:`, newOrder);
+      return { ...prev, [section]: newOrder };
+    });
   };
 
   return (
-    <div className="flex flex-col lg:flex-row w-full px-6 gap-6 justify-center ">
-     
-      <div className="lg:w-1/4 md:w-1/3 sm:w-full flex flex-col">
+    <div className="flex flex-col lg:flex-row w-full px-4 md:px-6 lg:px-8 gap-6 justify-center">
+      {/* Editor Panel */}
+      <div className="w-full lg:w-1/4">
         <ResumeEditor onUpdate={setStyle} />
       </div>
 
-      {/* Right Side: Resume Preview */}
-      <div className="w-full flex justify-center flex-col">
-        <div className="flex justify-end">
+      {/* Resume Preview and Save Button */}
+      <div className="w-full lg:w-3/4 flex flex-col">
+        <div className="flex flex-col lg:flex-row justify-end items-center gap-2 mb-4">
           <button
             type="button"
-            className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+            className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5"
             onClick={openModal}
           >
             Select Resume Fields
           </button>
+          {!modalIsOpen && (
+            <button
+              type="button"
+              className="flex items-center gap-2 text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5"
+              onClick={() => setModalResOpen(true)}
+            >
+              <FaRegSave size={20} />
+              Save My Resume
+            </button>
+          )}
         </div>
-
-        {/* Render Resume Teamplates*/}
-        {renderTemplate()}
+        {template?.id === "template1" && (
+          <Template1 data={formattedData} style={style} />
+        )}
       </div>
 
-      {/* ✅ Custom Modal for Field Selection */}
+      {/* Save Resume Modal */}
+      {modalResOpen && (
+        <SaveResumeModal
+          onSave={handleSave}
+          onClose={() => setModalResOpen(false)}
+        />
+      )}
+
+      {/* Fields and Arrange Modal */}
       {modalIsOpen && (
         <div
           id="default-modal"
           tabIndex="-1"
           aria-hidden="true"
-          className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 z-50"
+          className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 z-50 m-2"
         >
-          <div className="relative p-4 pb-0 w-full max-w-2xl max-h-[750px] bg-white rounded-lg shadow-md overflow-y-scroll">
+          <div className="relative p-4 pb-0 w-full max-w-2xl max-h-[750px] bg-white rounded-lg shadow-md overflow-y-scroll select-none">
             {/* Modal Header */}
             <div className="flex items-center justify-between p-4 border-b">
               <h3 className="text-xl font-semibold text-gray-900">
-                Select Fields for Resume
+                Select Fields for Resume &amp; Arrange Sections
               </h3>
               <button
                 type="button"
@@ -244,131 +316,175 @@ function ViewMyResume({ template }) {
               </button>
             </div>
 
-            {/* Modal Body: Sections and Subsections */}
+            {/* Modal Body */}
             <div className="p-4 space-y-4">
-              {Object.keys(profileData).map((section) => {
-                const sectionData = profileData[section];
+              <SortableList
+                onSortEnd={onOuterSortEnd}
+                className="space-y-4"
+                draggedItemClassName="dragged"
+                lockAxis="y"
+              >
+                {sectionOrder.map((section) => {
+                  const sectionData = profileData[section];
+                  const allSelected =
+                    selectedFields[section] &&
+                    Object.values(selectedFields[section]).every(Boolean);
 
-                // Check if all items in a section are selected
-                const allSelected =
-                  selectedFields[section] &&
-                  Object.values(selectedFields[section]).every(Boolean);
-
-                return (
-                  <div key={section} className="border-b pb-2">
-                    {/* Section Header with Expand Toggle */}
-                    <div className="flex justify-between items-center cursor-pointer">
-                      <label className="flex items-center space-x-2">
-                        <input
-                          type="checkbox"
-                          checked={allSelected}
-                          onChange={() => handleSectionSelect(section)}
-                          className="w-5 h-5 accent-blue-500"
-                        />
-                        <h4 className="font-bold text-gray-900">
-                          {formatLabel(section)}
-                        </h4>
-                      </label>
-                      <button
-                        type="button"
-                        className="text-gray-500"
-                        onClick={() => toggleSection(section)}
-                      >
-                        {expandedSections[section] ? (
-                          <GoChevronUp size={25} className="text-gray-700" />
-                        ) : (
-                          <GoChevronDown size={25} className="text-gray-700" />
-                        )}
-                      </button>
-                    </div>
-
-                    {/* Subsection Fields */}
-                    {expandedSections[section] && (
-                      <div className="mt-2 pl-6 space-y-1">
-                        {Array.isArray(sectionData)
-                          ? sectionData.map((item, index) => {
-                              let itemLabel = `Item ${index + 1}`;
-
-                              if (section === "professionalDetails")
-                                itemLabel = item.organisation || itemLabel;
-                              if (section === "educationDetails")
-                                itemLabel =
-                                  item.data?.qualification || itemLabel;
-                              if (section === "internshipDetails")
-                                itemLabel = item.organisation || itemLabel;
-                              if (section === "projectDetails")
-                                itemLabel = item.name || itemLabel;
-                              if (section === "certificationDetails")
-                                itemLabel = item.name || itemLabel;
-                              if (section === "researchPapers")
-                                itemLabel = item.name || itemLabel;
-                              if (section === "trainingDetails")
-                                itemLabel = item.name || itemLabel;
-
-                              return (
-                                <div key={index} className="ml-4">
-                                  <label className="flex items-center space-x-2">
-                                    <input
-                                      type="checkbox"
-                                      checked={
-                                        selectedFields[section]?.[index] ||
-                                        false
-                                      }
-                                      onChange={() =>
-                                        handleCheckboxChange(section, index)
-                                      }
-                                      className="w-4 h-4"
-                                    />
-                                    <span className="text-gray-700">
-                                      {formatLabel(itemLabel)}
-                                    </span>
-                                  </label>
-                                </div>
-                              );
-                            })
-                          : Object.entries(sectionData || {}).map(
-                              ([fieldKey, fieldValue]) => (
-                                <label
-                                  key={fieldKey}
-                                  className="flex items-center space-x-2 ml-6"
-                                >
-                                  <input
-                                    type="checkbox"
-                                    checked={
-                                      selectedFields[section]?.[fieldKey] ||
-                                      false
-                                    }
-                                    onChange={() =>
-                                      handleCheckboxChange(section, fieldKey)
-                                    }
-                                    className="w-4 h-4"
-                                  />
-                                  <span className="text-gray-700">
-                                    {formatLabel(fieldKey)}
-                                  </span>
-                                </label>
-                              )
+                  return (
+                    <SortableItem
+                      key={section}
+                      style={{ display: "block" }}
+                    >
+                      <div className="border-b pb-2">
+                        <div className="flex justify-between items-center cursor-move">
+                          <label className="flex items-center space-x-2 cursor-move">
+                            <input
+                              type="checkbox"
+                              checked={allSelected}
+                              onChange={() => handleSectionSelect(section)}
+                              className="w-5 h-5 accent-blue-500"
+                            />
+                            <h4 className="font-bold text-gray-900">
+                              {formatLabel(section)}
+                            </h4>
+                          </label>
+                          <button
+                            type="button"
+                            className="text-gray-500 cursor-pointer"
+                            onClick={() => toggleSection(section)}
+                          >
+                            {expandedSections[section] ? (
+                              <GoChevronUp
+                                size={25}
+                                className="text-gray-700"
+                              />
+                            ) : (
+                              <GoChevronDown
+                                size={25}
+                                className="text-gray-700"
+                              />
                             )}
+                          </button>
+                        </div>
+                        {expandedSections[section] && (
+                          <div className="mt-2 pl-6 space-y-1 cursor-move">
+                            <SortableList
+                              onSortEnd={(oldIndex, newIndex) =>
+                                onInnerSortEnd(section, oldIndex, newIndex)
+                              }
+                              className="space-y-1 cursor-move"
+                              draggedItemClassName="dragged"
+                              lockAxis="y"
+                            >
+                              {Array.isArray(sectionData)
+                                ? subSectionOrder[section]?.map(
+                                    (subIndex) => {
+                                      const item = sectionData[subIndex];
+                                      let itemLabel = `Item ${
+                                        subIndex + 1
+                                      }`;
+                                      if (section === "professionalDetails")
+                                        itemLabel =
+                                          item.organisation || itemLabel;
+                                      if (section === "educationDetails")
+                                        itemLabel =
+                                          item.data?.qualification ||
+                                          itemLabel;
+                                      if (section === "projectDetails")
+                                        itemLabel =
+                                          item.name || itemLabel;
+                                      if (section === "certificationDetails")
+                                        itemLabel =
+                                          item.name || itemLabel;
+                                      if (section === "researchPapers")
+                                        itemLabel =
+                                          item.name || itemLabel;
+                                      if (section === "trainingDetails")
+                                        itemLabel =
+                                          item.name || itemLabel;
+                                      return (
+                                        <SortableItem
+                                          key={subIndex}
+                                          style={{ display: "block" }}
+                                        >
+                                          <div className="ml-4">
+                                            <label className="flex items-center space-x-2 cursor-move">
+                                              <input
+                                                type="checkbox"
+                                                checked={
+                                                  selectedFields[section]?.[
+                                                    subIndex
+                                                  ] || false
+                                                }
+                                                onChange={() =>
+                                                  handleCheckboxChange(
+                                                    section,
+                                                    subIndex
+                                                  )
+                                                }
+                                                className="w-4 h-4"
+                                              />
+                                              <span className="text-gray-700 cursor-move">
+                                                {formatLabel(itemLabel)}
+                                              </span>
+                                            </label>
+                                          </div>
+                                        </SortableItem>
+                                      );
+                                    }
+                                  )
+                                : subSectionOrder[section]?.map(
+                                    (fieldKey) => (
+                                      <SortableItem
+                                        key={fieldKey}
+                                        style={{ display: "block" }}
+                                      >
+                                        <label className="flex items-center space-x-2 ml-6 cursor-move">
+                                          <input
+                                            type="checkbox"
+                                            checked={
+                                              selectedFields[section]?.[
+                                                fieldKey
+                                              ] || false
+                                            }
+                                            onChange={() =>
+                                              handleCheckboxChange(
+                                                section,
+                                                fieldKey
+                                              )
+                                            }
+                                            className="w-4 h-4 cursor-move"
+                                          />
+                                          <span className="text-gray-700 cursor-move">
+                                            {formatLabel(fieldKey)}
+                                          </span>
+                                        </label>
+                                      </SortableItem>
+                                    )
+                                  )}
+                            </SortableList>
+                          </div>
+                        )}
                       </div>
-                    )}
-                  </div>
-                );
-              })}
+                    </SortableItem>
+                  );
+                })}
+              </SortableList>
             </div>
 
             {/* Modal Footer */}
             <div className="flex items-center p-4 border-t sticky bg-white bottom-0 justify-end">
               <button
-                className="text-white bg-blue-600 px-5 py-2.5 rounded-lg"
-                onClick={validateSelectionBeforeApplying} // ✅ Now validates required fields
-              >
-                Apply
-              </button>
-              <button
-                className="px-5 py-2.5 ms-3 rounded-lg border bg-gray-200"
+                className="text-white bg-gradient-to-r from-gray-500 via-gray-600 to-gray-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5"
                 onClick={closeModal}
               >
                 Cancel
+              </button>
+              <button
+                className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 ms-2"
+                onClick={validateSelectionBeforeApplying}
+              >
+                Apply Changes
               </button>
             </div>
           </div>
@@ -379,3 +495,4 @@ function ViewMyResume({ template }) {
 }
 
 export default ViewMyResume;
+  

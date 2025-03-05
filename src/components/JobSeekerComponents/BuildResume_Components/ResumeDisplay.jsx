@@ -19,13 +19,20 @@ const templates = [
 
 function ResumeDisplay({ onSelectTemplate }) {
   return (
-    <div className="flex flex-col lg:flex-row w-full px-6 gap-6 justify-center">
-      <div className="lg:w-1/4 md:w-1/3 sm:w-full flex justify-center">
+    <div className="flex flex-col lg:flex-row w-full px-0 md:px-8 lg:px-16 gap-6 md:justify-center ">
+      {/* Filter Panel: Full width on mobile, 33% on tablets, 25% on desktops */}
+      <div className="w-full  lg:w-1/4 flex justify-center">
         <ResTemplateFilter />
       </div>
+
+      {/* Templates Grid: 1 column on mobile, 2 columns on small screens, 3 columns on medium screens and up */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 w-full">
         {templates.map((template) => (
-          <div key={template.id} onClick={() => onSelectTemplate(template)}>
+          <div
+            key={template.id}
+            onClick={() => onSelectTemplate(template)}
+            className="cursor-pointer"
+          >
             <ResumeCard imageSrc={template.image} />
           </div>
         ))}

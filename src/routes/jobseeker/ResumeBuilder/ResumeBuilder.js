@@ -4,8 +4,8 @@ import { toast, ToastContainer } from "react-toastify";
 import ResumeDisplay from "./../../../components/JobSeekerComponents/BuildResume_Components/ResumeDisplay";
 import ViewMyResume from "./../../../components/JobSeekerComponents/BuildResume_Components/ViewMyResume";
 import ReadyForJobs from "./../../../components/JobSeekerComponents/BuildResume_Components/ReadyForJobs";
-import { useSelector } from 'react-redux';
-import { setTeamplateSelect } from './../../../store/slices/resumeSlice';
+import { useSelector } from "react-redux";
+// import { setTeamplateSelect } from './../../../store/slices/resumeSlice';
 
 function ResumeBuilder() {
   const steps = [
@@ -21,7 +21,7 @@ function ResumeBuilder() {
   const handleTemplateSelect = (template) => {
     // setSelectedTemplate(template);
     setSelectedTemplate(template);
-    setTeamplateSelect(true);
+    // setTeamplateSelect(true);
     setCurrentStep(1); // Move to ViewMyResume
   };
 
@@ -41,12 +41,17 @@ function ResumeBuilder() {
     setCurrentStep(newStep);
   };
 
+  // This callback will be passed to ViewMyResume
+  const handleResumeSaveComplete = () => {
+    setCurrentStep(2);
+  };
+
   const renderComponent = () => {
     switch (currentStep) {
       case 0:
         return <ResumeDisplay onSelectTemplate={handleTemplateSelect} />;
       case 1:
-        return <ViewMyResume template={selectedTemplate} />;
+        return <ViewMyResume template={selectedTemplate}  onSaveComplete={handleResumeSaveComplete} />;
       case 2:
         return <ReadyForJobs />;
       default:
@@ -55,9 +60,9 @@ function ResumeBuilder() {
   };
 
   return (
-    <div className="flex-1 overflow-y-auto p-4 mt-10 md:mt-16 h-lvh">
+    <div className="flex-1 overflow-y-auto p-4 mt-10 md:mt-16 h-lvh no-scrollbar">
       <ToastContainer />
-      
+
       {/* Header Section */}
       <div className="w-full flex justify-center items-center flex-col text-center my-6">
         <p className="text-lg text-gray-700 font-semibold py-4">
@@ -65,20 +70,24 @@ function ResumeBuilder() {
         </p>
 
         <div className="flex w-full justify-center items-center py-4">
-          <Stepper steps={steps} currentStep={currentStep} onStepChange={handleStepChange} />
+          <Stepper
+            steps={steps}
+            currentStep={currentStep}
+            onStepChange={handleStepChange}
+          />
         </div>
 
         <p className="text-2xl text-black font-bold py-4">
           {steps[currentStep].title}
         </p>
         <p className="text-medium text-gray-500">
-          You can always change your template later.
+          You can always change your resume template later.
         </p>
       </div>
 
       {/* Main Content Section */}
       <div className="flex flex-col lg:flex-row w-full px-6 gap-6 justify-center">
-        <div className="w-full flex justify-center px-24 h-auto">
+        <div className="w-full flex justify-center px-1  lg:px-24 h-auto ">
           {renderComponent()}
         </div>
       </div>
