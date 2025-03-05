@@ -42,14 +42,19 @@ import AdminSignIn from './pages/authentication/admin/admin-signin'
 import AdminSignUp from './pages/authentication/admin/admin-signup'
 import ForgotPassword from './pages/authentication/admin/admin-forgot-password'
 import Dashboard from './pages/dashboard/admin/Dashboard'
-import Recruiters  from './pages/dashboard/admin/modules/usermanagment/recruiters'
-import Jobseekers from './pages/dashboard/admin/modules/usermanagment/jobseekers'
+import Recruiters  from './pages/dashboard/admin/modules/recruiters/recruiters'
+import Jobseekers from './pages/dashboard/admin/modules/jobseekers/jobseekers'
 import ReportsAnalytics from './pages/dashboard/admin/modules/reportsanalytics/reportsanalytics'
 import SupportManagement from './pages/dashboard/admin/modules/supportmanagment/supportmanagment'
 import SubscriptionPayment from './pages/dashboard/admin/modules/subscriptionandpayment/subscriptionandpayment'
+import Roles from './pages/dashboard/admin/modules/usermanagment/roles';
+
+
+
 // added by admin rahul to use flowbit 
 import "flowbite";
 import "./index.css";
+
 
 
 
@@ -80,7 +85,6 @@ const App = () => {
                 <Route path='trainings' element={<TraningForm/>}/>
                 <Route path='certifications' element={<CertificationForm/>}/> 
                 <Route path='other-details' element={<OtherDetailsForm/>}/> 
-
              </Route>
          </Route>
 
@@ -109,10 +113,12 @@ const App = () => {
       </Route>
 
       <Route path='/usermanagment' element="">
+      <Route path='roles' element={<Roles/>}/>
+      </Route>
+
        <Route path='recruiters' element={<Recruiters/>}/>
 
        <Route path='jobseekers' element={<Jobseekers/>}/>
-      </Route>
 
       <Route path='/admin/reportsanalytics' element={<ReportsAnalytics/>}/>
       <Route path='/admin/supportmanagement' element={<SupportManagement/>}/>

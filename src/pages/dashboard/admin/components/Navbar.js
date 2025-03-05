@@ -63,37 +63,35 @@ export default function Navbar() {
                 <div id="dropdownNavbar" className="hidden z-40 absolute mt-2 bg-white border border-gray-200 rounded-lg shadow-sm w-44 dark:bg-gray-700 dark:border-gray-600">
                   <ul className="py-2 text-sm text-gray-700 dark:text-gray-400">
                     <li>
-                      <Link to="/usermanagment/jobseekers" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Job Seekers Management</Link>
+                      <Link to="/usermanagment/roles" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Role</Link>
                     </li>
                     <li>
-                      <Link to="/usermanagment/recruiters" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Recruiters Management</Link>
+                      <Link to="#" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Permission</Link>
                     </li>
                   </ul>
                 </div>
               </li>
+ <li>
+                 <Link to="/jobseekers" className="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Job Seekers Management</Link>
+              </li>
+ <li>
+                <Link to="/recruiters" className="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Recruiters Management</Link>
+              </li>
 
-                {/* ✅ Working Flowbite Dropdown */}
-            {/* <li>
-              <Dropdown label="User Management" inline>
-                <Dropdown.Item>
-                  <Link to="#">Job Seekers Management</Link>
-                </Dropdown.Item>
-                <Dropdown.Item>
-                  <Link to="/usermanagment/recruiters">Recruiters Management</Link>
-                </Dropdown.Item>
-              </Dropdown>
-            </li> */}
+       
               <li>
-                <a href="/admin/subscriptionpayment" className="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Subscription & Payment</a>
+               <Link to="/admin/subscriptionpayment" className="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Subscription & Payment</Link>
               </li>
 
 
+
+
               <li>
-                <a href="/admin/reportsanalytics" className="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"> Reports & Analytics</a>
+                <Link to="/admin/reportsanalytics" className="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"> Reports & Analytics</Link>
               </li>
 
                <li>
-                <a href="/admin/supportmanagement" className="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"> Supports</a>
+                <Link to="/admin/supportmanagement" className="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"> Supports</Link>
               </li>
 
             </ul>
