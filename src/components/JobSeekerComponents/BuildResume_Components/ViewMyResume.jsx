@@ -299,7 +299,7 @@ function ViewMyResume({ template, onSaveComplete }) {
           id="default-modal"
           tabIndex="-1"
           aria-hidden="true"
-          className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 z-50 m-2"
+          className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 z-50"
         >
           <div className="relative p-4 pb-0 w-full max-w-2xl max-h-[750px] bg-white rounded-lg shadow-md overflow-y-scroll select-none">
             {/* Modal Header */}
