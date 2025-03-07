@@ -32,6 +32,7 @@ const loadFormsFromLocalStorage = () => {
             extraCurricular: [],
           },
           finalData: null,
+          isProfileCompleted: false,
            missingFields: [], // Stores fields that are missing
         };
   } catch (error) {
@@ -61,6 +62,7 @@ const loadFormsFromLocalStorage = () => {
         extraCurricular: [],
       },
       finalData: null,
+      isProfileCompleted: false,
       missingFields: [], // Stores fields that are missing
     };
   }
@@ -544,6 +546,8 @@ const profileFormsSlice = createSlice({
         },
         finalData: null,
         missingFields: [], // Stores fields that are missing
+        isProfileCompleted: false,
+
       };
     },
     removeAttachment: (state, action) => {
@@ -552,6 +556,13 @@ const profileFormsSlice = createSlice({
       );
       localStorage.setItem("forms", JSON.stringify(state));
     },
+
+
+    //Set  Final Profile Save
+    
+    setProfileComplete: (state,action) =>{
+      state.isProfileCompleted = action.payload;
+    }
   },
 });
 
@@ -620,7 +631,9 @@ export const {
   removeAttachment,
 
   saveFinalData,
-  setMissingFields
+  setMissingFields,
+
+  setProfileComplete,
 
 } = profileFormsSlice.actions;
 

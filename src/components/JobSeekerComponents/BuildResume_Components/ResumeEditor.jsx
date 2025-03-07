@@ -54,7 +54,7 @@ const ResumeEditor = ({ onUpdate }) => {
         </div>
         <button
           type="button"
-          class="text-white flex items-center justify-center gap-2 bg-gradient-to-r my-2 from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+          className="text-white flex items-center justify-center gap-2 bg-gradient-to-r my-2 from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
           onClick={()=>  navigation('/jobseeker/complete-profile-form/personal-info')}
        >
          

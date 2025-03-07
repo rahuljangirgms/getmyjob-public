@@ -1,18 +1,26 @@
-import React from "react";
+import { toast } from "react-toastify";
 
-const QuizControls = ({ onNext, onPrevious, onFinish, showNext, isLastQuestion }) => {
+const QuizControls = ({ onNext, onPrevious, onFinish, showNext, isLastQuestion, selectedAnswer }) => {
+  const handleFinishClick = () => {
+    if (isLastQuestion && !selectedAnswer) {
+      toast.warn("Please attempt the last question before submitting!", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        theme: "dark",
+      });
+      return;
+    }
+    onFinish();
+  };
   return (
     <div className="flex justify-end mt-4">
-      {/* <button
-        onClick={onPrevious}
-        className="px-4 py-2 border border-gray-400 rounded-md hover:bg-gray-200"
-      >
-        Previous question
-      </button> */}
-
       {isLastQuestion ? (
         <button
-          onClick={onFinish}
+          onClick={handleFinishClick}
           className="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600"
         >
           Finish Quiz
@@ -23,7 +31,7 @@ const QuizControls = ({ onNext, onPrevious, onFinish, showNext, isLastQuestion }
             onClick={onNext}
             className="px-4 py-2 bg-purple-500 text-white rounded-md hover:bg-purple-600"
           >
-            Next question
+            Next Question
           </button>
         )
       )}

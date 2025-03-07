@@ -14,15 +14,21 @@ const Separator = () => (
   </div>
 );
 
-const Timer = () => {
-  const [time, setTime] = useState(3592); // 59 minutes and 32 seconds
+const Timer = ({ minutes, onTimeUp }) => {
+  const [time, setTime] = useState(minutes * 60); // Convert minutes to seconds
 
   useEffect(() => {
+    if (time === 0) {
+      onTimeUp(); // Trigger test completion when time is up
+      return;
+    }
+
     const interval = setInterval(() => {
       setTime((prev) => (prev > 0 ? prev - 1 : 0));
     }, 1000);
+
     return () => clearInterval(interval);
-  }, []);
+  }, [time, onTimeUp]);
 
   const formatTime = () => {
     const hours = Math.floor(time / 3600);
@@ -36,23 +42,19 @@ const Timer = () => {
     };
   };
 
-  const { hours, minutes, seconds } = formatTime();
+  const { hours, minutes: mins, seconds } = formatTime();
 
   return (
     <div className="bg-[#1A1F2C] rounded-2xl">
       <div className="bg-black/40 backdrop-blur-xl p-4 rounded-2xl shadow-2xl border border-white/10">
-        
         <div className="flex flex-row gap-2 items-center mb-2">
-        <FiClock size={22} className="text-white"/>
-        <p className="text-white font-semibold">Time Remaining</p>
+          <FiClock size={22} className="text-white" />
+          <p className="text-white font-semibold">Time Remaining</p>
         </div>
 
         <div className="flex items-center space-x-1">
-          <TimerBlock value={hours[0]} />
-          <TimerBlock value={hours[1]} />
-          <Separator />
-          <TimerBlock value={minutes[0]} />
-          <TimerBlock value={minutes[1]} />
+          <TimerBlock value={mins[0]} />
+          <TimerBlock value={mins[1]} />
           <Separator />
           <TimerBlock value={seconds[0]} />
           <TimerBlock value={seconds[1]} />

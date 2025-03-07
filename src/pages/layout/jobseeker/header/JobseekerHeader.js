@@ -12,10 +12,12 @@ import { CiSquareChevUp } from "react-icons/ci";
 import { LuPanelTopOpen } from "react-icons/lu";
 import { LuPanelBottomOpen } from "react-icons/lu";
 import { FaAnglesDown, FaAnglesUp, FaAngleUp } from "react-icons/fa6";
+import { useSelector } from 'react-redux';
 
 
 const JobseekerHeader = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false); // Controls mobile menu visibility
+  const isProfileCompleted = useSelector(state => state.profileForms.isProfileCompleted);
 
   return (
     <header className="bg-white shadow-sm fixed top-0 w-full z-50 h-16 md:h-20 ">
@@ -60,7 +62,7 @@ const JobseekerHeader = () => {
           </button>
 
           {/* Profile Section (Dropdown in Desktop & Mobile, but hide text on mobile) */}
-          <ProfileDropdown/>
+         {isProfileCompleted &&  <ProfileDropdown/>}
         </div>
 
         {/* Mobile - Hamburger Menu */}

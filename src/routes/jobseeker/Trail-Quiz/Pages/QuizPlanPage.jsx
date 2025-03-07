@@ -33,7 +33,7 @@ function QuizPlanPage() {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-50 flex-col">
+    <div className="flex items-center justify-center min-h-screen bg-gray-50 flex-col mt-20 lg:mt-0">
       <HeroSection />
 
       <div className="flex w-full justify-center gap-4 flex-col lg:flex-row p-6">
@@ -43,7 +43,7 @@ function QuizPlanPage() {
           frequency="/month"
           features={featuresUnPaid}
           buttonText="Choose plan"
-          onClick={handleChooseUnpaidPlan}
+          onClick={handleChoosePaidPlan}
         />
         <PricingCard
           planName="Standard plan"

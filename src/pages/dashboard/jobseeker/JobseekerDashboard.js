@@ -16,8 +16,15 @@ import JobSearchComponent from "./../../../components/JobSeekerComponents/JobSea
 import JobFilterComponent from './../../../components/JobSeekerComponents/JobFilterComponent';
 import JobListingContainer from './../../../components/JobSeekerComponents/JobListingContainer';
 import VerticalProfileCard from './../../../components/JobSeekerComponents/VerticalProfileCard';
+import { useSelector } from 'react-redux';
+import ProfileSkeleton from './../../../components/JobSeekerComponents/ReusableComponents/ProfileSkeleton';
+
 
 const JobseekerDashboard = () => {
+
+  const profileData = useSelector(state => state.profileForms.personalInformation);
+  const isProfileCompleted = useSelector(state => state.profileForms.isProfileCompleted);
+  
   return (
 <div className="flex min-h-screen bg-white flex-col pt-16 md:pt-20">
   {/* Job Search Component (Full Width) */}
@@ -38,7 +45,9 @@ const JobseekerDashboard = () => {
     {/* Right Sidebar (Optional for Extra Content) */}
     <div className="w-full md:w-1/5 py-6">
     {/* <JobFilterComponent /> */}
-    <VerticalProfileCard/>
+    {
+      isProfileCompleted ? <VerticalProfileCard profileData={profileData}/> : <ProfileSkeleton/>
+    }
     </div>
   </div>
 </div>

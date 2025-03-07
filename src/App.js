@@ -39,6 +39,7 @@ import QuizHomePage from "./routes/jobseeker/Trail-Quiz/QuizHomePage";
 import QuizTopics from "./routes/jobseeker/Trail-Quiz/Pages/QuizTopics";
 import QuizPlanPage from './routes/jobseeker/Trail-Quiz/Pages/QuizPlanPage';
 import QuizPage from './routes/jobseeker/Trail-Quiz/Pages/QuizPage';
+import JobSeekerProfile from './routes/jobseeker/Profile/JobSeekerProfile';
 
 const App = () => {
   return (
@@ -59,6 +60,7 @@ const App = () => {
         <Route path="/jobseeker" element={<JobseekerLayout />}>
           <Route path="dashboard" element={<JobseekerDashboard />} />
           <Route path="job-detail" element={<JobDetailsPage />} />
+          <Route path="profile" element={<JobSeekerProfile/>}/>
           <Route path="resume-builder" element={<ResumeBuilder />} />
           <Route
             path="complete-profile-form"

@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   saveOtherDetails,
   editOtherDetails,
+  setProfileComplete
 } from "./../../../store/slices/profileFormsSlice";
 import { ToastContainer, toast } from "react-toastify";
 import { useNavigate, useOutletContext } from "react-router-dom"; // Import useOutletContext
@@ -18,6 +19,7 @@ import { processFinalData } from './Form_Functions/processFinalData ';
 const validationSchema = Yup.object().shape({
   summary: Yup.string().required("Summary is required"), // Make summary required
   expertise: Yup.array().min(1, "At least one skill is required"), // Make expertise (skills) required
+  softSkills: Yup.array().min(1, "At least one Soft skill is required"), // Make expertise (skills) required
   achievements: Yup.array().notRequired(), // Optional field
   extraCurricular: Yup.array().notRequired(), // Optional field
 });
@@ -34,6 +36,7 @@ function OtherDetailsForm() {
   const initialValues = otherDetails || {
     summary: "",
     expertise: [],
+    softSkills:[],
     achievements: [],
     extraCurricular: [],
   };
@@ -84,6 +87,7 @@ function OtherDetailsForm() {
     }
     setIsFormDirty(false); 
     console.log("Form Submitted:", cleanedValues); // Log the cleaned data
+    dispatch(setProfileComplete(true));
     setTimeout(() => {
       navigate('/jobseeker/resume-builder');
     }, 5000); // 3 seconds delay
@@ -139,11 +143,28 @@ function OtherDetailsForm() {
                     form={{ values, setFieldValue }}
                   />
 
-                  {errors.expertise && touched.expertise && (
+                  {/* {errors.expertise && touched.expertise && (
                     <div className="text-red-600 text-sm">
                       {errors.expertise}
                     </div>
-                  )}
+                  )} */}
+                </div>
+
+
+                {/* Key Expertise */}
+                <div>
+                  <ChipsComponent
+                    label="Enter Your Soft Skills"
+                    placeholder="Add Soft Skills e.g. Teamwork"
+                    name="softSkills"
+                    form={{ values, setFieldValue }}
+                  />
+
+                  {/* {errors.expertise && touched.expertise && (
+                    <div className="text-red-600 text-sm">
+                      {errors.softSkills}
+                    </div>
+                  )} */}
                 </div>
 
                 {/* Achievements */}

@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setIsInstrctRead } from './../../../../store/slices/quizSlice';
 import { reactQuestions } from './../data/React-Questions';
 import { pythonQuestions } from './../data/pythonQuestions';
+import aptitudeQuestions from './../data/aptitudeQuestions';
 
 const QuizInstructions = () => {
   const dispatch = useDispatch();
@@ -13,11 +14,15 @@ const QuizInstructions = () => {
   // ✅ Use useEffect to prevent infinite re-renders
   useEffect(() => {
     switch (topic) {
-      case 'React':
+      case "React":
         setQuestionsLen(reactQuestions.length);
         break; 
-      case 'Python':
+      case "Python":
         setQuestionsLen(pythonQuestions.length);
+      break;
+      case "Apptitude":
+        setQuestionsLen(aptitudeQuestions.length);
+      break;
       default:
         setQuestionsLen(0);
     }
