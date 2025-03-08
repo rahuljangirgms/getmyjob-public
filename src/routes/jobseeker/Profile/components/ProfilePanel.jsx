@@ -29,9 +29,9 @@ function ProfilePanel() {
   } = profileData;
 
   return (
-    <div className="mx-auto bg-white rounded-xl shadow-lg p-6">
+    <div className="mx-auto bg-white rounded-2xl shadow-lg p-6 w-full">
       {/* Header Section */}
-      <div className="flex justify-between items-center border-b pb-4">
+      <div className="flex gap-3 lg:gap-0 flex-col lg:flex-row justify-between items-center border-b pb-4">
         <h1 className="text-2xl font-bold text-gray-800">Your Profile</h1>
 
         <div className="flex items-center space-x-2">

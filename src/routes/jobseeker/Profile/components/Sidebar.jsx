@@ -1,10 +1,12 @@
 import React from "react";
-import { AiOutlinePhone, AiOutlineMail } from "react-icons/ai";
-import { BsWhatsapp } from "react-icons/bs";
-import { FiChevronDown } from "react-icons/fi";
+import { AiOutlineMail } from "react-icons/ai";
+
 import { useSelector } from "react-redux";
 import { GrTrophy } from "react-icons/gr";
 import { TiStar } from "react-icons/ti";
+import { MdOutlinePhone } from "react-icons/md";
+import SkillBedge from "./SkillBedge";
+import TestScore from "./TestScore";
 
 function Sidebar() {
   const personalInformation = useSelector(
@@ -12,7 +14,7 @@ function Sidebar() {
   );
 
   return (
-    <div className="row-span-3 col-start-5 bg-white rounded-2xl p-6 border-2 border-gray-200 shadow-lg">
+    <div className="w-full row-span-3 col-start-5 bg-white rounded-2xl p-6 border-2 border-gray-200 shadow-lg">
       <div className="flex flex-col items-center text-center border-b-2 border-gray-200 pb-4">
         <img
           src={personalInformation.profilePicture}
@@ -33,7 +35,7 @@ function Sidebar() {
       <div className="mt-6 space-y-4">
         <div className="flex items-center space-x-3">
           <div className="p-2 rounded-full bg-blue-50">
-            <AiOutlinePhone className="w-5 h-5 text-blue-600" />
+            <MdOutlinePhone className="w-5 h-5 text-blue-600" />
           </div>
           <div>
             <p className="text-gray-600">Phone</p>
@@ -73,45 +75,23 @@ function Sidebar() {
       </div>
 
       <div className="flex flex-row flex-wrap my-6 gap-2">
-        <button
-          type="button"
-          className="inline-flex items-center px-2 py-2.5 text-sm font-medium text-center text-blue-700 bg-blue-50 rounded-full hover:bg-blue-50 focus:ring-4 focus:outline-none"
-        >
-          JavaScript
-          <span className="inline-flex items-center justify-center w-8 h-8 ms-2 text-xs font-bold text-white bg-blue-500 rounded-full">
-            <TiStar size={22} />
-          </span>
-        </button>
+        <SkillBedge title={"Aptitude"} />
+        <SkillBedge title={"JavaScript"} />
+        <SkillBedge title={"React Js"} />
+        <SkillBedge title={"Angular"} />
+        <SkillBedge title={"Node Js"} />
+      </div>
 
-        <button
-          type="button"
-          className="inline-flex items-center px-2 py-2.5 text-sm font-medium text-center text-blue-700 bg-blue-50 rounded-full hover:bg-blue-50 focus:ring-4 focus:outline-none"
-        >
-          HTML
-          <span className="inline-flex items-center justify-center w-8 h-8 ms-2 text-xs font-bold text-white bg-blue-500 rounded-full">
-            <TiStar size={22} />
-          </span>
-        </button>
+      <div className="flex flex-col">
+        <h2 className="text-xl font-semibold text-blue-700 border-b-2 pb-2">
+          Your Test Scores
+        </h2>
+        <TestScore Skill={"Aptitude"} Score={98} />
 
-        <button
-          type="button"
-          className="inline-flex items-center px-2 py-2.5 text-sm font-medium text-center text-blue-700 bg-blue-50 rounded-full hover:bg-blue-50 focus:ring-4 focus:outline-none"
-        >
-          React JS
-          <span className="inline-flex items-center justify-center w-8 h-8 ms-2 text-xs font-bold text-white bg-blue-500 rounded-full">
-            <TiStar size={22} />
-          </span>
-        </button>
-
-        <button
-          type="button"
-          className="inline-flex items-center px-2 py-2.5 text-sm font-medium text-center text-blue-700 bg-blue-50 rounded-full hover:bg-blue-50 focus:ring-4 focus:outline-none"
-        >
-          Angular
-          <span className="inline-flex items-center justify-center w-8 h-8 ms-2 text-xs font-bold text-white bg-blue-500 rounded-full">
-            <TiStar size={22} />
-          </span>
-        </button>
+        <TestScore Skill={"JavaScript"} Score={78} />
+        <TestScore Skill={"React Js"} Score={40} />
+        <TestScore Skill={"Angular"} Score={88} />
+        <TestScore Skill={"Node Js"} Score={78} />
       </div>
     </div>
   );

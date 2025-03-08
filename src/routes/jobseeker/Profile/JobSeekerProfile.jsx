@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import { AiOutlinePhone, AiOutlineMail } from "react-icons/ai";
 import { BsWhatsapp } from "react-icons/bs";
 import { FiChevronDown } from "react-icons/fi";
-import ProfilePanel from './components/ProfilePanel';
-import Sidebar from './components/Sidebar';
+import ProfilePanel from "./components/ProfilePanel";
+import Sidebar from "./components/Sidebar";
+import ResumeSection from './components/ResumeSection';
+
 
 
 function JobSeekerProfile() {
@@ -36,22 +38,27 @@ function JobSeekerProfile() {
   };
 
   return (
-    <div className="p-8">
-      <div className="grid grid-cols-5 grid-rows-5 gap-4 mt-20">
-        {/* ✅ Left Profile Section - Green Background */}
-        <div className="col-span-4 row-span-5">
-            <ProfilePanel/>
+       <div className=" bg-gray-50 mt-20 p-8 flex flex-col md:flex-col lg:flex-row gap-4">
+      {/* Left Section (60% Width) */}
+      <div className="w-full md:w-full lg:w-4/5 flex flex-col gap-4 order-last lg:order-1">
+        {/* First Box inside Left Section */}
+        <div className="flex-1 bg-white flex p-6 rounded-lg shadow-md order-2 lg:order-1">
+
+          <ResumeSection/>
+
         </div>
-
-        {/* ✅ Right Sidebar - Profile Card */}
-        <Sidebar/>
-
-        {/* ✅ Bottom Section */}
-        <div className="row-span-2 col-start-5 row-start-4 bg-gray-400 flex items-center justify-center">
-          <p className="text-white">Other Content</p>
+        {/* Second Box inside Left Section */}
+        <div className="flex-1 flex items-center justify-center rounded-lg shadow-md order-1 lg:order-2">
+          <ProfilePanel/>
         </div>
       </div>
+
+      {/* Right Section (40% Width) */}
+      <div className="w-full md:w-full lg:w-3/12 flex rounded-lg shadow-md order-1 lg:order-1">
+        <Sidebar/>
+      </div>
     </div>
+
   );
 }
 
