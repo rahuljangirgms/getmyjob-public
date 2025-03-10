@@ -5,7 +5,8 @@ import jobReducer from './slices/jobSlice';
 import authReducer from "./slices/authSlice";
 import profileFormReducer from './slices/profileFormsSlice';
 import resumeReducer from './slices/resumeSlice';
-import quizReducer from './slices/quizSlice'
+import quizReducer from './slices/quizSlice';
+import jobSeekerAuthReducer from './slices/jobSeeker/authentication/jobSeekerAuthSlice';
 
 // Create Saga Middleware
 const sagaMiddleware = createSagaMiddleware();
@@ -16,7 +17,8 @@ const store = configureStore({
     auth: authReducer,
     profileForms: profileFormReducer,
     resume: resumeReducer,
-    quiz: quizReducer
+    quiz: quizReducer,
+    jobSeekerAuth: jobSeekerAuthReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({ thunk: false }).concat(sagaMiddleware),

@@ -40,6 +40,8 @@ import QuizTopics from "./routes/jobseeker/Trail-Quiz/Pages/QuizTopics";
 import QuizPlanPage from './routes/jobseeker/Trail-Quiz/Pages/QuizPlanPage';
 import QuizPage from './routes/jobseeker/Trail-Quiz/Pages/QuizPage';
 import JobSeekerProfile from './routes/jobseeker/Profile/JobSeekerProfile';
+import ProtectedRoute from './routes/jobseeker_Protected_Route/ProtectedRoute';
+
 
 const App = () => {
   return (
@@ -57,8 +59,9 @@ const App = () => {
           element={<JobseekerResetPass />}
         />
 
-        <Route path="/jobseeker" element={<JobseekerLayout />}>
-          <Route path="dashboard" element={<JobseekerDashboard />} />
+        <Route path="/jobseeker" element={<ProtectedRoute />}>
+         <Route element={<JobseekerLayout/>}>
+         <Route path="dashboard" element={<JobseekerDashboard />} />
           <Route path="job-detail" element={<JobDetailsPage />} />
           <Route path="profile" element={<JobSeekerProfile/>}/>
           <Route path="resume-builder" element={<ResumeBuilder />} />
@@ -84,6 +87,7 @@ const App = () => {
             <Route path="quiz-page" element={<QuizPage/>} />
 
           </Route>
+         </Route>
         </Route>
 
         {/* Recruiter Routes */}

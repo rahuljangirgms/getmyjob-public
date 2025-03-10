@@ -62,7 +62,8 @@ const JobseekerHeader = () => {
           </button>
 
           {/* Profile Section (Dropdown in Desktop & Mobile, but hide text on mobile) */}
-         {isProfileCompleted &&  <ProfileDropdown/>}
+         {/* {isProfileCompleted &&  <ProfileDropdown/>} */}
+         <ProfileDropdown/>
         </div>
 
         {/* Mobile - Hamburger Menu */}

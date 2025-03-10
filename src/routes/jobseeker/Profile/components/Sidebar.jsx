@@ -8,27 +8,32 @@ import { MdOutlinePhone } from "react-icons/md";
 import SkillBedge from "./SkillBedge";
 import TestScore from "./TestScore";
 
+import dummyPrfileImg from './../../../../assets/images/dummyuser.png'
+
 function Sidebar() {
   const personalInformation = useSelector(
     (state) => state.profileForms.personalInformation
   );
 
+  const user = JSON.parse(localStorage.getItem("user"));
+
+
   return (
     <div className="w-full row-span-3 col-start-5 bg-white rounded-2xl p-6 border-2 border-gray-200 shadow-lg">
       <div className="flex flex-col items-center text-center border-b-2 border-gray-200 pb-4">
         <img
-          src={personalInformation.profilePicture}
+          src={personalInformation.profilePicture || dummyPrfileImg}
           alt="user-image"
           className="w-20 h-20 rounded-full bg-indigo-100"
         />
         <h2 className="mt-4 text-xl font-semibold text-gray-900">
-          {personalInformation.firstName} {personalInformation.lastName}
+          {user.name}
         </h2>
         <p className="text-gray-600">{personalInformation.specialization}</p>
-        <p className="text-gray-500 text-sm">
+       {personalInformation.totalExpYear && personalInformation.totalExpMonth &&   <p className="text-gray-500 text-sm">
           Experience: {personalInformation.totalExpYear} Years{" "}
           {personalInformation.totalExpMonth} Months
-        </p>
+        </p>}
       </div>
 
       {/* Contact Section */}
@@ -39,7 +44,7 @@ function Sidebar() {
           </div>
           <div>
             <p className="text-gray-600">Phone</p>
-            <p className="font-semibold">{personalInformation.phoneNumber}</p>
+            <p className="font-semibold">{user.mobile}</p>
           </div>
         </div>
         {/* <div className="flex items-center space-x-3">
@@ -59,7 +64,7 @@ function Sidebar() {
           </div>
           <div>
             <p className="text-gray-600">Email</p>
-            <p className="font-semibold">{personalInformation.email}</p>
+            <p className="font-semibold">{user.email}</p>
           </div>
         </div>
 
