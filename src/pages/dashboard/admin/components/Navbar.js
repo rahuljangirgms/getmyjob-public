@@ -3,6 +3,7 @@ import { Menu, X } from "lucide-react";
 import { LuMessageSquareText } from "react-icons/lu";
 import { FiBell } from "react-icons/fi";
 import ThemeButton from "./ThemeButton";
+import Notification from "./Notification";
 
 import { Link } from "react-router-dom";
 
@@ -10,7 +11,7 @@ import { Link } from "react-router-dom";
 export default function Navbar() {
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
-
+  // You can manage the pulse notification state here or pass it down from props.
    useEffect(() => {
     import("flowbite").then((flowbite) => flowbite.initFlowbite());
   }, []);
@@ -66,7 +67,10 @@ export default function Navbar() {
                       <Link to="/usermanagment/roles" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Role</Link>
                     </li>
                     <li>
-                      <Link to="#" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Permission</Link>
+                      <Link to="/usermanagment/permission" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Permission</Link>
+                    </li>
+                    <li>
+                      <Link to="/usermanagment/user" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Users</Link>
                     </li>
                   </ul>
                 </div>
@@ -103,7 +107,7 @@ export default function Navbar() {
 
 
             {/* Message Button */}
-            <button
+            {/* <button
               className="relative p-2 bg-gray-50 hover:bg-gray-100 rounded-full dark:bg-gray-800 dark:hover:bg-gray-700"
               type="button"
               data-drawer-target="drawer-message-example"
@@ -114,7 +118,7 @@ export default function Navbar() {
             >
               <LuMessageSquareText className="w-5 h-5 text-gray-700 dark:text-gray-300" />
 
-              {/* Notification Badge with Pulse Effect */}
+             
               <span className="absolute -top-1 -right-1 flex items-center justify-center h-5 w-5">
                 {showPulseMessage && (
                   <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-purple-400 opacity-75"></span>
@@ -123,10 +127,10 @@ export default function Navbar() {
                   2
                 </span>
               </span>
-            </button>
+            </button> */}
 
             {/* Notification Drawer Button */}
-            <button
+            {/* <button
               className="relative p-2 bg-gray-50 hover:bg-gray-100 rounded-full dark:bg-gray-800 dark:hover:bg-gray-700"
               type="button"
               data-drawer-target="drawer-right-example"
@@ -137,7 +141,7 @@ export default function Navbar() {
             >
               <FiBell className="w-5 h-5 text-gray-700 dark:text-gray-300" />
 
-              {/* Notification Badge with Pulse Effect */}
+            
               <span className="absolute -top-1 -right-1 flex items-center justify-center h-5 w-5">
                 {showPulseNotification && (
                   <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-red-400 opacity-75"></span>
@@ -146,12 +150,12 @@ export default function Navbar() {
                   5
                 </span>
               </span>
-            </button>
+            </button> */}
 
             {/* dropdown profile*/}
-            <div id="dropdownprofileLink" data-dropdown-toggle="dropdownprofile" class="relative inline-flex hover:cursor-pointer items-center justify-center w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600">
+            {/* <div id="dropdownprofileLink" data-dropdown-toggle="dropdownprofile" class="relative inline-flex hover:cursor-pointer items-center justify-center w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600">
               <span class="font-medium text-gray-600 dark:text-gray-300">JM</span>
-            </div>
+            </div> */}
 
 
 
@@ -179,6 +183,63 @@ export default function Navbar() {
             <button onClick={() => setMobileMenuOpen(!isMobileMenuOpen)} className="p-2 md:hidden rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700" type="button" data-drawer-target="drawer-navigation" data-drawer-show="drawer-navigation" aria-controls="drawer-navigation">
               {<Menu className="w-6 h-6" />}
             </button>
+
+
+              {/* <button type="button" data-dropdown-toggle="notification-dropdown" class="p-2 mr-1 text-gray-500 rounded-lg hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-700 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600">
+                  <span class="sr-only">View notifications</span>
+                  <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 14 20"><path d="M12.133 10.632v-1.8A5.406 5.406 0 0 0 7.979 3.57.946.946 0 0 0 8 3.464V1.1a1 1 0 0 0-2 0v2.364a.946.946 0 0 0 .021.106 5.406 5.406 0 0 0-4.154 5.262v1.8C1.867 13.018 0 13.614 0 14.807 0 15.4 0 16 .538 16h12.924C14 16 14 15.4 14 14.807c0-1.193-1.867-1.789-1.867-4.175ZM3.823 17a3.453 3.453 0 0 0 6.354 0H3.823Z"/></svg>
+              </button> */}
+
+                {/* Notification Drawer Button */}
+           <Notification showPulseNotification={showPulseNotification} />
+             
+
+ <div id="user-menu-button" aria-expanded="false" data-dropdown-toggle="dropdown" class="relative inline-flex hover:cursor-pointer items-center justify-center w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600">
+              <span class="font-medium text-gray-600 dark:text-gray-300">JM</span>
+            </div>
+
+              <div class="hidden z-50 my-4 w-56 text-base list-none bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600" id="dropdown">
+                  <div class="py-3 px-4">
+                      <span class="block text-sm font-semibold text-gray-900 dark:text-white">Jaywant Mahajan</span>
+                      <span class="block text-sm text-gray-500 truncate dark:text-gray-400">Jaywant@getmysolutions.in</span>
+                  </div>
+                  <ul class="py-1 text-gray-500 dark:text-gray-400" aria-labelledby="dropdown">
+                      <li>
+                          <a href="#" class="block py-2 px-4 text-sm hover:text-blue-500 hover:bg-blue-100 dark:hover:bg-blue-400 dark:text-gray-400 dark:hover:text-blue-700">My profile</a>
+                      </li>
+                      <li>
+                          <a href="#" class="block py-2 px-4 text-sm hover:text-blue-500 hover:bg-blue-100 dark:hover:bg-blue-400 dark:text-gray-400 dark:hover:text-blue-700">Account settings</a>
+                      </li>
+                  </ul>
+                  {/* <ul class="py-1 text-gray-500 dark:text-gray-400" aria-labelledby="dropdown">
+                        <li>
+                          <a href="#" class="flex items-center py-2 px-4 text-sm hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                              <svg class="mr-2 w-4 h-4 text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 18"><path d="M17.947 2.053a5.209 5.209 0 0 0-3.793-1.53A6.414 6.414 0 0 0 10 2.311 6.482 6.482 0 0 0 5.824.5a5.2 5.2 0 0 0-3.8 1.521c-1.915 1.916-2.315 5.392.625 8.333l7 7a.5.5 0 0 0 .708 0l7-7a6.6 6.6 0 0 0 2.123-4.508 5.179 5.179 0 0 0-1.533-3.793Z"/></svg>
+                              My likes
+                          </a>
+                      </li>
+                      <li>
+                          <a href="#" class="flex items-center py-2 px-4 text-sm hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                            <svg class="mr-2 w-4 h-4 text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20"> <path d="m1.56 6.245 8 3.924a1 1 0 0 0 .88 0l8-3.924a1 1 0 0 0 0-1.8l-8-3.925a1 1 0 0 0-.88 0l-8 3.925a1 1 0 0 0 0 1.8Z"/> <path d="M18 8.376a1 1 0 0 0-1 1v.163l-7 3.434-7-3.434v-.163a1 1 0 0 0-2 0v.786a1 1 0 0 0 .56.9l8 3.925a1 1 0 0 0 .88 0l8-3.925a1 1 0 0 0 .56-.9v-.786a1 1 0 0 0-1-1Z"/> <path d="M17.993 13.191a1 1 0 0 0-1 1v.163l-7 3.435-7-3.435v-.163a1 1 0 1 0-2 0v.787a1 1 0 0 0 .56.9l8 3.925a1 1 0 0 0 .88 0l8-3.925a1 1 0 0 0 .56-.9v-.787a1 1 0 0 0-1-1Z"/> </svg> 
+                            Collections
+                          </a>
+                      </li>
+                      <li>
+                          <a href="#" class="flex justify-between items-center py-2 px-4 text-sm hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                              <span class="flex items-center">
+                                  <svg class="mr-2 w-4 h-4 text-primary-600 dark:text-primary-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20"><path d="m7.164 3.805-4.475.38L.327 6.546a1.114 1.114 0 0 0 .63 1.89l3.2.375 3.007-5.006ZM11.092 15.9l.472 3.14a1.114 1.114 0 0 0 1.89.63l2.36-2.362.38-4.475-5.102 3.067Zm8.617-14.283A1.613 1.613 0 0 0 18.383.291c-1.913-.33-5.811-.736-7.556 1.01-1.98 1.98-6.172 9.491-7.477 11.869a1.1 1.1 0 0 0 .193 1.316l.986.985.985.986a1.1 1.1 0 0 0 1.316.193c2.378-1.3 9.889-5.5 11.869-7.477 1.746-1.745 1.34-5.643 1.01-7.556Zm-3.873 6.268a2.63 2.63 0 1 1-3.72-3.72 2.63 2.63 0 0 1 3.72 3.72Z"/></svg>
+                                  Pro version
+                              </span>
+                              <svg class="w-2.5 h-2.5 text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/></svg>
+                          </a>
+                      </li>
+                  </ul> */}
+                  <ul class="py-1 text-gray-500 dark:text-gray-400" aria-labelledby="dropdown">
+                      <li>
+                          <a href="#" class="block py-2 px-4 text-sm hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-300 dark:hover:text-red-700">Sign out</a>
+                      </li>
+                  </ul>
+              </div>
 
 
 
