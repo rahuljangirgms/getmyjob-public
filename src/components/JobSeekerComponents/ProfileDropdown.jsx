@@ -14,7 +14,7 @@ function ProfileDropdown() {
 
   const profileData = useSelector(state => state.profileForms.personalInformation);
 
-  const user = JSON.parse(localStorage.getItem("user")); 
+  const {user} = JSON.parse(localStorage.getItem("auth")); 
 
   // console.log("USER: ",user);
 

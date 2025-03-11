@@ -7,13 +7,17 @@ const initialState = {
     loading: false,
     error: null,
     message: '',
-    status: false
+    status: false,
+    email:''
 };
 
 const jobSeekerAuthSlice = createSlice({
     name: 'jobSeekerAuth',
     initialState,
     reducers: {
+
+        // Login User Actions Here
+
         loginRequest: (state) => {
             state.loading = true;
             state.error = null; // ✅ Clear previous errors before login
@@ -21,19 +25,22 @@ const jobSeekerAuthSlice = createSlice({
         },
         loginSuccess: (state, action) => {
             state.loading = false;
-            state.user = action.payload.data;
-            state.token = action.payload.token;
-            state.message = action.payload.message || "Login successful!";
-            state.error = null; // ✅ Clear error on success
-            localStorage.setItem("token", action.payload.token);
-            localStorage.setItem("user", JSON.stringify(action.payload.data)); // ✅ Convert object to JSON
-            state.status = action.payload.status;
+            state.user = action.payload.data; // ✅ Correctly store user data
+            state.token = action.payload.token; // ✅ Store token
+            state.message = action.payload.message || "Login successful!"; // ✅ Ensure message is always set
+            state.error = null; // ✅ Clear previous errors
+            state.status = action.payload.status ?? true; // ✅ Prevent `undefined` status
         },
+        
         loginFailure: (state, action) => {
             state.loading = false;
             state.error = action.payload || "Invalid credentials!";
             state.message = ''; // ✅ Clear success message on failure
         },
+
+        // Register New User Actions Here
+
+
         registerRequest: (state) => {
             state.loading = true;
             state.error = null; // ✅ Clear previous errors before registering
@@ -52,6 +59,51 @@ const jobSeekerAuthSlice = createSlice({
             state.error = action.payload || "Registration failed!";
             state.message = ''; // ✅ Clear success message on failure
         },
+
+        // ForgetPassword Actions Here
+
+        forgetPassRequest:(state,action) =>{
+            state.loading = true;
+            state.error = null;
+            state.message = '';
+        },  
+        forgetPassSuccess:(state,action)=>{
+            state.loading = false;
+            state.message = action.payload.message;
+            state.status = action.payload.status;
+            state.error = null;
+            state.email = action.payload.email;
+        },
+        forgetPassFailure:(state,action)=>{
+            state.loading = false;
+            state.error = action.payload;
+            state.message = '';
+            state.status = action.payload.status;
+        },
+
+
+        // Reset Password Actions Here 
+
+        resetPassRequest:(state,action)=>{
+            state.loading = true;
+            state.error = null;
+            state.message = '';
+        },
+        resetPassSuccess:(state,action)=>{
+            state.loading = false;
+            state.message = action.payload.message;
+            state.status = action.payload.status;
+            state.error = null;
+        },
+        resetPassFailure:(state,action)=>{
+            state.loading = false;
+            state.error = action.payload;
+            state.message = action.payload.message;
+            state.status = action.payload.status;
+        },
+
+        // Logout User Action Here
+
         logout: (state) => {
             state.user = null;
             state.token = null;
@@ -61,7 +113,13 @@ const jobSeekerAuthSlice = createSlice({
             state.status = false;
             localStorage.removeItem("token");
             localStorage.removeItem("user");
+            localStorage.removeItem("auth");
+            localStorage.removeItem("email");
         },
+
+
+        // Clearing auth state here for preventing twice msg disply in toast 
+
         clearAuthState: (state) => {
             state.error = null; // ✅ Clear errors when visiting login/signup
             state.message = ''; // ✅ Clear messages when visiting login/signup
@@ -71,7 +129,9 @@ const jobSeekerAuthSlice = createSlice({
 
 export const { 
     loginRequest, loginSuccess, loginFailure, 
-    registerRequest, registerSuccess, registerFailure, 
+    registerRequest, registerSuccess, registerFailure,
+    forgetPassRequest,forgetPassSuccess, forgetPassFailure,
+    resetPassRequest,resetPassSuccess,resetPassFailure,
     logout, clearAuthState 
 } = jobSeekerAuthSlice.actions;
 

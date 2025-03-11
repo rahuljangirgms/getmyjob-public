@@ -1,12 +1,12 @@
 import { Navigate, Outlet } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-const ProtectedRoute = () => {
+const PublicRoute = () => {
   let token = null;
 
   try {
     // ✅ Get token from Redux store (if available)
-    const authState = useSelector((state) => state.jobSeekerAuth.token  );
+    const authState = useSelector((state) => state.jobSeekerAuth.token);
     token = authState?.token || null;
 
     // ✅ If Redux token is not available, try getting from localStorage
@@ -21,8 +21,8 @@ const ProtectedRoute = () => {
     console.error("Error retrieving auth token:", error);
   }
 
-  // ✅ Allow access only if token exists, else redirect to Login
-  return token ? <Outlet /> : <Navigate to="/jobseeker/login" replace />;
+  // ✅ If user is already authenticated, redirect to dashboard
+  return token ? <Navigate to="/jobseeker/dashboard" replace /> : <Outlet />;
 };
 
-export default ProtectedRoute;
+export default PublicRoute;

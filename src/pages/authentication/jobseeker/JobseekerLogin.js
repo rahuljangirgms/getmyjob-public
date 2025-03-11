@@ -4,7 +4,10 @@ import { motion } from "framer-motion";
 import { useDispatch, useSelector } from "react-redux";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { loginRequest,clearAuthState } from "./../../../store/slices/jobSeeker/authentication/jobSeekerAuthSlice";
+import {
+  loginRequest,
+  clearAuthState,
+} from "./../../../store/slices/jobSeeker/authentication/jobSeekerAuthSlice";
 import breifcaseLogo from "./../../../assets/images/brief-case.png";
 import avtarGroupImg from "./../../../assets/images/avtar-group.png";
 import { FcGoogle } from "react-icons/fc";
@@ -22,29 +25,25 @@ function JobseekerLogin() {
   const [showPassword, setShowPassword] = useState(false);
 
   const message = useSelector((state) => state.jobSeekerAuth.message);
-
   const error = useSelector((state) => state.jobSeekerAuth.error);
-
   const token = useSelector((state) => state.jobSeekerAuth.token);
-
   const navigate = useNavigate();
-  
+
   useEffect(() => {
     if (token) {
-      navigate('/jobseeker/dashboard'); // ✅ Navigate only when token is updated
+      navigate("/jobseeker/dashboard");
     }
-  }, [token, navigate]); // ✅ Runs when `token` updates
+  }, [token, navigate]);
 
   useEffect(() => {
-    dispatch(clearAuthState()); // ✅ Clear previous messages and errors on component mount
+    dispatch(clearAuthState());
   }, [dispatch]);
-
 
   useEffect(() => {
     if (error) {
       toast.error(error, {
         position: "top-right",
-        autoClose: 3000, // Closes after 3 seconds
+        autoClose: 3000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
@@ -53,24 +52,6 @@ function JobseekerLogin() {
       });
     }
   }, [error, dispatch]);
-
-  // useEffect(() => {
-  //   if (message) {
-  //     toast.error(message, {
-  //       position: "top-right",
-  //       autoClose: 3000, // Closes after 3 seconds
-  //       hideProgressBar: false,
-  //       closeOnClick: true,
-  //       pauseOnHover: true,
-  //       draggable: true,
-  //       theme: "dark",
-  //     });
-
-      
-
-  //    // console.log("Tost Msg: ", message);
-  //   }
-  // }, [message, dispatch]);
 
   const formik = useFormik({
     initialValues: {
@@ -88,7 +69,6 @@ function JobseekerLogin() {
     }),
     onSubmit: (values) => {
       dispatch(loginRequest(values));
-
     },
   });
 
@@ -101,7 +81,7 @@ function JobseekerLogin() {
         backgroundPosition: "center",
       }}
     >
-      <ToastContainer/>
+      <ToastContainer />
       <div className="flex flex-col md:flex-row w-full max-w-6xl bg-transparent min-h-[500px] md:min-h-[650px]">
         <div className="flex flex-col justify-center px-6 py-12 lg:px-12 bg-blue-600 w-full md:w-1/2 shadow-lg rounded-t-lg md:rounded-bl-lg md:rounded-tr-none">
           <div className="flex flex-row items-center">
@@ -147,18 +127,19 @@ function JobseekerLogin() {
                 >
                   Email address
                 </label>
-                <div className="mt-2">
-                  <input
-                    id="email"
-                    name="email"
-                    type="email"
-                    placeholder="Enter Your email"
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    value={formik.values.email}
-                    className="block w-full rounded-md bg-gray-600 px-3 py-1.5 text-white"
-                  />
-                </div>
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  placeholder="Enter Your email"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.email}
+                  className="block w-full rounded-md bg-gray-600 px-3 py-1.5 text-white"
+                />
+                {formik.touched.email && formik.errors.email && (
+                  <p className="text-red-500 text-sm">{formik.errors.email}</p>
+                )}
               </div>
               <div>
                 <label
@@ -185,15 +166,20 @@ function JobseekerLogin() {
                     {showPassword ? (
                       <AiOutlineEyeInvisible
                         size={20}
-                        className="text-gray-700"
+                        className="text-white"
                       />
                     ) : (
-                      <AiOutlineEye size={20} className="text-gray-700" />
+                      <AiOutlineEye size={20} className="text-white" />
                     )}
                   </span>
                 </div>
+                {formik.touched.password && formik.errors.password && (
+                  <p className="text-red-500 text-sm">
+                    {formik.errors.password}
+                  </p>
+                )}
               </div>
-              <div className="py-1 flex justify-end">
+              <div className="mt-1 flex justify-end">
               <Link to='/jobseeker/forgetpassword' className="font-bold text-blue-600 hover:text-blue-500">
                     Forgot password?
                   </Link>
@@ -204,10 +190,12 @@ function JobseekerLogin() {
               >
                 Login to your account
               </button>
+
+              
             </form>
             <p className="text-sm text-gray-500 text-center mt-4">
               Don't have an account?{" "}
-              <Link to="/jobseeker/signup" className="text-blue-600">
+              <Link to="/jobseeker/signup" className="font-semibold text-blue-600">
                 Sign Up
               </Link>
             </p>
