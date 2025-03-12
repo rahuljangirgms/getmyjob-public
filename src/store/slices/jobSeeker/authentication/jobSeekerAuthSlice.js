@@ -3,12 +3,23 @@ import { createSlice } from '@reduxjs/toolkit';
 //  initial state
 const initialState = {
     user: null,
-    token: localStorage.getItem("token") || null,
+    token: (() => {
+        try {
+            const storedAuth = localStorage.getItem("auth"); //   Retrieve "auth" object
+            if (storedAuth) {
+                const parsedAuth = JSON.parse(storedAuth); //   Parse JSON
+                return parsedAuth?.token || null; //   Extract token
+            }
+        } catch (error) {
+            console.error("Error retrieving token from localStorage:", error);
+        }
+        return null;
+    })(),
     loading: false,
     error: null,
     message: '',
     status: false,
-    email:''
+    email: ''
 };
 
 const jobSeekerAuthSlice = createSlice({
@@ -20,22 +31,22 @@ const jobSeekerAuthSlice = createSlice({
 
         loginRequest: (state) => {
             state.loading = true;
-            state.error = null; // ✅ Clear previous errors before login
-            state.message = ''; // ✅ Clear message before new request
+            state.error = null; //   Clear previous errors before login
+            state.message = ''; //   Clear message before new request
         },
         loginSuccess: (state, action) => {
             state.loading = false;
-            state.user = action.payload.data; // ✅ Correctly store user data
-            state.token = action.payload.token; // ✅ Store token
-            state.message = action.payload.message || "Login successful!"; // ✅ Ensure message is always set
-            state.error = null; // ✅ Clear previous errors
-            state.status = action.payload.status ?? true; // ✅ Prevent `undefined` status
+            state.user = action.payload.data; //   Correctly store user data
+            state.token = action.payload.token; //   Store token
+            state.message = action.payload.message || "Login successful!"; //   Ensure message is always set
+            state.error = null; //   Clear previous errors
+            state.status = action.payload.status ?? true; //   Prevent `undefined` status
         },
         
         loginFailure: (state, action) => {
             state.loading = false;
             state.error = action.payload || "Invalid credentials!";
-            state.message = ''; // ✅ Clear success message on failure
+            state.message = ''; //   Clear success message on failure
         },
 
         // Register New User Actions Here
@@ -43,21 +54,21 @@ const jobSeekerAuthSlice = createSlice({
 
         registerRequest: (state) => {
             state.loading = true;
-            state.error = null; // ✅ Clear previous errors before registering
-            state.message = ''; // ✅ Clear message before new request
+            state.error = null; //   Clear previous errors before registering
+            state.message = ''; //   Clear message before new request
         },
         registerSuccess: (state, action) => {
             state.loading = false;
             state.user = action.payload.user;
             state.message = action.payload.message || "Registration successful!";
             state.token = action.payload.token;
-            state.error = null; // ✅ Clear error on success
+            state.error = null; //   Clear error on success
             state.status = action.payload.status;
         },
         registerFailure: (state, action) => {
             state.loading = false;
             state.error = action.payload || "Registration failed!";
-            state.message = ''; // ✅ Clear success message on failure
+            state.message = ''; //   Clear success message on failure
         },
 
         // ForgetPassword Actions Here
@@ -121,8 +132,8 @@ const jobSeekerAuthSlice = createSlice({
         // Clearing auth state here for preventing twice msg disply in toast 
 
         clearAuthState: (state) => {
-            state.error = null; // ✅ Clear errors when visiting login/signup
-            state.message = ''; // ✅ Clear messages when visiting login/signup
+            state.error = null; //   Clear errors when visiting login/signup
+            state.message = ''; //   Clear messages when visiting login/signup
         },
     },
 });

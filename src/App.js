@@ -37,57 +37,60 @@ import EditJob from "./pages/dashboard/recruiter/Jobmanagement/EditJob";
 import ResumeBuilder from "./routes/jobseeker/ResumeBuilder/ResumeBuilder";
 import QuizHomePage from "./routes/jobseeker/Trail-Quiz/QuizHomePage";
 import QuizTopics from "./routes/jobseeker/Trail-Quiz/Pages/QuizTopics";
-import QuizPlanPage from './routes/jobseeker/Trail-Quiz/Pages/QuizPlanPage';
-import QuizPage from './routes/jobseeker/Trail-Quiz/Pages/QuizPage';
-import JobSeekerProfile from './routes/jobseeker/Profile/JobSeekerProfile';
-import ProtectedRoute from './routes/jobseeker_Protected_Route/ProtectedRoute';
-
+import QuizPlanPage from "./routes/jobseeker/Trail-Quiz/Pages/QuizPlanPage";
+import QuizPage from "./routes/jobseeker/Trail-Quiz/Pages/QuizPage";
+import JobSeekerProfile from "./routes/jobseeker/Profile/JobSeekerProfile";
+import ProtectedRoute from "./routes/jobseeker_Protected_Route/ProtectedRoute";
+import RedirectIfAuthenticated from "./routes/jobseeker_Protected_Route/RedirectIfAuthenticated";
 
 const App = () => {
   return (
     <>
       <Routes>
-        <Route path="/jobseeker/" element={<JobSeekerHomePage />} />
-        <Route path="/jobseeker/login" element={<JobseekerLogin />} />
-        <Route path="/jobseeker/signup" element={<JobSeekerSignUp />} />
-        <Route
-          path="/jobseeker/forgetpassword"
-          element={<JobseekerForgetPass />}
-        />
-        <Route
-          path="/jobseeker/resetpassword"
-          element={<JobseekerResetPass />}
-        />
-
-        <Route path="/jobseeker" element={<ProtectedRoute />}>
-         <Route element={<JobseekerLayout/>}>
-         <Route path="dashboard" element={<JobseekerDashboard />} />
-          <Route path="job-detail" element={<JobDetailsPage />} />
-          <Route path="profile" element={<JobSeekerProfile/>}/>
-          <Route path="resume-builder" element={<ResumeBuilder />} />
+        {/* Prevent logged-in users from accessing login, signup, forget password, reset password, and home */}
+        <Route element={<RedirectIfAuthenticated />}>
+          <Route path="/jobseeker/" element={<JobSeekerHomePage />} />
+          <Route path="/jobseeker/login" element={<JobseekerLogin />} />
+          <Route path="/jobseeker/signup" element={<JobSeekerSignUp />} />
           <Route
-            path="complete-profile-form"
-            element={<CompleteProfileFormSection />}
-          >
-            <Route path="personal-info" element={<PersonalInfoForm />} />
-            <Route path="contact-info" element={<ContactDetailsForm />} />
-            <Route path="education" element={<EducationalDetailsFrom />} />
-            <Route path="attachments" element={<AttachementsFrom />} />
-            <Route path="professional" element={<ProfessionalDetailForm />} />
-            <Route path="internship" element={<InternshipForm />} />
-            <Route path="projects" element={<ProjectsForm />} />
-            <Route path="publications" element={<ResearchPaperForm />} />
-            <Route path="trainings" element={<TraningForm />} />
-            <Route path="certifications" element={<CertificationForm />} />
-            <Route path="other-details" element={<OtherDetailsForm />} />
-          </Route>
-          <Route path="trail-quiz" element={<QuizHomePage />}>
-            <Route path="" element={<QuizPlanPage/>} />
-            <Route path="quiz-topic" element={<QuizTopics/>} />
-            <Route path="quiz-page" element={<QuizPage/>} />
+            path="/jobseeker/forgetpassword"
+            element={<JobseekerForgetPass />}
+          />
+          <Route
+            path="/jobseeker/resetpassword"
+            element={<JobseekerResetPass />}
+          />
+        </Route>
 
+        {/* Protected Routes (Only Accessible When Logged In) */}
+        <Route path="/jobseeker" element={<ProtectedRoute />}>
+          <Route element={<JobseekerLayout />}>
+            <Route path="dashboard" element={<JobseekerDashboard />} />
+            <Route path="job-detail" element={<JobDetailsPage />} />
+            <Route path="profile" element={<JobSeekerProfile />} />
+            <Route path="resume-builder" element={<ResumeBuilder />} />
+            <Route
+              path="complete-profile-form"
+              element={<CompleteProfileFormSection />}
+            >
+              <Route path="personal-info" element={<PersonalInfoForm />} />
+              <Route path="contact-info" element={<ContactDetailsForm />} />
+              <Route path="education" element={<EducationalDetailsFrom />} />
+              <Route path="attachments" element={<AttachementsFrom />} />
+              <Route path="professional" element={<ProfessionalDetailForm />} />
+              <Route path="internship" element={<InternshipForm />} />
+              <Route path="projects" element={<ProjectsForm />} />  
+              <Route path="publications" element={<ResearchPaperForm />} />
+              <Route path="trainings" element={<TraningForm />} />
+              <Route path="certifications" element={<CertificationForm />} />
+              <Route path="other-details" element={<OtherDetailsForm />} />
+            </Route>
+            <Route path="trail-quiz" element={<QuizHomePage />}>
+              <Route path="" element={<QuizPlanPage />} />
+              <Route path="quiz-topic" element={<QuizTopics />} />
+              <Route path="quiz-page" element={<QuizPage />} />
+            </Route>
           </Route>
-         </Route>
         </Route>
 
         {/* Recruiter Routes */}

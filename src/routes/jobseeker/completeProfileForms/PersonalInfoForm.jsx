@@ -11,6 +11,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { savePersonalInformation } from "./../../../store/slices/profileFormsSlice";
 import { ToastContainer, toast } from "react-toastify";
 import { useOutletContext } from "react-router-dom"; // Import useOutletContext
+import {
+  getpersonalInfoRequest,
+  postpersonalInfoRequest,
+} from "./../../../store/slices/jobSeeker/Profile_Form/personalInfoSlice";
 
 // Validation Schema using Yup
 const validationSchema = Yup.object({
@@ -46,8 +50,7 @@ const validationSchema = Yup.object({
   gender: Yup.string().required("Gender is required"),
   maritalStatus: Yup.string().required("Marital status is required"),
   addressLine1: Yup.string().required("Address is required"),
-  addressLine2: Yup.string().required("Address Line 2 is required"),
-  city: Yup.string().required("City is required"),
+    city: Yup.string().required("City is required"),
   state: Yup.string().required("State is required"),
   country: Yup.string().required("Country is required"),
   zipCode: Yup.string()
@@ -64,7 +67,7 @@ const validationSchema = Yup.object({
     .min(1, "Select at least one language")
     .required("Known languages are required"),
   totalExpYear: Yup.string().required("Total Years of Experience Required"),
-  totalExpMonth: Yup.string().required("Total Months of Experience Required")
+  totalExpMonth: Yup.string().required("Total Months of Experience Required"),
 });
 
 function PersonalInfoForm() {
@@ -77,41 +80,54 @@ function PersonalInfoForm() {
     setIsFormDirty(isDirty);
   }, [isDirty, setIsFormDirty]);
 
+  useEffect(() => {
+    dispatch(getpersonalInfoRequest());
+  }, [dispatch]); // Runs only once when component mounts
+
+  const profileDataFrmApi = useSelector((state) => state.personalInfoForm.data);
+
+  // console.log("Data: ",profileDataFrmApi);
+
   const personalInformation = useSelector(
     (state) => state.profileForms.personalInformation
   );
 
   // Initial Values
   const initialValues = {
-    profilePicture: personalInformation.profilePicture || null,
-    firstName: personalInformation.firstName || "",
-    middleName: personalInformation.middleName || "",
-    lastName: personalInformation.lastName || "",
-    email: personalInformation.email || "",
-    phoneNumber: personalInformation.phoneNumber || "",
-    dateOfBirth: personalInformation.dateOfBirth || "",
-    gender: personalInformation.gender || "",
-    maritalStatus: personalInformation.maritalStatus || "",
-    addressLine1: personalInformation.addressLine1 || "",
-    addressLine2: personalInformation.addressLine2 || "",
-    city: personalInformation.city || "",
-    state: personalInformation.state || "",
-    country: personalInformation.country || "",
-    zipCode: personalInformation.zipCode || "",
-    course: personalInformation.course || "",
-    specialization: personalInformation.specialization || "",
-    bloodGroup: personalInformation.bloodGroup || "",
-    medicalHistory: personalInformation.medicalHistory || "",
-    disability: personalInformation.disability || "",
-    knownLanguages: personalInformation.knownLanguages || [],
-    totalExpYear: personalInformation.totalExpYear || "",
-    totalExpMonth: personalInformation.totalExpMonth || "",
-
+    profilePicture: profileDataFrmApi?.profile_picture || null,
+    firstName: profileDataFrmApi?.first_name || "",
+    middleName: profileDataFrmApi?.middle_name || "",
+    lastName: profileDataFrmApi?.last_name || "",
+    email: profileDataFrmApi?.email || "",
+    phoneNumber: profileDataFrmApi?.mobile || "",
+    dateOfBirth: profileDataFrmApi?.dob || "",
+    gender: profileDataFrmApi?.gender || "",
+    maritalStatus: profileDataFrmApi?.marital_status || "",
+    addressLine1: profileDataFrmApi?.location || "",
+    city: profileDataFrmApi?.city || "",
+    state: profileDataFrmApi?.state || "",
+    country: profileDataFrmApi?.country || "",
+    zipCode: profileDataFrmApi?.zipcode || "",
+    course: profileDataFrmApi?.course || "",
+    specialization: profileDataFrmApi?.primary_specialization || "",
+    bloodGroup: profileDataFrmApi?.blood_group || "",
+    medicalHistory: profileDataFrmApi?.medical_history || "",
+    disability: profileDataFrmApi?.disability || "",
+    knownLanguages: profileDataFrmApi?.language_known
+      ? profileDataFrmApi?.language_known.split(",")
+      : [],
+    totalExpYear: profileDataFrmApi?.total_year_exp || "",
+    totalExpMonth: profileDataFrmApi?.total_month_exp || "",
   };
 
   const handleSubmit = (values, { setSubmitting, setErrors, validateForm }) => {
     // Saving form data
-    dispatch(savePersonalInformation(values));
+    // dispatch(savePersonalInformation(values));
+
+    console.log("Personal Data: ", values);
+    dispatch(postpersonalInfoRequest(values));
+    // dispatch(getpersonalInfoRequest());
+
     // Show success message
     toast.success("Personal information saved successfully!", {
       position: "top-right",
@@ -129,14 +145,17 @@ function PersonalInfoForm() {
         <Formik
           initialValues={initialValues}
           validationSchema={validationSchema}
+          enableReinitialize={true}
           validateOnChange={true} // Ensures validation runs on change
           validateOnBlur={true} // Ensures validation runs on blur
           onSubmit={handleSubmit}
         >
           {(formikProps) => {
-            const { setFieldValue, errors, dirty } = formikProps;
+            const { setFieldValue, errors, dirty, isSubmitting } = formikProps;
 
             setIsDirty(dirty);
+
+            console.log("error",errors)
 
             return (
               <Form className="space-y-8 rounded-lg bg-white p-6 shadow-sm">
@@ -145,8 +164,8 @@ function PersonalInfoForm() {
                   label="Profile Picture"
                   name="profilePicture"
                   setFieldValue={setFieldValue}
+                  profileImg={profileDataFrmApi?.profile_picture} // Pass the initial image URL
                 />
-
                 {/* Personal Information */}
                 <div className="grid gap-6 md:grid-cols-3">
                   <InputField label="First Name" name="firstName" />
@@ -156,7 +175,11 @@ function PersonalInfoForm() {
 
                 <div className="grid gap-6 md:grid-cols-2">
                   <InputField label="Email Address" name="email" type="email" />
-                  <InputField label="Phone Number" name="phoneNumber" type="number" />
+                  <InputField
+                    label="Phone Number"
+                    name="phoneNumber"
+                    type="number"
+                  />
                 </div>
 
                 <div className="grid gap-6 md:grid-cols-2">
@@ -188,7 +211,6 @@ function PersonalInfoForm() {
                 {/* Address Section */}
                 <div className="grid gap-6 md:grid-cols-2">
                   <InputField label="Address Line 1" name="addressLine1" />
-                  <InputField label="Address Line 2" name="addressLine2" />
                   <DropDown
                     label="Country"
                     name="country"
@@ -203,12 +225,12 @@ function PersonalInfoForm() {
                   <InputField label="ZIP/Postal Code" name="zipCode" />
                 </div>
 
-                 {/* Total Experince  */}
-                 <p className="font-medium text-gray-700">
+                {/* Total Experince  */}
+                <p className="font-medium text-gray-700">
                   Total Experience
                   <span className="text-red-500">*</span>
                 </p>
-                
+
                 <div className="grid gap-6 md:grid-cols-3">
                   <DropDown
                     label="Years"
@@ -229,9 +251,10 @@ function PersonalInfoForm() {
                     options={[
                       { label: "0 Months", value: "0" }, // Start from 0
                       ...Array.from({ length: 11 }, (_, i) => ({
-                      label: `${i + 1} ${i + 1 === 1 ? "Month" : "Months"}`,
-                      value: `${i + 1}`,
-                    }))]}
+                        label: `${i + 1} ${i + 1 === 1 ? "Month" : "Months"}`,
+                        value: `${i + 1}`,
+                      })),
+                    ]}
                   />
                 </div>
 
@@ -276,14 +299,13 @@ function PersonalInfoForm() {
                   ]}
                 />
 
-               
-
                 {/* Text Area */}
                 <TextAreaField label="Medical History" name="medicalHistory" />
 
                 {/* Submit Button */}
                 <div className="flex justify-end">
                   <button
+                   disabled={isSubmitting || Object.keys(errors).length > 0}
                     type="submit"
                     // disabled={isSubmitting || !isValid}
                     className="inline-flex items-center gap-2 rounded-md bg-blue-600 px-6 py-2 text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50"

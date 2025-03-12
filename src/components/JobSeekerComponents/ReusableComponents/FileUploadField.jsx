@@ -1,27 +1,23 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useField } from "formik";
 import { FaUpload } from "react-icons/fa";
 
-function FileUploadField({ label, name, setFieldValue }) {
+function FileUploadField({ label, name, setFieldValue, profileImg }) {
   const [field, meta] = useField(name);
-  const [preview, setPreview] = useState(field.value || null); // If already set, show preview
+  const [preview, setPreview] = useState(profileImg || null); // Initialize with profileImg or null
 
-  const handleFileChange = async (event) => {
+  useEffect(() => {
+    if (profileImg) {
+      setPreview(profileImg); // Update preview when profileImg changes
+    }
+  }, [profileImg]);
+
+  const handleFileChange = (event) => {
     const file = event.currentTarget.files?.[0];
     if (file) {
-      const base64 = await convertFileToBase64(file);
-      setFieldValue(name, base64); // Save as Base64
-      setPreview(base64); // Update preview
+      setFieldValue(name, file); // Store file object in Formik field
+      setPreview(URL.createObjectURL(file)); // Update preview to show new image
     }
-  };
-
-  const convertFileToBase64 = (file) => {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => resolve(reader.result);
-      reader.onerror = (error) => reject(error);
-    });
   };
 
   return (
@@ -43,7 +39,7 @@ function FileUploadField({ label, name, setFieldValue }) {
               type="file"
               name={name}
               className="absolute inset-0 h-full w-full cursor-pointer opacity-0"
-              onChange={handleFileChange}
+              onChange={handleFileChange} // When file is selected, update form field and preview
               accept="image/*"
             />
           </div>

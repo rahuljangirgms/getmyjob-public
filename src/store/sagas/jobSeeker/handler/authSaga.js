@@ -13,7 +13,7 @@ function* handleLogin(action) {
         const response = yield call(loginApi, action.payload);
         const { data, token, status, message } = response.data; // ✅ Ensure all fields are extracted
 
-        console.log("Login Response:", response.data);
+        console.log("Login Response:==============================>>>>>", response.data);
         
         yield put(loginSuccess({ data, token, status, message })); // ✅ Include `status` and `message`
 

@@ -24,6 +24,11 @@ const JobseekerDashboard = () => {
 
   const profileData = useSelector(state => state.profileForms.personalInformation);
   const isProfileCompleted = useSelector(state => state.profileForms.isProfileCompleted);
+
+  const {user} = useSelector((state) => state.jobSeekerAuth);
+
+  console.log('Data frm dashbord _<', user);
+  
   
   return (
 <div className="flex min-h-screen bg-white flex-col pt-16 md:pt-20">

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { use, useEffect } from "react";
 import { AiOutlineMail } from "react-icons/ai";
 
 import { useSelector } from "react-redux";
@@ -15,7 +15,19 @@ function Sidebar() {
     (state) => state.profileForms.personalInformation
   );
 
-  const {user} = JSON.parse(localStorage.getItem("auth"));
+  const {user} = useSelector((state) => state.jobSeekerAuth);
+
+  console.log("Data from JOb seeker Auth: ", user?.name);
+
+  useEffect(()=>{
+    if(!user){
+      console.log("USER NOT PRESENT");
+      
+    }
+  },[user]);
+
+
+  // const {user} = JSON.parse(localStorage.getItem("auth"));
 
 
   return (
@@ -27,7 +39,7 @@ function Sidebar() {
           className="w-20 h-20 rounded-full bg-indigo-100"
         />
         <h2 className="mt-4 text-xl font-semibold text-gray-900">
-          {user.name}
+          {user?.name || ""} 
         </h2>
         <p className="text-gray-600">{personalInformation.specialization}</p>
        {personalInformation.totalExpYear && personalInformation.totalExpMonth &&   <p className="text-gray-500 text-sm">
@@ -44,7 +56,7 @@ function Sidebar() {
           </div>
           <div>
             <p className="text-gray-600">Phone</p>
-            <p className="font-semibold">{user.mobile}</p>
+            <p className="font-semibold">{user?.mobile}</p>
           </div>
         </div>
         {/* <div className="flex items-center space-x-3">
@@ -64,7 +76,7 @@ function Sidebar() {
           </div>
           <div>
             <p className="text-gray-600">Email</p>
-            <p className="font-semibold">{user.email}</p>
+            <p className="font-semibold">{user?.email}</p>
           </div>
         </div>
 
