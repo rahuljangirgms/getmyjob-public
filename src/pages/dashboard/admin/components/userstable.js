@@ -1,6 +1,6 @@
 import { useState } from "react";
 import ProfileCompletionBar from './profilecompletionbar';
-import StatusBadge from './statusbadge ';
+import StatusBadge from './statusbadge';
 
 const UsersTable = ({ users }) => {
     const [selectedUsers, setSelectedUsers] = useState([]);

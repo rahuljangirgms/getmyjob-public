@@ -1,5 +1,5 @@
 import React from "react";
-import StatusBadge from "./statusbadge ";
+import StatusBadge from "./statusbadge";
 
 const RolesTable = ({ roles, searchTerm, statusFilter, setRoles }) => {
     // Filter roles based on search and status

@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Dropdown } from "flowbite";
 import "flowbite";
-import StatusBadge from "../components/statusbadge ";
+import StatusBadge from "../components/statusbadge";
 import ProfileCompletionBar from "../components/profilecompletionbar";
 
 

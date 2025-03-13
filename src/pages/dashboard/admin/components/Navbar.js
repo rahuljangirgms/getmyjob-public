@@ -12,7 +12,7 @@ export default function Navbar() {
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
   // You can manage the pulse notification state here or pass it down from props.
-   useEffect(() => {
+  useEffect(() => {
     import("flowbite").then((flowbite) => flowbite.initFlowbite());
   }, []);
 
@@ -75,16 +75,16 @@ export default function Navbar() {
                   </ul>
                 </div>
               </li>
- <li>
-                 <Link to="/jobseekers" className="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Job Seekers Management</Link>
+              <li>
+                <Link to="/jobseekers" className="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Job Seekers Management</Link>
               </li>
- <li>
+              <li>
                 <Link to="/recruiters" className="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Recruiters Management</Link>
               </li>
 
-       
+
               <li>
-               <Link to="/admin/subscriptionpayment" className="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Subscription & Payment</Link>
+                <Link to="/admin/subscriptionpayment" className="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Subscription & Payment</Link>
               </li>
 
 
@@ -94,7 +94,7 @@ export default function Navbar() {
                 <Link to="/admin/reportsanalytics" className="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"> Reports & Analytics</Link>
               </li>
 
-               <li>
+              <li>
                 <Link to="/admin/supportmanagement" className="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"> Supports</Link>
               </li>
 
@@ -185,33 +185,33 @@ export default function Navbar() {
             </button>
 
 
-              {/* <button type="button" data-dropdown-toggle="notification-dropdown" class="p-2 mr-1 text-gray-500 rounded-lg hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-700 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600">
+            {/* <button type="button" data-dropdown-toggle="notification-dropdown" class="p-2 mr-1 text-gray-500 rounded-lg hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-700 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600">
                   <span class="sr-only">View notifications</span>
                   <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 14 20"><path d="M12.133 10.632v-1.8A5.406 5.406 0 0 0 7.979 3.57.946.946 0 0 0 8 3.464V1.1a1 1 0 0 0-2 0v2.364a.946.946 0 0 0 .021.106 5.406 5.406 0 0 0-4.154 5.262v1.8C1.867 13.018 0 13.614 0 14.807 0 15.4 0 16 .538 16h12.924C14 16 14 15.4 14 14.807c0-1.193-1.867-1.789-1.867-4.175ZM3.823 17a3.453 3.453 0 0 0 6.354 0H3.823Z"/></svg>
               </button> */}
 
-                {/* Notification Drawer Button */}
-           <Notification showPulseNotification={showPulseNotification} />
-             
+            {/* Notification Drawer Button */}
+            <Notification showPulseNotification={showPulseNotification} />
 
- <div id="user-menu-button" aria-expanded="false" data-dropdown-toggle="dropdown" class="relative inline-flex hover:cursor-pointer items-center justify-center w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600">
+
+            <div id="user-menu-button" aria-expanded="false" data-dropdown-toggle="dropdown" class="relative inline-flex hover:cursor-pointer items-center justify-center w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600">
               <span class="font-medium text-gray-600 dark:text-gray-300">JM</span>
             </div>
 
-              <div class="hidden z-50 my-4 w-56 text-base list-none bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600" id="dropdown">
-                  <div class="py-3 px-4">
-                      <span class="block text-sm font-semibold text-gray-900 dark:text-white">Jaywant Mahajan</span>
-                      <span class="block text-sm text-gray-500 truncate dark:text-gray-400">Jaywant@getmysolutions.in</span>
-                  </div>
-                  <ul class="py-1 text-gray-500 dark:text-gray-400" aria-labelledby="dropdown">
-                      <li>
-                          <a href="#" class="block py-2 px-4 text-sm hover:text-blue-500 hover:bg-blue-100 dark:hover:bg-blue-400 dark:text-gray-400 dark:hover:text-blue-700">My profile</a>
-                      </li>
-                      <li>
-                          <a href="#" class="block py-2 px-4 text-sm hover:text-blue-500 hover:bg-blue-100 dark:hover:bg-blue-400 dark:text-gray-400 dark:hover:text-blue-700">Account settings</a>
-                      </li>
-                  </ul>
-                  {/* <ul class="py-1 text-gray-500 dark:text-gray-400" aria-labelledby="dropdown">
+            <div class="hidden z-50 my-4 w-56 text-base list-none bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600" id="dropdown">
+              <div class="py-3 px-4">
+                <span class="block text-sm font-semibold text-gray-900 dark:text-white">Jaywant Mahajan</span>
+                <span class="block text-sm text-gray-500 truncate dark:text-gray-400">Jaywant@getmysolutions.in</span>
+              </div>
+              <ul class="py-1 text-gray-500 dark:text-gray-400" aria-labelledby="dropdown">
+                <li>
+                  <a href="#" class="block py-2 px-4 text-sm hover:text-blue-500 hover:bg-blue-100 dark:hover:bg-blue-400 dark:text-gray-400 dark:hover:text-blue-700">My profile</a>
+                </li>
+                <li>
+                  <a href="#" class="block py-2 px-4 text-sm hover:text-blue-500 hover:bg-blue-100 dark:hover:bg-blue-400 dark:text-gray-400 dark:hover:text-blue-700">Account settings</a>
+                </li>
+              </ul>
+              {/* <ul class="py-1 text-gray-500 dark:text-gray-400" aria-labelledby="dropdown">
                         <li>
                           <a href="#" class="flex items-center py-2 px-4 text-sm hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
                               <svg class="mr-2 w-4 h-4 text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 18"><path d="M17.947 2.053a5.209 5.209 0 0 0-3.793-1.53A6.414 6.414 0 0 0 10 2.311 6.482 6.482 0 0 0 5.824.5a5.2 5.2 0 0 0-3.8 1.521c-1.915 1.916-2.315 5.392.625 8.333l7 7a.5.5 0 0 0 .708 0l7-7a6.6 6.6 0 0 0 2.123-4.508 5.179 5.179 0 0 0-1.533-3.793Z"/></svg>
@@ -234,12 +234,12 @@ export default function Navbar() {
                           </a>
                       </li>
                   </ul> */}
-                  <ul class="py-1 text-gray-500 dark:text-gray-400" aria-labelledby="dropdown">
-                      <li>
-                          <a href="#" class="block py-2 px-4 text-sm hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-300 dark:hover:text-red-700">Sign out</a>
-                      </li>
-                  </ul>
-              </div>
+              <ul class="py-1 text-gray-500 dark:text-gray-400" aria-labelledby="dropdown">
+                <li>
+                  <a href="#" class="block py-2 px-4 text-sm hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-300 dark:hover:text-red-700">Sign out</a>
+                </li>
+              </ul>
+            </div>
 
 
 
@@ -312,7 +312,7 @@ export default function Navbar() {
               </a>
             </li>
 
-             <li>
+            <li>
               <a href="#" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                 <svg class="shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                   <path d="m17.418 3.623-.018-.008a6.713 6.713 0 0 0-2.4-.569V2h1a1 1 0 1 0 0-2h-2a1 1 0 0 0-1 1v2H9.89A6.977 6.977 0 0 1 12 8v5h-2V8A5 5 0 1 0 0 8v6a1 1 0 0 0 1 1h8v4a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1v-4h6a1 1 0 0 0 1-1V8a5 5 0 0 0-2.582-4.377ZM6 12H4a1 1 0 0 1 0-2h2a1 1 0 0 1 0 2Z" />
