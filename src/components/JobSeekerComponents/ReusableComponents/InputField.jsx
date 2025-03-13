@@ -1,6 +1,6 @@
 import { useField } from "formik";
 
-function InputField({ label, name, type = "text", error,optional,...props }) {
+function InputField({ label, name, type = "text", error,optional,isReadOnly,...props }) {
   const [field, meta] = useField(name);
 
   return (
@@ -14,6 +14,7 @@ function InputField({ label, name, type = "text", error,optional,...props }) {
         type={type}
         name={name}
         id={name}
+        readOnly={isReadOnly}
         className={`mt-1 block w-full rounded-md border px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500
           ${meta.touched && meta.error ? "border-red-500" : "border-gray-300"}`}
       />

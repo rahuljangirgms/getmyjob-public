@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { addOrUpdateEducation, deleteEducation } from "./../../../store/slices/profileFormsSlice";
 import EducationAddBox from "./../../../components/JobSeekerComponents/Education_ADD_Box/EducationAddBox";
 import EducationDetailsDisplay from "./../../../components/JobSeekerComponents/DataDisplayBox/EducationDetailsDisplay";
 import EducationDetailsModal from './../../../components/JobSeekerComponents/ModalForms/EducationDetailsModal';
+import {postEducationInfoRequest,getEducationInfoRequest} from './../../../store/slices/jobSeeker/Profile_Form/educationInfoSlice';
 
 function EducationalDetailsForm() {
   const dispatch = useDispatch();
@@ -14,6 +15,8 @@ function EducationalDetailsForm() {
   // Get education details from Redux store
   const educationDetails = useSelector((state) => state.profileForms.educationDetails);
 
+  const apiData = useSelector((state) => state.contactInfoForm.data);
+
   const educationTitles = {
     tenth: "10th Standard / Secondary Education",
     twelfth: "12th Standard / Higher Secondary Education",
@@ -23,8 +26,18 @@ function EducationalDetailsForm() {
     other: "Other Degree",
   };
 
+  useEffect(()=>{
+    dispatch(getEducationInfoRequest());
+   
+  },[dispatch]);
+
+  console.log("Education data frm api: ",apiData);
+
   const handleAddOrUpdate = (type, data) => {
     dispatch(addOrUpdateEducation({ type, data }));
+    dispatch(postEducationInfoRequest({ type: type, data: data }));
+
+
     setModalOpen(false); // Close modal after saving
   };
 

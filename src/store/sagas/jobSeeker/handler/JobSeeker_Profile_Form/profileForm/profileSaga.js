@@ -1,5 +1,5 @@
 import { call, put, takeLatest, select } from "redux-saga/effects";
-import { getPersonalInfoApi, savePersonalInfoApi } from './../../request/profileFormRequest/profileFormRequest';
+import { getPersonalInfoApi, savePersonalInfoApi } from '../../../request/JobSeeker_Profile_Form/profileFormRequest/profileFormRequest';
 import { 
   postpersonalInfoRequest, 
   postpersonalInfoFailure, 
@@ -7,22 +7,24 @@ import {
   getpersonalInfoRequest, 
   getpersonalInfoFailure, 
   getpersonalInfoSuccess 
-} from './../../../../slices/jobSeeker/Profile_Form/personalInfoSlice';
+} from '../../../../../slices/jobSeeker/Profile_Form/personalInfoSlice';
 
 //    Selector to get the token from Redux store
 const getAuthToken = (state) => state.jobSeekerAuth.token;
-console.log("===============>",getAuthToken)
+
+
+//---  ------ ------ Personal Info Form saga
 
 //    Saga for POST request (Save Personal Information)
 function* handlePostPersonalInfo(action) {
   try {
 
 
-    // 🔹 Retrieve token from Redux store
+    // Retrieve token from Redux store
     const token = yield select(getAuthToken);
 
     console.log("token for api call: ",token);
-    // 🔹 Make API call with Authorization header
+    // Make API call with Authorization header
     const response = yield call(savePersonalInfoApi, action.payload, token);
 
     const {data, status} = response.data;
@@ -32,11 +34,15 @@ function* handlePostPersonalInfo(action) {
     //   console.log('get profile info again from profile saga', response);
     // }
 
-    console.log("   POST Response:", data);
+    console.log("POST Response:", data);
 
-    yield put(postpersonalInfoSuccess(data));
+    yield put(postpersonalInfoSuccess(data, status));
+
+    // imediate get request after post 
+    yield put(getpersonalInfoRequest());
+
   } catch (error) {
-    console.error("❌ POST Error:", error);
+    console.error("POST Error:", error);
     yield put(postpersonalInfoFailure(error.response?.data || "Something went wrong!"));
   }
 }
@@ -44,18 +50,18 @@ function* handlePostPersonalInfo(action) {
 //    Saga for GET request (Fetch Personal Information)
 function* handleGetPersonalInfo() {
   try {
-    // 🔹 Retrieve token from Redux store
+    // Retrieve token from Redux store
     const token = yield select(getAuthToken);
     console.log("Token for API call:", token);
 
-    // 🔹 Make API call with Authorization header
+    // Make API call with Authorization header
     const response = yield call(getPersonalInfoApi, token);
     console.log("GET Response:", response);
 
-    // ✅ Dispatch success action with response data
+    // Dispatch success action with response data
     yield put(getpersonalInfoSuccess(response));
   } catch (error) {
-    console.error("❌ GET Error:", error);
+    console.error("GET Error:", error);
     yield put(getpersonalInfoFailure(error.response?.data || "Failed to fetch profile!"));
   }
 }

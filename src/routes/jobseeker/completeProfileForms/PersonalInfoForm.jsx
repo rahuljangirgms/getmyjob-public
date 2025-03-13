@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, use } from "react";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import { FaSave } from "react-icons/fa";
@@ -15,6 +15,8 @@ import {
   getpersonalInfoRequest,
   postpersonalInfoRequest,
 } from "./../../../store/slices/jobSeeker/Profile_Form/personalInfoSlice";
+import Loader from './../../../components/JobSeekerComponents/ReusableComponents/Loader';
+
 
 // Validation Schema using Yup
 const validationSchema = Yup.object({
@@ -76,6 +78,12 @@ function PersonalInfoForm() {
 
   const [isDirty, setIsDirty] = useState(false);
 
+  // const {user} = useSelector((state) => state.jobSeekerAuth);
+  const {user} = JSON.parse(localStorage.getItem("auth")); 
+
+
+  // console.log("USER DATA : ", user);
+
   useEffect(() => {
     setIsFormDirty(isDirty);
   }, [isDirty, setIsFormDirty]);
@@ -86,11 +94,15 @@ function PersonalInfoForm() {
 
   const profileDataFrmApi = useSelector((state) => state.personalInfoForm.data);
 
+  const {status,loading,error} = useSelector((state) => state.personalInfoForm);
+
   // console.log("Data: ",profileDataFrmApi);
 
-  const personalInformation = useSelector(
-    (state) => state.profileForms.personalInformation
-  );
+  // const personalInformation = useSelector(
+  //   (state) => state.profileForms.personalInformation
+  // );
+
+
 
   // Initial Values
   const initialValues = {
@@ -98,8 +110,8 @@ function PersonalInfoForm() {
     firstName: profileDataFrmApi?.first_name || "",
     middleName: profileDataFrmApi?.middle_name || "",
     lastName: profileDataFrmApi?.last_name || "",
-    email: profileDataFrmApi?.email || "",
-    phoneNumber: profileDataFrmApi?.mobile || "",
+    email: user?.email || "",
+    phoneNumber: user?.mobile || "",
     dateOfBirth: profileDataFrmApi?.dob || "",
     gender: profileDataFrmApi?.gender || "",
     maritalStatus: profileDataFrmApi?.marital_status || "",
@@ -129,19 +141,23 @@ function PersonalInfoForm() {
     // dispatch(getpersonalInfoRequest());
 
     // Show success message
-    toast.success("Personal information saved successfully!", {
+    if(status){
+       toast.success("Personal information saved successfully!", {
       position: "top-right",
       autoClose: 5000,
       className: "bg-green-50",
     });
+    }
     setSubmitting(false);
     setIsFormDirty(false);
   };
 
   return (
     <div className="min-h-screen bg-gray-50 w-full p-8">
-      <div className="mx-auto w-full">
-        <ToastContainer />
+
+    <ToastContainer />
+
+     {loading ? <Loader/> : <div className="mx-auto w-full">
         <Formik
           initialValues={initialValues}
           validationSchema={validationSchema}
@@ -174,11 +190,12 @@ function PersonalInfoForm() {
                 </div>
 
                 <div className="grid gap-6 md:grid-cols-2">
-                  <InputField label="Email Address" name="email" type="email" />
+                  <InputField label="Email Address" name="email" type="email" isReadOnly={true} />
                   <InputField
                     label="Phone Number"
                     name="phoneNumber"
                     type="number"
+                    isReadOnly={true}
                   />
                 </div>
 
@@ -318,7 +335,7 @@ function PersonalInfoForm() {
             );
           }}
         </Formik>
-      </div>
+      </div>}
     </div>
   );
 }

@@ -8,32 +8,32 @@ const initialState = {
   message: "",
 };
 
-const personalInfoSlice = createSlice({
-  name: "jobSeekerPersonalInfo",
+const contactInfoSlice = createSlice({
+  name: "jobSeekerContactInfo",
   initialState,
   reducers: {
-    // ✅ POST personalInfo Reducers
-    postpersonalInfoRequest: (state) => {
+    // ✅ POST ContactInfo Reducers
+    postContactInfoRequest: (state) => {
       state.loading = true;
       state.error = null;
     },
-    postpersonalInfoSuccess: (state, action) => {
+    postContactInfoSuccess: (state, action) => {
       console.log("POST Success Data:", action.payload); // Debugging
       state.loading = false;
       state.data = action.payload; // Ensure correct assignment
       state.error = null;
     },
-    postpersonalInfoFailure: (state, action) => {
+    postContactInfoFailure: (state, action) => {
       state.loading = false;
       state.error = action.payload;
     },
 
-    // ✅ GET personalInfo Reducers
-    getpersonalInfoRequest: (state) => {
+    // ✅ GET ContactInfo Reducers
+    getContactInfoRequest: (state) => {
       state.loading = true;
       state.error = null;
     },
-    getpersonalInfoSuccess: (state, action) => {
+    getContactInfoSuccess: (state, action) => {
       console.log("GET Success Data:", action.payload); // Debugging
       state.loading = false;
       state.data = action.payload?.data || null; // ✅ Ensure valid data assignment
@@ -41,7 +41,7 @@ const personalInfoSlice = createSlice({
       state.message = action.payload?.message || "";
       state.error = null;
     },
-    getpersonalInfoFailure: (state, action) => {
+    getContactInfoFailure: (state, action) => {
       state.loading = false;
       state.error = action.payload;
     },
@@ -49,12 +49,13 @@ const personalInfoSlice = createSlice({
 });
 
 export const {
-  postpersonalInfoRequest,
-  postpersonalInfoSuccess,
-  postpersonalInfoFailure,
-  getpersonalInfoRequest,
-  getpersonalInfoSuccess,
-  getpersonalInfoFailure,
-} = personalInfoSlice.actions;
+  postContactInfoRequest,
+  postContactInfoFailure,
+  postContactInfoSuccess,
 
-export default personalInfoSlice.reducer;
+  getContactInfoFailure,
+  getContactInfoRequest,
+  getContactInfoSuccess,
+} = contactInfoSlice.actions;
+
+export default contactInfoSlice.reducer;

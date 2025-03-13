@@ -1,7 +1,7 @@
-import JobSeeker_API_URL from './../../../../../apiUrls/apiUrls';
+import JobSeeker_API_URL from '../../../../../../apiUrls/apiUrls';
 import axios from 'axios';
 
-// ✅ POST Request - Save Personal Information
+// POST Request - Save Personal Information
 export const savePersonalInfoApi = async (formData, token) => {
   try {
       const response = await axios.post(
@@ -19,7 +19,7 @@ export const savePersonalInfoApi = async (formData, token) => {
       throw error.response?.data || "Something went wrong!";
   }
 };
-// ✅ GET Request - Fetch Personal Information
+// GET Request - Fetch Personal Information
 export const getPersonalInfoApi = async (token) => {
     try {
         const response = await axios.get(`${JobSeeker_API_URL}/get_personal_info`, {

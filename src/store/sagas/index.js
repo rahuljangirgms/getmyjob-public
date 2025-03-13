@@ -2,13 +2,17 @@ import { all } from "redux-saga/effects";
 import { watchFetchJobs } from "./jobSaga";
 import { watchAuth } from "./authSaga";
 import {watchJobSeekerAuth} from './../sagas/jobSeeker/handler/authSaga'
-import {watchPersonalInfo} from './../sagas/jobSeeker/handler/profileForm/profileSaga'
+import {watchPersonalInfo} from './../sagas/jobSeeker/handler/JobSeeker_Profile_Form/profileForm/profileSaga'
+import {watchContactInfo} from './../sagas/jobSeeker/handler/JobSeeker_Profile_Form/contactForm/contactFromSaga'
+import {watchEducationInfo} from './../sagas/jobSeeker/handler/JobSeeker_Profile_Form/educationForm/educationSaga'
 
 export default function* rootSaga() {
   yield all([
     watchFetchJobs(),
     watchAuth(),
     watchJobSeekerAuth(),
-    watchPersonalInfo()
+    watchPersonalInfo(),
+    watchContactInfo(),
+    watchEducationInfo()
   ]);
 }

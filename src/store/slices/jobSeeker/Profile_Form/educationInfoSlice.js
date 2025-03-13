@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   data: null,
@@ -8,32 +8,32 @@ const initialState = {
   message: "",
 };
 
-const personalInfoSlice = createSlice({
-  name: "jobSeekerPersonalInfo",
+const EducationInfoSlice = createSlice({
+  name: "jobSeekerEducationInfo",
   initialState,
   reducers: {
-    // ✅ POST personalInfo Reducers
-    postpersonalInfoRequest: (state) => {
+    // ✅ POST EducationInfo Reducers
+    postEducationInfoRequest: (state) => {
       state.loading = true;
       state.error = null;
     },
-    postpersonalInfoSuccess: (state, action) => {
+    postEducationInfoSuccess: (state, action) => {
       console.log("POST Success Data:", action.payload); // Debugging
       state.loading = false;
       state.data = action.payload; // Ensure correct assignment
       state.error = null;
     },
-    postpersonalInfoFailure: (state, action) => {
+    postEducationInfoFailure: (state, action) => {
       state.loading = false;
       state.error = action.payload;
     },
 
-    // ✅ GET personalInfo Reducers
-    getpersonalInfoRequest: (state) => {
+    // ✅ GET EducationInfo Reducers
+    getEducationInfoRequest: (state) => {
       state.loading = true;
       state.error = null;
     },
-    getpersonalInfoSuccess: (state, action) => {
+    getEducationInfoSuccess: (state, action) => {
       console.log("GET Success Data:", action.payload); // Debugging
       state.loading = false;
       state.data = action.payload?.data || null; // ✅ Ensure valid data assignment
@@ -41,7 +41,7 @@ const personalInfoSlice = createSlice({
       state.message = action.payload?.message || "";
       state.error = null;
     },
-    getpersonalInfoFailure: (state, action) => {
+    getEducationInfoFailure: (state, action) => {
       state.loading = false;
       state.error = action.payload;
     },
@@ -49,12 +49,13 @@ const personalInfoSlice = createSlice({
 });
 
 export const {
-  postpersonalInfoRequest,
-  postpersonalInfoSuccess,
-  postpersonalInfoFailure,
-  getpersonalInfoRequest,
-  getpersonalInfoSuccess,
-  getpersonalInfoFailure,
-} = personalInfoSlice.actions;
+  postEducationInfoRequest,
+  postEducationInfoFailure,
+  postEducationInfoSuccess,
 
-export default personalInfoSlice.reducer;
+  getEducationInfoFailure,
+  getEducationInfoRequest,
+  getEducationInfoSuccess,
+} = EducationInfoSlice.actions;
+
+export default EducationInfoSlice.reducer;
