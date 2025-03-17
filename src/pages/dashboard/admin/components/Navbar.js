@@ -205,7 +205,9 @@ export default function Navbar() {
               </div>
               <ul class="py-1 text-gray-500 dark:text-gray-400" aria-labelledby="dropdown">
                 <li>
-                  <a href="#" class="block py-2 px-4 text-sm hover:text-blue-500 hover:bg-blue-100 dark:hover:bg-blue-400 dark:text-gray-400 dark:hover:text-blue-700">My profile</a>
+                  <a href="/admin/userprofile" class="block py-2 px-4 text-sm hover:text-blue-500 hover:bg-blue-100 dark:hover:bg-blue-400 dark:text-gray-400 dark:hover:text-blue-700">My profile
+                  
+                  </a>
                 </li>
                 <li>
                   <a href="#" class="block py-2 px-4 text-sm hover:text-blue-500 hover:bg-blue-100 dark:hover:bg-blue-400 dark:text-gray-400 dark:hover:text-blue-700">Account settings</a>

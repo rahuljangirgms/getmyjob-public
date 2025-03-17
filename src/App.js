@@ -50,7 +50,7 @@ import SubscriptionPayment from './pages/dashboard/admin/modules/subscriptionand
 import Roles from './pages/dashboard/admin/modules/usermanagment/roles';
 import Permissions from './pages/dashboard/admin/modules/usermanagment/permission';
 import Users from './pages/dashboard/admin/modules/usermanagment/users'
-
+import UserProfile from './pages/dashboard/admin/components/UserProfile/UserProfile'
 // added by admin rahul to use flowbit 
 import "flowbite";
 import "./index.css";
@@ -112,12 +112,14 @@ const App = () => {
       {/* admin  */}
       <Route path='/admin' element="">
        <Route path='dashboard' element={<Dashboard/>}/>
+       <Route path='userprofile' element={<UserProfile />} />
+          
       </Route>
 
       <Route path='/usermanagment' element="">
-      <Route path='roles' element={<Roles/>}/>
-      <Route path='permission' element={<Permissions/>}/>
-       <Route path='user' element={<Users/>}/>
+          <Route path='roles' element={<Roles/>}/>
+          <Route path='permission' element={<Permissions/>}/>
+          <Route path='user' element={<Users/>}/>
       </Route>
 
        <Route path='recruiters' element={<Recruiters/>}/>
