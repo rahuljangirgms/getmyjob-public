@@ -13,6 +13,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
 import { useOutletContext } from "react-router-dom"; // Import useOutletContext
+import {addProfessionalExperienceRequest, getProfessionalExperienceRequest, updateProfessionalExperienceRequest, deleteProfessionalExperienceRequest} from './../../../store/slices/jobSeeker/Profile_Form/professionalExpSlice';
 
 function ProfessionalDetailForm() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -37,6 +38,9 @@ function ProfessionalDetailForm() {
   const finalSavedList = useSelector(
     (state) => state.profileForms.professionalDetails || []
   );
+
+
+
 
   const dispatch = useDispatch();
 
@@ -116,6 +120,7 @@ function ProfessionalDetailForm() {
               className="inline-flex items-center gap-2 rounded-md bg-blue-600 px-6 py-2 text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 mb-4"
               onClick={() => {
                 dispatch(finalizeProfessionalDetails());
+                dispatch(addProfessionalExperienceRequest(finalSavedList));
                 toast.success("Professional Details saved successfully!", {
                   position: "top-right",
                   autoClose: 5000,

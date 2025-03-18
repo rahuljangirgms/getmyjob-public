@@ -5,6 +5,9 @@ import {watchJobSeekerAuth} from './../sagas/jobSeeker/handler/authSaga'
 import {watchPersonalInfo} from './../sagas/jobSeeker/handler/JobSeeker_Profile_Form/profileForm/profileSaga'
 import {watchContactInfo} from './../sagas/jobSeeker/handler/JobSeeker_Profile_Form/contactForm/contactFromSaga'
 import {watchEducationInfo} from './../sagas/jobSeeker/handler/JobSeeker_Profile_Form/educationForm/educationSaga'
+import {watchAddDocuments} from './../sagas/jobSeeker/handler/JobSeeker_Profile_Form/addDocument/addDocumentSaga';
+import {watchProfessionalExperience} from './../sagas/jobSeeker/handler/JobSeeker_Profile_Form/professionalExpForm/professionalExpFormSaga';
+
 
 export default function* rootSaga() {
   yield all([
@@ -13,6 +16,8 @@ export default function* rootSaga() {
     watchJobSeekerAuth(),
     watchPersonalInfo(),
     watchContactInfo(),
-    watchEducationInfo()
+    watchEducationInfo(),
+    watchAddDocuments(),
+    watchProfessionalExperience()
   ]);
 }

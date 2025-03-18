@@ -42,6 +42,8 @@ import QuizPage from "./routes/jobseeker/Trail-Quiz/Pages/QuizPage";
 import JobSeekerProfile from "./routes/jobseeker/Profile/JobSeekerProfile";
 import ProtectedRoute from "./routes/jobseeker_Protected_Route/ProtectedRoute";
 import RedirectIfAuthenticated from "./routes/jobseeker_Protected_Route/RedirectIfAuthenticated";
+import ApplyForJobPage from './pages/jobseekerpages/ApplyForJobPage';
+
 
 const App = () => {
   return (
@@ -67,6 +69,7 @@ const App = () => {
           <Route element={<JobseekerLayout />}>
             <Route path="dashboard" element={<JobseekerDashboard />} />
             <Route path="job-detail" element={<JobDetailsPage />} />
+            <Route path="apply-job" element={<ApplyForJobPage />} />
             <Route path="profile" element={<JobSeekerProfile />} />
             <Route path="resume-builder" element={<ResumeBuilder />} />
             <Route

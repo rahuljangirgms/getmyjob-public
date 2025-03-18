@@ -33,7 +33,7 @@ function FileCard() {
           >
             <div>
                 <p className="text-lg font-semibold text-gray-800">
-                  {educationTitles[data.educationType] || "N/A"}
+                  {educationTitles[data.type] || "N/A"}
                 </p>
               {/* <p className="text-sm text-gray-500">Size: {data.size}</p>
               <p className="text-sm text-blue-500">{data.file || "N/A"}</p> */}

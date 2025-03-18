@@ -176,7 +176,7 @@ function JobListingContainer() {
         {/* Job Cards (Behind Red Box) */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 relative z-10">
           {paginatedJobs.map((job, index) =>
-            isProfileCompleted ? (
+            !isProfileCompleted ? (
               <JobCard key={index} job={job}  />
             ) : (
               <SkeletonCard key={index} />

@@ -1,8 +1,4 @@
-import React from "react";
-
-import AIButton from "./../../components/JobSeekerComponents/Buttons/AIButton";
-
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
 
 import {
   Briefcase,
@@ -11,18 +7,15 @@ import {
   FileCode2,
   BookmarkPlus,
   Wallet,
-} from "lucide-react";  
+} from "lucide-react";
 
 
+const ApplyForJobPage = () => {
+  const [selectedValue, setSelectedValue] = useState("option1"); // ✅ State to track selected radio
 
-const JobDetailsPage = () => {
-
-  const navigate = useNavigate();
-
-  const handleApplyBtn = () =>{
-    navigate('/jobseeker/apply-job');
-  }
-
+  const handleChange = (event) => {
+    setSelectedValue(event.target.value);
+  };
 
   const skills = ["Business", "Marketing", "Development"];
   const latestJobs = [
@@ -78,42 +71,64 @@ const JobDetailsPage = () => {
               </p>
             </div>
           </div>
-
-          <div className="flex mt-4 md:mt-0 md:ml-auto space-x-2 gap-2 md:gap-0 flex-col md:flex-row">
-            <button className="flex items-center px-4 py-2 border rounded-lg text-sm font-medium text-gray-800 bg-white hover:bg-gray-100 transition-colors">
-              <BookmarkPlus className="mr-2 w-4 h-4" /> Save
-            </button>
-            <AIButton btnTxt={"Generate Resume By Job Description"} />
-            <button className="px-6 py-2 border rounded-lg text-sm font-medium text-white bg-green-600 hover:bg-green-700 transition-colors"
-            onClick={()=> handleApplyBtn()}
-            >
-              Apply
-            </button>
-          </div>
         </div>
 
         {/* Main Content & Sidebar */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-6">
+        <div className="grid grid-cols-1 lg:grid-cols-1 gap-6 mt-6">
           {/* Left Content */}
           <div className="lg:col-span-2 space-y-6">
             {/* About Job */}
             <div className="bg-white rounded-xl shadow-sm p-6">
               <h2 className="text-xl font-semibold text-gray-900 mb-4">
-                About the job
+                Answer Below Questions
               </h2>
-              <p className="text-gray-800">
-                Microsoft is an equal opportunity employer. All qualified
-                applicants will receive consideration for employment without
-                regard to age, ancestry, color, family or medical care leave,
-                gender identity or expression, genetic information, marital
-                status, medical condition, national origin, physical or mental
-                disability, political affiliation, protected veteran status,
-                race, religion.
-              </p>
+
+              <p class="font-medium text-gray-900 dark:text-white py-4">1.  Are You Willing To Relocate ?</p>
+
+              <div className="flex items-center mb-4">
+
+                
+
+
+                <input
+                  id="radio-1"
+                  type="radio"
+                  name="radio-group"
+                  value="option1"
+                  checked={selectedValue === "option1"} // ✅ React handles checked state
+                  onChange={handleChange} // ✅ Handle selection change
+                  className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                />
+                <label
+                  htmlFor="radio-1"
+                  className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                >
+                  Yes
+                </label>
+              </div>
+
+              {/* ✅ Radio Button 2 */}
+              <div className="flex items-center">
+                <input
+                  id="radio-2"
+                  type="radio"
+                  name="radio-group"
+                  value="option2"
+                  checked={selectedValue === "option2"} // ✅ React handles checked state
+                  onChange={handleChange} // ✅ Handle selection change
+                  className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                />
+                <label
+                  htmlFor="radio-2"
+                  className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                >
+                  No
+                </label>
+              </div>
             </div>
 
             {/* Responsibilities */}
-            <div className="bg-white rounded-xl shadow-sm p-6">
+            {/* <div className="bg-white rounded-xl shadow-sm p-6">
               <h2 className="text-xl font-semibold text-gray-900 mb-4">
                 Responsibilities
               </h2>
@@ -127,10 +142,10 @@ const JobDetailsPage = () => {
                 <li>Maintain high team & customer satisfaction levels.</li>
                 <li>Ensure high-quality delivery without any escalations.</li>
               </ul>
-            </div>
+            </div> */}
 
             {/* Skills Section */}
-            <div className="bg-white rounded-xl shadow-sm p-6">
+            {/* <div className="bg-white rounded-xl shadow-sm p-6">
               <h2 className="text-xl font-semibold text-gray-900 mb-4">
                 Skills
               </h2>
@@ -144,63 +159,15 @@ const JobDetailsPage = () => {
                   </span>
                 ))}
               </div>
-            </div>
+            </div> */}
 
             {/* About Company Section */}
-            <div className="bg-white rounded-xl shadow-sm p-6">
-              <h2 className="text-xl font-semibold text-gray-900 mb-4">
-                About Company
-              </h2>
-              <div className="flex items-center space-x-3">
-                <img
-                  src="https://res.cloudinary.com/ddpegoqtf/image/upload/v1739873441/images_ixyyvv.png"
-                  alt="Microsoft"
-                  className="w-12 h-12 rounded-lg"
-                />
-                <div>
-                  <h3 className="text-lg font-semibold">Microsoft</h3>
-                  <p className="text-sm text-gray-600">14,056,752 followers</p>
-                </div>
-              </div>
-              <p className="mt-3 text-gray-800">
-                All qualified applicants will receive consideration for
-                employment without regard to age, ancestry, color, family or
-                medical care leave, gender identity or expression, genetic
-                information, marital status, medical condition.
-              </p>
-
-              {/* Latest Activity */}
-              <div className="bg-gray-100 mt-4 p-4 rounded-lg shadow-sm">
-                <h3 className="text-lg font-semibold text-gray-900">
-                  Latest activity
-                </h3>
-                <div className="flex items-center mt-3">
-                  <img
-                    src="https://res.cloudinary.com/ddpegoqtf/image/upload/v1739873441/images_ixyyvv.png"
-                    alt="Microsoft"
-                    className="w-8 h-8 rounded-lg"
-                  />
-                  <div className="ml-3">
-                    <h4 className="text-sm font-medium text-gray-900">
-                      Microsoft Inc.
-                    </h4>
-                    <p className="text-sm text-gray-600">
-                      How do I cancel my reservation for a stay?
-                    </p>
-                    <p className="text-xs text-gray-500">
-                      You can cancel a reservation any time before or during
-                      your trip.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
           </div>
 
-           {/* Sidebar */}
-           <div className="space-y-6">
+          {/* Sidebar */}
+          <div className="space-y-6">
             {/* Job Details */}
-            <div className="bg-white rounded-xl shadow-sm p-6">
+            {/* <div className="bg-white rounded-xl shadow-sm p-6">
               <h2 className="text-xl font-semibold text-gray-900 mb-4">
                 Job Details
               </h2>
@@ -251,10 +218,10 @@ const JobDetailsPage = () => {
                   </div>
                 </div>
               </div>
-            </div>
+            </div> */}
 
             {/* Latest Jobs */}
-            <div className="bg-white rounded-xl shadow-sm p-6">
+            {/* <div className="bg-white rounded-xl shadow-sm p-6">
               <h2 className="text-xl font-semibold text-gray-900 mb-4">
                 Latest jobs
               </h2>
@@ -281,7 +248,7 @@ const JobDetailsPage = () => {
                   See all jobs from Microsoft
                 </a>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
@@ -289,4 +256,4 @@ const JobDetailsPage = () => {
   );
 };
 
-export default JobDetailsPage;
+export default ApplyForJobPage;

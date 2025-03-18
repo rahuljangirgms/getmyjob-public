@@ -120,16 +120,22 @@ const profileFormsSlice = createSlice({
     //------------------------ For Save Attachment Documents ------------------------
 
     saveAttachmentDocuments: (state, action) => {
-      const { educationType, file } = action.payload;
-
-      // Ensure `attachmentDocuments` is an array
+      const { type, file } = action.payload;
+    
       if (!Array.isArray(state.attachmentDocuments)) {
         state.attachmentDocuments = [];
       }
-
-      // ✅ Only add valid files (prevent `null` values)
+    
       if (file && file.name) {
-        state.attachmentDocuments.push({ educationType, file });
+        const fileData = {
+          type,
+          name: file.name,
+          size: file.size,
+          fileType: file.type,
+          url: URL.createObjectURL(file), // Temporary Blob URL for preview
+        };
+    
+        state.attachmentDocuments.push(fileData);
         saveState(state);
       }
     },

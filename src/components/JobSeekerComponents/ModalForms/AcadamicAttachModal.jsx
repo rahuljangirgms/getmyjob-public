@@ -15,12 +15,19 @@ const validationSchema = Yup.object().shape({
 
 function AcadamicAttachModal({ onClose }) {
   const dispatch = useDispatch();
-  
-  // Get education details & stored files from Redux
-  const educationDetails = useSelector((state) => state.profileForms.educationDetails);
+
+  // Get API Data from Redux Store
+  const apiData = useSelector((state) => state.educationInfoForm.data);
+  console.log("Raw API Data:", apiData);
+
+  // ✅ Parse API Data before using it
+  const parsedApiData = apiData?.educations ? JSON.parse(apiData.educations) : [];
+  console.log("Parsed Education Data:", parsedApiData);
+
+  // ✅ Get stored attachments from Redux
   const storedFiles = useSelector((state) => state.profileForms.attachmentDocuments) || [];
 
-  // List of available attachment types based on education records
+  // ✅ List of available attachment types based on education records
   const attachmentOptions = {
     tenth: "10th Marksheet",
     twelfth: "12th Marksheet",
@@ -35,14 +42,16 @@ function AcadamicAttachModal({ onClose }) {
 
   // ✅ Filter available options to prevent duplicate selections
   const availableAttachments = Object.entries(attachmentOptions)
-    .filter(([type]) => educationDetails.some((edu) => edu.type === type)) // Only show existing education types
-    .filter(([type]) => !uploadedTypes.includes(type)); // Remove already uploaded attachments
+    .filter(([type]) => parsedApiData.some((edu) => edu.type === type)) // ✅ Use parsedApiData instead of apiData
+    .filter(([type]) => !uploadedTypes.includes(type)); // ✅ Prevent duplicate selections
 
-  // ✅ State to track the selected attachment type & uploaded file
+  console.log("Available Attachments:", availableAttachments);
+
+  // ✅ State for attachment selection & file upload
   const [selectedAttachment, setSelectedAttachment] = useState("");
   const [uploadedFile, setUploadedFile] = useState(null);
 
-  // ✅ Reset the state when the modal opens
+  // ✅ Reset the state when the modal opens or closes
   useEffect(() => {
     setSelectedAttachment("");
     setUploadedFile(null);
@@ -52,11 +61,8 @@ function AcadamicAttachModal({ onClose }) {
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     if (file) {
-      setUploadedFile({
-        name: file.name,
-        size: (file.size / 1024).toFixed(2) + " KB",
-      });
-    }
+      setUploadedFile(file);  // ✅ Store actual file instead of metadata
+  }
   };
 
   // ✅ Handle Save
@@ -69,7 +75,7 @@ function AcadamicAttachModal({ onClose }) {
     // Dispatch to Redux
     dispatch(
       saveAttachmentDocuments({
-        educationType: selectedAttachment,
+        type: selectedAttachment,
         file: uploadedFile,
       })
     );
