@@ -5,11 +5,9 @@ import { Form, Formik, Field } from "formik";
 import ChipsComponent from "./../ReusableComponents/ChipsComponent";
 import * as Yup from "yup";
 import { useDispatch } from "react-redux";
-import {
-  saveTempResearchPaper,
-  editTempResearchPaper,
-  editFinalResearchPaper,
-} from "./../../../store/slices/profileFormsSlice";
+
+
+import {saveTempResearchPaperDetails} from './../../../store/slices/jobSeeker/Profile_Form/researchPaperSlice';
 
 // ✅ Validation Schema using Yup
 const validationSchema = Yup.object().shape({
@@ -73,28 +71,12 @@ function ResearchPaperModal({
               onSubmit={(values, { setSubmitting }) => {
                 try {
                   if (isEditing) {
-                    // ✅ Update existing paper
-                    if (isEditingTemp) {
-                      dispatch(
-                        editTempResearchPaper({
-                          index: editIndex,
-                          updatedData: values,
-                        })
-                      );
-                    } else {
-                      dispatch(
-                        editFinalResearchPaper({
-                          index: editIndex,
-                          updatedData: values,
-                        })
-                      );
-                    }
+                    onSubmit(values);
                   } else {
                     // ✅ Save new research paper
-                    dispatch(saveTempResearchPaper(values));
+                    dispatch(saveTempResearchPaperDetails(values));
                   }
                   setSubmitting(false);
-                  onSubmit(values); // ✅ Ensure parent state updates
                   onClose(); // ✅ Close modal
                 } catch (error) {
                   console.error("Error submitting form:", error);

@@ -7,7 +7,9 @@ import {watchContactInfo} from './../sagas/jobSeeker/handler/JobSeeker_Profile_F
 import {watchEducationInfo} from './../sagas/jobSeeker/handler/JobSeeker_Profile_Form/educationForm/educationSaga'
 import {watchAddDocuments} from './../sagas/jobSeeker/handler/JobSeeker_Profile_Form/addDocument/addDocumentSaga';
 import {watchProfessionalExperience} from './../sagas/jobSeeker/handler/JobSeeker_Profile_Form/professionalExpForm/professionalExpFormSaga';
-
+import {watchInternshipExperience} from './../sagas/jobSeeker/handler/JobSeeker_Profile_Form/InternshipExpForm/InternshipExpFormSaga';
+import {watchProjectDetail} from './../sagas/jobSeeker/handler/JobSeeker_Profile_Form/projectForm/projectFormSaga';
+import {watchResearchPaper} from './../sagas/jobSeeker/handler/JobSeeker_Profile_Form/researchPaperForm/researchPaperForm';
 
 export default function* rootSaga() {
   yield all([
@@ -18,6 +20,9 @@ export default function* rootSaga() {
     watchContactInfo(),
     watchEducationInfo(),
     watchAddDocuments(),
-    watchProfessionalExperience()
+    watchProfessionalExperience(),
+    watchInternshipExperience(),
+    watchProjectDetail(),
+    watchResearchPaper(),
   ]);
 }

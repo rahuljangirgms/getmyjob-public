@@ -16,6 +16,9 @@ export const getProfessionalExperienceApi = async (token) => {
 
 // ✅ ADD Professional Experience
 export const addProfessionalExperienceApi = async (data, token) => {
+
+    console.log("Experience to post: ", data);
+
     try {
         const response = await axios.post(`${JobSeeker_API_URL}/add_professional_exp`, 
             {experiences: data}, {
@@ -28,9 +31,14 @@ export const addProfessionalExperienceApi = async (data, token) => {
 };
 
 // ✅ UPDATE Professional Experience
-export const updateProfessionalExperienceApi = async (data, token) => {
+export const updateProfessionalExperienceApi = async (id, data, token) => {
+
+
+  
     try {
-        const response = await axios.post(`${JobSeeker_API_URL}/update_professional_exp`, data, {
+        const response = await axios.post(`${JobSeeker_API_URL}/update_professional_exp`, 
+            {exp_id: id, experience: data}, 
+            {
             headers: { "Authorization": `Bearer ${token}` }
         });
         return response.data;
@@ -42,7 +50,9 @@ export const updateProfessionalExperienceApi = async (data, token) => {
 // ✅ DELETE Professional Experience
 export const deleteProfessionalExperienceApi = async (data, token) => {
     try {
-        const response = await axios.post(`${JobSeeker_API_URL}/delete_professional_exp`, data, {
+        const response = await axios.post(`${JobSeeker_API_URL}/delete_professional_exp`,
+             {exp_id: data}, 
+        {
             headers: { "Authorization": `Bearer ${token}` }
         });
         return response.data;

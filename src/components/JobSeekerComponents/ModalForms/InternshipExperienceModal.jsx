@@ -6,11 +6,7 @@ import { Form, Formik, Field } from "formik";
 import * as Yup from "yup";
 import { useDispatch } from "react-redux";
 import ChipsComponent from './../ReusableComponents/ChipsComponent';
-import {
-  saveTempInternshipDetails,
-  editTempInternshipExperience,
-  editFinalInternshipExperience,
-} from "../../../store/slices/profileFormsSlice";
+import {saveTempInternshipDetails} from './../../../store/slices/jobSeeker/Profile_Form/internshipExpSlice';
 
 
 const validationSchema = Yup.object().shape({
@@ -80,16 +76,12 @@ function InternshipExperienceModal({
                 console.log("Form Submitted: ", values);
 
                 if (isEditing) {
-                  if (isEditingTemp) {
-                    dispatch(editTempInternshipExperience({ index: editIndex, updatedData: values }));
-                  } else {
-                    dispatch(editFinalInternshipExperience({ index: editIndex, updatedData: values }));
-                  }
+                  onSubmit(values);
                 } else {
                   dispatch(saveTempInternshipDetails(values));
                 }
 
-                onSubmit(values);
+                
                 onClose();
               }}
             >

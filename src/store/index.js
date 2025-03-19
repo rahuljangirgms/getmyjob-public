@@ -12,6 +12,9 @@ import contactInfoReducer from './slices/jobSeeker/Profile_Form/contactInfoSlice
 import EducationInfoReducer from './slices/jobSeeker/Profile_Form/educationInfoSlice';
 import addDocumentsReducer from './slices/jobSeeker/Profile_Form/documentsSlice';
 import profExperinceReducer from './slices/jobSeeker/Profile_Form/professionalExpSlice';
+import internshipExpReducer from './slices/jobSeeker/Profile_Form/internshipExpSlice';
+import projectFormReducer from './slices/jobSeeker/Profile_Form/projectSlice';
+import researchPaperReducer from './slices/jobSeeker/Profile_Form/researchPaperSlice';
 
 // Create Saga Middleware
 const sagaMiddleware = createSagaMiddleware();
@@ -33,7 +36,14 @@ const store = configureStore({
     // create profile -> add documents
     documentsInfoForm: addDocumentsReducer,
     // create profile -> Professional Exp. Info
-    profExpForm: profExperinceReducer
+    profExpForm: profExperinceReducer,
+    // create profile -> Internship Exp. Info
+    intershipExpForm: internshipExpReducer,
+    // create profile -> Project Details
+    projectForm: projectFormReducer,
+    // create profile -> Research Paper Details
+    researchPaperForm: researchPaperReducer,
+
 
   },
   middleware: (getDefaultMiddleware) =>

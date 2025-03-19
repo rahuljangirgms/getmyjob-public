@@ -41,9 +41,13 @@ function* handleAddProfessionalExperience(action) {
 
 // ✅ Handle UPDATE Professional Experience
 function* handleUpdateProfessionalExperience(action) {
+    console.log("Exp data to update: ", action.payload);
     try {
         const token = yield select(getAuthToken);
-        const response = yield call(updateProfessionalExperienceApi, action.payload, token);
+        const {finalEditIndex,updatedData} = action.payload;
+
+        
+        const response = yield call(updateProfessionalExperienceApi, finalEditIndex, updatedData, token);
         yield put(updateProfessionalExperienceSuccess(response));
         yield put(getProfessionalExperienceRequest()); // Fetch updated data
     } catch (error) {

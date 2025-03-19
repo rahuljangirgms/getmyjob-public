@@ -5,11 +5,8 @@ import { Form, Formik, Field } from "formik";
 import ChipsComponent from "./../ReusableComponents/ChipsComponent";
 import { useDispatch } from "react-redux";
 import * as Yup from "yup";
-import {
-  saveTempProject,
-  editTempProject,
-  editFinalProject,
-} from "./../../../store/slices/profileFormsSlice";
+
+import {saveTempProjectDetails} from './../../../store/slices/jobSeeker/Profile_Form/projectSlice';
 
 // ✅ Validation Schema using Yup
 const validationSchema = Yup.object().shape({
@@ -78,26 +75,11 @@ function ProjectDetailsModal({
               onSubmit={(values, { setSubmitting }) => {
                 try {
                   if (isEditing) {
-                    if (isEditingTemp) {
-                      dispatch(
-                        editTempProject({
-                          index: editIndex,
-                          updatedData: values,
-                        })
-                      );
-                    } else {
-                      dispatch(
-                        editFinalProject({
-                          index: editIndex,
-                          updatedData: values,
-                        })
-                      );
-                    }
+                    onSubmit(values);
                   } else {
-                    dispatch(saveTempProject(values));
+                    dispatch(saveTempProjectDetails(values));
                   }
                   setSubmitting(false);
-                  onSubmit(values);
                   onClose();
                 } catch (error) {
                   console.error("Error submitting form:", error);

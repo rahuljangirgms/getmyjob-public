@@ -4,8 +4,10 @@ import InputField from "./../ReusableComponents/InputField";
 import { Form, Formik, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import ChipsComponent from './../ReusableComponents/ChipsComponent';
-import { saveTempProfessionalDetails } from "../../../store/slices/profileFormsSlice";
+// import { saveTempProfessionalDetails } from "../../../store/slices/profileFormsSlice";
 import { useDispatch } from "react-redux";
+
+import {saveTempProfessionalDetails} from './../../../store/slices/jobSeeker/Profile_Form/professionalExpSlice';
 
 const validationSchema = Yup.object().shape({
   designation: Yup.string().required("Designation is required"),
