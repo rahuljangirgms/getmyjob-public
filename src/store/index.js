@@ -15,6 +15,11 @@ import profExperinceReducer from './slices/jobSeeker/Profile_Form/professionalEx
 import internshipExpReducer from './slices/jobSeeker/Profile_Form/internshipExpSlice';
 import projectFormReducer from './slices/jobSeeker/Profile_Form/projectSlice';
 import researchPaperReducer from './slices/jobSeeker/Profile_Form/researchPaperSlice';
+import traningFormReducer from './slices/jobSeeker/Profile_Form/trainingSlice';
+import certificationFormReducer from './slices/jobSeeker/Profile_Form/certificationSlice';
+import otherDetailsReducer from './slices/jobSeeker/Profile_Form/otherDetailsFormSlice';
+import masterResumeReducer from './slices/jobSeeker/master_Resume_Data/masterResumeSlice';
+import isProfilCompleteReducer from './slices/jobSeeker/isProfileCompleted/isProfileCompleteSlice';
 
 // Create Saga Middleware
 const sagaMiddleware = createSagaMiddleware();
@@ -43,6 +48,17 @@ const store = configureStore({
     projectForm: projectFormReducer,
     // create profile -> Research Paper Details
     researchPaperForm: researchPaperReducer,
+    // create profile -> Training/Workshop Details
+    trainingForm: traningFormReducer,
+    // create profile -> Certification Details
+    certificationForm: certificationFormReducer,
+    // create profile -> Other Details
+    otherDetailsForm: otherDetailsReducer,
+    // Master Resume JSON
+    masterResumeJson: masterResumeReducer,
+    // isProfileCompleted (After Filling Create Profile Forms)
+    isProfileComplete: isProfilCompleteReducer,
+
 
 
   },

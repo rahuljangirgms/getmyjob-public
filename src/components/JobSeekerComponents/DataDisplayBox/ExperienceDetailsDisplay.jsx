@@ -57,9 +57,9 @@ function ExperienceDetailsDisplay({ title, data, onDelete, onEdit }) {
           </p>
         )}
 
-        {data.marksType && data.aggregate && data.max && (
+        {data.marksType && data.aggregate != 0 && data.max != 0 && (
           <p className="text-gray-700 text-base">
-            <span className="font-semibold text-gray-800">{data.marksType.toUpperCase()}:</span> {data.aggregate} / {data.max}
+            <span className="font-semibold text-gray-800">{data.marksType.toUpperCase()}Marks:</span> {data.aggregate} / {data.max}
           </p>
         )}
 
@@ -164,6 +164,16 @@ function ExperienceDetailsDisplay({ title, data, onDelete, onEdit }) {
             <span className="font-semibold text-gray-800">Publication Name:</span> {data.publicationName}
           </p>
         )}
+
+        {/* Research paper Publication Status */}
+
+        {data.status && (
+            <p className="text-gray-700 text-base">
+            <span className="font-semibold text-gray-800">Publication Status:</span> {data.status}
+          </p>
+        )
+
+        }
 
         {data.description && (
           <p className="text-gray-700 text-base">

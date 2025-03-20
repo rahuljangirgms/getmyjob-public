@@ -51,8 +51,8 @@ function* handleAddResearchPaper(action) {
 function* handleUpdateResearchPaper(action) {
   try {
     const token = yield select(getAuthToken);
-    const { id, updatedData } = action.payload;
-    const response = yield call(updateResearchPaperApi, id, updatedData, token);
+    const { finalEditIndex, updatedData } = action.payload;
+    const response = yield call(updateResearchPaperApi, finalEditIndex, updatedData, token);
     yield put(updateResearchPaperSuccess(response));
     yield put(getResearchPaperRequest()); // Fetch updated data
   } catch (error) {

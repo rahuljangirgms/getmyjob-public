@@ -71,7 +71,7 @@ function ResearchPaperForm() {
 
   const parsedPaperData = data?.publications ? JSON.parse(data.publications) : [];
 
-  console.log("API DATA:", parsedPaperData);
+  // console.log("API DATA:", parsedPaperData);
 
   useEffect(() => {
     if (tempSavedList.length > 0 || parsedPaperData.length > 0) {
@@ -115,7 +115,7 @@ function ResearchPaperForm() {
     if (isEditingTemp) {
       dispatch(editTempResearchPaper({ index: editIndex, updatedData }));
     } else {
-      dispatch(editFinalResearchPaper({ index: editIndex, updatedData }));
+      dispatch(updateResearchPaperRequest({ finalEditIndex, updatedData }));
     }
     setIsModalOpen(false);
     setIsDirty(false);
@@ -138,7 +138,7 @@ function ResearchPaperForm() {
             />
           )}
 
-          {tempSavedList.length > 0 && (
+          {tempSavedList.length > 0 && isSaved && (
             <div className="flex justify-end">
               <button
                 className="inline-flex items-center gap-2 rounded-md bg-blue-600 px-6 py-2 text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 mb-4"
@@ -146,6 +146,7 @@ function ResearchPaperForm() {
                   dispatch(addResearchPaperRequest(tempSavedList));
                   setHasFilledForm(true);
                   setIsDirty(false);
+                  setIsSaved(true);
                 }}
               >
                 <FaSave />

@@ -16,10 +16,11 @@ function EducationalDetailsForm() {
   
   // Fetch API data from Redux store
   const apiData = useSelector((state) => state.educationInfoForm.data);
-  const { loading, status, message } = useSelector((state) => state.educationInfoForm);
+  const { loading, status, message, data } = useSelector((state) => state.educationInfoForm);
 
   // Parse API Data
   const parsedApiData = apiData?.educations ? JSON.parse(apiData.educations) : [];
+  console.log("Educations API Data : ", data);
 
   // Titles mapping
   const educationTitles = {
@@ -31,9 +32,9 @@ function EducationalDetailsForm() {
     other: "Other Degree",
   };
 
-  // useEffect(() => {
-  //   dispatch(getEducationInfoRequest());
-  // }, [dispatch]);
+  useEffect(() => {
+    dispatch(getEducationInfoRequest());
+  }, [dispatch]);
 
   // useEffect(() => {
   //   if (status) {

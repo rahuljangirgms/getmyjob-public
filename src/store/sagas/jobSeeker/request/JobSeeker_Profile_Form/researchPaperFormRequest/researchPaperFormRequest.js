@@ -31,6 +31,9 @@ export const addResearchPaperApi = async (data, token) => {
 
 // ✅ UPDATE Research Paper
 export const updateResearchPaperApi = async (id, data, token) => {
+
+  console.log("Publication To Update : ", id, " ,  ", data);
+
   try {
     const response = await axios.post(
       `${JobSeeker_API_URL}/update_research_paper`,

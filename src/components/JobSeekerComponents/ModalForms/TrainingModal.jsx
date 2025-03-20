@@ -5,11 +5,8 @@ import { Form, Formik, Field } from "formik";
 import ChipsComponent from "./../ReusableComponents/ChipsComponent";
 import * as Yup from "yup";
 import { useDispatch } from "react-redux";
-import {
-  saveTempTraining,
-  editTempTraining,
-  editFinalTraining,
-} from "./../../../store/slices/profileFormsSlice";
+
+import {saveTempTrainingDetails} from './../../../store/slices/jobSeeker/Profile_Form/trainingSlice';
 
 // ✅ Validation Schema using Yup
 const validationSchema = Yup.object().shape({
@@ -69,28 +66,13 @@ function TrainingModal({
                 try {
                   // If editing
                   if (isEditing) {
-                    if (isEditingTemp) {
-                      dispatch(
-                        editTempTraining({
-                          index: editIndex,
-                          updatedData: values,
-                        })
-                      );
-                    } else {
-                      dispatch(
-                        editFinalTraining({
-                          index: editIndex,
-                          updatedData: values,
-                        })
-                      );
-                    }
+                    onSubmit(values);
                   } else {
                     // If adding new training
-                    dispatch(saveTempTraining(values));
+                    dispatch(saveTempTrainingDetails(values));
                   }
 
                   setSubmitting(false);
-                  onSubmit(values);
                   onClose(); // Close modal after submission
                 } catch (error) {
                   console.error("Error submitting form:", error);

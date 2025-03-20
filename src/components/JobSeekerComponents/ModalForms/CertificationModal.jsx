@@ -6,34 +6,31 @@ import ChipsComponent from './../ReusableComponents/ChipsComponent';
 import DropDown from "./../ReusableComponents/DropDown";
 import * as Yup from "yup";
 import { useDispatch } from "react-redux";
-import {
-  saveTempCertification,
-  editTempCertification,
-  editFinalCertification,
-} from "./../../../store/slices/profileFormsSlice";
+
+
+import {saveTempCertificationDetails} from './../../../store/slices/jobSeeker/Profile_Form/certificationSlice';
+
 
 // ✅ Validation Schema using Yup
 const validationSchema = Yup.object().shape({
   name: Yup.string().required("Certification Name is required"),
   provider: Yup.string().required("Provider is required"),
-  // enrollmentNumber: Yup.string().required("Enrollment Number is required"),
   validUpto: Yup.date().required("Valid Upto date is required"),
-  marksType: Yup.string(),
+  // marksType: Yup.string(),
   aggregate: Yup.number()
     .typeError("Aggregate must be a number")
-    .positive("Must be a positive number")
+    .moreThan(-1, "Must be zero or a positive number") // ✅ Allows 0 and positive numbers
     .nullable(),       
-    // .required("Aggregate is required"),
   max: Yup.number()
     .typeError("Max value must be a number")
-    .positive("Must be a positive number")
+    .moreThan(-1, "Must be zero or a positive number") // ✅ Allows 0 and positive numbers
     .nullable(),
-    // .required("Max value is required"),
   skills: Yup.array().min(1, "At least one skill is required"),
   description: Yup.string()
     .required("Description is required")
     .max(500, "Description must be at most 500 characters"),
 });
+
 
 function CertificationModal({
   onClose,
@@ -79,26 +76,12 @@ function CertificationModal({
               onSubmit={(values, { setSubmitting }) => {
                 try {
                   if (isEditing) {
-                    if (isEditingTemp) {
-                      dispatch(
-                        editTempCertification({
-                          index: editIndex,
-                          updatedData: values,
-                        })
-                      );
-                    } else {
-                      dispatch(
-                        editFinalCertification({
-                          index: editIndex,
-                          updatedData: values,
-                        })
-                      );
-                    }
+                   onSubmit(values);
                   } else {
-                    dispatch(saveTempCertification(values));
+                    dispatch(saveTempCertificationDetails(values));
                   }
                   setSubmitting(false);
-                  onSubmit(values);
+                  
                   onClose();
                 } catch (error) {
                   console.error("Error submitting form:", error);

@@ -10,6 +10,11 @@ import {watchProfessionalExperience} from './../sagas/jobSeeker/handler/JobSeeke
 import {watchInternshipExperience} from './../sagas/jobSeeker/handler/JobSeeker_Profile_Form/InternshipExpForm/InternshipExpFormSaga';
 import {watchProjectDetail} from './../sagas/jobSeeker/handler/JobSeeker_Profile_Form/projectForm/projectFormSaga';
 import {watchResearchPaper} from './../sagas/jobSeeker/handler/JobSeeker_Profile_Form/researchPaperForm/researchPaperForm';
+import {watchTraining} from './../sagas/jobSeeker/handler/JobSeeker_Profile_Form/traningForm/traningFormSaga';
+import {watchCertification} from './../sagas/jobSeeker/handler/JobSeeker_Profile_Form/certificationForm/certificationFormSaga';
+import {watchOtherDetails} from './../sagas/jobSeeker/handler/JobSeeker_Profile_Form/otherDetailsForm/otherDetailsFormSaga'
+import {watchMasterResume} from './../sagas/jobSeeker/handler/master_Resume_Data/masterResumeSaga';
+import {watchCheckProfileComplete} from './../sagas/jobSeeker/handler/check_Profile_completed/isProfileCompleteSaga';
 
 export default function* rootSaga() {
   yield all([
@@ -24,5 +29,10 @@ export default function* rootSaga() {
     watchInternshipExperience(),
     watchProjectDetail(),
     watchResearchPaper(),
+    watchTraining(),
+    watchCertification(),
+    watchOtherDetails(),
+    watchMasterResume(),
+    watchCheckProfileComplete()
   ]);
 }

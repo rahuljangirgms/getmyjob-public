@@ -5,20 +5,27 @@ import CertificationModal from "../../../components/JobSeekerComponents/ModalFor
 import { FaSave } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  deleteTempCertification,
+  // deleteTempCertification,
   deleteFinalCertification,
-  editTempCertification,
+  // editTempCertification,
   editFinalCertification,
   finalizeCertificationDetails,
   saveTempCertification,
 } from "./../../../store/slices/profileFormsSlice";
 import { ToastContainer, toast } from "react-toastify";
 import { useOutletContext } from "react-router-dom"; // Import useOutletContext
+import {getCertificationRequest, addCertificationRequest, updateCertificationRequest, deleteCertificationRequest, deleteTempCertification, editTempCertification, clearMessage} from './../../../store/slices/jobSeeker/Profile_Form/certificationSlice';
 
 function CertificationForm() {
+
+  // Certifications Form State
+  const {status, message, loading, data} = useSelector((state) => state.certificationForm);
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [hasFilledForm, setHasFilledForm] = useState(false);
   const [editIndex, setEditIndex] = useState(null);
+  const [finalEditIndex, setFinalEditIndex] = useState(null);
+  const [isSaved, setIsSaved] = useState(false);
   const [isEditingTemp, setIsEditingTemp] = useState(false);
   const [initialFormValues, setInitialFormValues] = useState(null);
 
@@ -31,7 +38,7 @@ function CertificationForm() {
   }, [isDirty, setIsFormDirty]);
 
   const tempCertificationList = useSelector(
-    (state) => state.profileForms.tempCertification || []
+    (state) => state.certificationForm.tempCertificationDetails || []
   );
 
   const finalCertificationList = useSelector(
@@ -40,14 +47,40 @@ function CertificationForm() {
 
   const dispatch = useDispatch();
 
+  useEffect(()=>{
+    dispatch(getCertificationRequest());
+  },[dispatch]);
+
+  const parsedCertificationData = data?.certifications ? JSON.parse(data.certifications) : [];
+  console.log("API Data: ", parsedCertificationData);
+
+
+    useEffect(() => {
+      if (message && status) {
+        // ✅ Ensure status is true to avoid duplicate toast
+        toast.success(message, {
+          position: "top-right",
+          autoClose: 5000,
+          className: "bg-green-50",
+        });
+  
+        // ✅ Clear the message after displaying Toast
+        dispatch(clearMessage());
+      }
+    }, [message]); // ✅ Only runs when `message` changes
+
   useEffect(() => {
-    if (tempCertificationList.length > 0 || finalCertificationList.length > 0) {
+    if (tempCertificationList.length > 0 || parsedCertificationData.length > 0) {
       setHasFilledForm(true);
+    }
+    if(parsedCertificationData.length > 0){
+      setIsDirty(false);
     }
     if (tempCertificationList.length > 0 ){
       setIsDirty(true);
+      
     }
-  }, [tempCertificationList, finalCertificationList]);
+  }, [tempCertificationList, parsedCertificationData]);
 
   const handleCertificationSubmit = (data) => {
     setIsModalOpen(false);
@@ -59,15 +92,16 @@ function CertificationForm() {
   };
 
   const handleFinalDelete = (index) => {
-    dispatch(deleteFinalCertification(index));
+    dispatch(deleteCertificationRequest(index));
   };
 
-  const handleEdit = (index, isTemp) => {
+  const handleEdit = (index, certId, isTemp) => {
     setIsEditingTemp(isTemp);
+    setFinalEditIndex(certId);
     setEditIndex(index);
     const selectedCertification = isTemp
       ? tempCertificationList[index]
-      : finalCertificationList[index];
+      : parsedCertificationData[index];
     setInitialFormValues({ ...selectedCertification });
     setIsModalOpen(true);
   };
@@ -76,7 +110,7 @@ function CertificationForm() {
     if (isEditingTemp) {
       dispatch(editTempCertification({ index: editIndex, updatedData }));
     } else {
-      dispatch(editFinalCertification({ index: editIndex, updatedData }));
+      dispatch(updateCertificationRequest({ finalEditIndex, updatedData }));
     }
     setIsModalOpen(false);
     setEditIndex(null);
@@ -95,18 +129,14 @@ function CertificationForm() {
           />
         )}
 
-        {tempCertificationList.length > 0 && (
+        {tempCertificationList.length > 0  && isSaved && (
           <div className="flex justify-end">
             <button
               type="submit"
               className="inline-flex items-center gap-2 rounded-md bg-blue-600 px-6 py-2 text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 mb-4"
               onClick={() => {
-                dispatch(finalizeCertificationDetails());
-                toast.success("Details saved successfully!", {
-                  position: "top-right",
-                  autoClose: 5000,
-                  className: "bg-green-50",
-                });
+                dispatch(addCertificationRequest(tempCertificationList));
+                setIsSaved(true);
                 setHasFilledForm(true);
                 setIsDirty(false);
               }}
@@ -139,22 +169,22 @@ function CertificationForm() {
               title={certification.name}
               data={certification}
               onDelete={() => handleTempDelete(index)}
-              onEdit={() => handleEdit(index, true)}
+              onEdit={() => handleEdit(index,index, true)}
             />
           ))}
 
-        {finalCertificationList.length > 0 &&
-          finalCertificationList.map((certification, index) => (
+        {parsedCertificationData.length > 0 &&
+          parsedCertificationData.map((certification, index) => (
             <ExperienceDetailsDisplay
-              key={index}
+              key={certification.certification_id}
               title={certification.name}
               data={certification}
-              onDelete={() => handleFinalDelete(index)}
-              onEdit={() => handleEdit(index, false)}
+              onDelete={() => handleFinalDelete(certification.certification_id)}
+              onEdit={() => handleEdit(index,certification.certification_id, false)}
             />
           ))}
 
-        {isModalOpen && (
+        {isModalOpen && ( 
           <CertificationModal
             onClose={() => setIsModalOpen(false)}
             onSubmit={
