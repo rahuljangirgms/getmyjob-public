@@ -29,6 +29,7 @@ function* handleGetOtherDetails() {
 
 // ✅ Handle ADD Other Details
 function* handleAddOtherDetails(action) {
+  console.log("OTHER DETAILS TO POST: ",action.payload);
   try {
     const token = yield select(getAuthToken);
     const response = yield call(addOtherDetailsApi, action.payload, token);

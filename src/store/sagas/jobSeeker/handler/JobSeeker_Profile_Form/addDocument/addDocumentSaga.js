@@ -1,60 +1,60 @@
 import { call, put, takeLatest, select } from "redux-saga/effects";
-import {addDocumentsApi,getDocumentsApi} from './../../../request/JobSeeker_Profile_Form/addDocumentRequest/addDocumentRequest';
-
+import { uploadAttachmentApi, getDocumentsApi,deleteDocumentApi} from "./../../../request/JobSeeker_Profile_Form/addDocumentRequest/addDocumentRequest";
 import {
-    postDocumentsSuccess,
-    postDocumentsRequest,
-    postDocumentsFailure,
-    getDocumentsFailure,
-    getDocumentsRequest,
-    getDocumentsSuccess
+  addDocumentRequest,
+  addDocumentSuccess,
+  addDocumentFailure,
+  getDocumentFailure,
+  getDocumentRequest,
+  getDocumentSuccess,
+  deleteDocumentRequest,
+  deleteDocumentSuccess,
+  deleteDocumentFailure
+} from "./../../../../../slices/jobSeeker/Profile_Form/documentsSlice";
 
-} from './../../../../../slices/jobSeeker/Profile_Form/documentsSlice'; 
-
+// Token selector
 const getAuthToken = (state) => state.jobSeekerAuth.token;
 
-// Saga for POST request to add documents
-
-function* handlePostDocuments(action) {  
-    try {
-            const token = yield select(getAuthToken);
-         const data = action.payload;
-        //  making POST API call to save docs
-        const response = yield call(addDocumentsApi, data,token);
-        const {message, status} = response.data;
-
-        yield put(postDocumentsSuccess(message,status));
-
-        // Immediately get docs call
-        // yield put(getDocumentsRequest());
-    } catch (error) {
-        yield put(postDocumentsFailure(error.response?.data || "Something went wrong!"));
-    }
-};
-
-// Saga for GET request to get documents
-
-function* handleGetDocuments(){
-    try {
-        const token = yield select(getAuthToken);
-        const response = yield call(getDocumentsApi,token);
-
-        const {message,status,data} = response.data;
-
-        yield put(getDocumentsSuccess({message,status,data}));
-        
-    } catch (error) {
-        yield put(getDocumentsFailure(error.response?.data || "Failed to fetch Documents"))
-    }
-};
-
-
-// Watcher Sagas
-
-export function* watchAddDocuments() {
-    yield takeLatest(postDocumentsRequest.type, handlePostDocuments);
-    yield takeLatest(getDocumentsRequest.type, handleGetDocuments)
+// Worker Saga
+function* handleUploadDocument(action) {
+  try {
+    const token = yield select(getAuthToken);
+    const response = yield call(uploadAttachmentApi, action.payload, token);
+    
+    yield put(addDocumentSuccess({ message: response.message, document: action.payload, status: response.status }));
+    yield put(getDocumentRequest());
+  } catch (error) {
+    yield put(addDocumentFailure(error));
+  }
 }
 
 
+function* handleGetDocuments() {    
+    try {
+      const token = yield select(getAuthToken);
+      const response = yield call(getDocumentsApi, token);
+      yield put(getDocumentSuccess({ documents: response.data }));
+    } catch (error) {
+      yield put(getDocumentFailure(error));
+    }
+  }
 
+
+function* handleDeleteDocuments(action){
+  try {
+    const token = yield select(getAuthToken);
+  
+    const response = yield call(deleteDocumentApi,action.payload, token);
+    yield put(deleteDocumentSuccess({message: response.message, status: response.staus}));
+    yield put(getDocumentRequest());
+  } catch (error) {
+    yield put(deleteDocumentFailure(error));
+  }
+}
+
+// Watcher Saga
+export function* watchUploadDocument() {
+  yield takeLatest(addDocumentRequest.type, handleUploadDocument);
+  yield takeLatest(getDocumentRequest.type, handleGetDocuments);
+  yield takeLatest(deleteDocumentRequest.type, handleDeleteDocuments);
+}

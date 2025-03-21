@@ -1,48 +1,57 @@
-import JobSeeker_API_URL from './../../../../../../apiUrls/apiUrls';
-import  axios  from 'axios';
+import axios from "axios";
+import JobSeeker_API_URL from "./../../../../../../apiUrls/apiUrls";
 
-// POST request for Saving Documents
+export const uploadAttachmentApi = async ({ file, type }, token) => {
+  try {
+    const formData = new FormData();
+    formData.append("documents[file]", file);
+    formData.append("documents[type]", type);
 
-export const addDocumentsApi = async (documents, token) => {
-    try {
-        const formData = new FormData();
+    const response = await axios.post(
+      `${JobSeeker_API_URL}/add_document`,
+      formData,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
 
-        // ✅ Append each document correctly
-        documents.forEach((doc, index) => {
-            if (doc.file instanceof File) {  // ✅ Ensure file is valid
-                formData.append(`document_${index}`, doc.file);
-                formData.append(`type_${index}`, doc.type);
-            } else {
-                console.error("Invalid file format:", doc.file);
-            }
-        });
-
-        console.log("Final FormData:", formData);
-
-        const response = await axios.post(`${JobSeeker_API_URL}/add_document`, formData, {
-            headers: {
-                "Authorization": `Bearer ${token}`,
-                "Content-Type": "multipart/form-data",
-            },
-        });
-
-        return response;
-    } catch (error) {
-        throw error.response?.data || "Something went wrong while adding the document!";
-    }
+    return response.data;
+  } catch (error) {
+    console.error("Upload Error:", error.response?.data);
+    throw error.response?.data || "Upload failed!";
+  }
 };
-
-// GET request to get Saved Documents
 
 export const getDocumentsApi = async (token) => {
-    try {
-        const response = await axios.get(`${JobSeeker_API_URL}/get_document`, {
-            headers: {
-                "Authorization": `Bearer ${token}` // Include token
-            },
-        });
-        return response;
-    } catch (error) {
-        throw error.response?.data || "Failed to fetch Documents Data!";
-    }
+  try {
+    const response = await axios.get(`${JobSeeker_API_URL}/get_document`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || "Failed to fetch documents";
+  }
 };
+
+
+export const deleteDocumentApi = async (id, token) =>{
+
+  console.log("Document Id to delete:",id);
+  try {
+    const response = await axios.post(`${JobSeeker_API_URL}/delete_document`,
+      {doc_id: id},
+      {
+        headers: {
+          Authorization: `Bearer ${token}`
+        },
+      });
+      return response.data;
+  } catch (error) {
+    throw error.response?.data || "Failed to Delete documents";
+  }
+}

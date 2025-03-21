@@ -18,10 +18,11 @@ import ConfirmationModal from './../../components/JobSeekerComponents/ReusableCo
 function CompleteProfileFormSection() {
   const navigate = useNavigate();
   const location = useLocation();
+
   const [activeTab, setActiveTab] = useState(localStorage.getItem("activeTab") || "personalInfo");
-  const [isFormDirty, setIsFormDirty] = useState(false); // Track unsaved changes
+  const [isFormDirty, setIsFormDirty] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [pendingRoute, setPendingRoute] = useState(null); // Store pending navigation
+  const [pendingRoute, setPendingRoute] = useState(null);
 
   const sidebarItems = [
     { id: "personalInfo", label: "Personal Information", icon: <FaUser size={20} />, route: "/jobseeker/complete-profile-form/personal-info" },
@@ -37,12 +38,21 @@ function CompleteProfileFormSection() {
     { id: "otherdetails", label: "Other Details", icon: <FaInfoCircle size={20} />, route: "/jobseeker/complete-profile-form/other-details" },
   ];
 
-  // Persist active tab in localStorage
+  // ✅ Save active tab to localStorage
   useEffect(() => {
     localStorage.setItem("activeTab", activeTab);
   }, [activeTab]);
 
-  // Warn on page reload or tab close
+  // ✅ Reset active tab when user navigates away
+  useEffect(() => {
+    const isProfileFormRoute = location.pathname.startsWith("/jobseeker/complete-profile-form");
+    if (!isProfileFormRoute) {
+      localStorage.removeItem("activeTab");
+      setActiveTab("personalInfo");
+    }
+  }, [location.pathname]);
+
+  // ✅ Warn before browser close or reload
   useEffect(() => {
     const handleBeforeUnload = (event) => {
       if (isFormDirty) {
@@ -57,7 +67,7 @@ function CompleteProfileFormSection() {
   const handleTabClick = (id, route) => {
     if (isFormDirty) {
       setIsModalOpen(true);
-      setPendingRoute({ id, route }); // Store the intended route
+      setPendingRoute({ id, route });
     } else {
       setActiveTab(id);
       navigate(route);
@@ -69,18 +79,18 @@ function CompleteProfileFormSection() {
       setActiveTab(pendingRoute.id);
       navigate(pendingRoute.route);
       setIsModalOpen(false);
-      setIsFormDirty(false); // Reset form dirty state
+      setIsFormDirty(false);
       setPendingRoute(null);
     }
   };
 
   return (
     <div className="flex flex-col min-h-screen bg-gray-50 pt-20">
-      {/* Mobile Navigation Bar (Tabs at the top) */}
+      {/* Mobile Tabs */}
       <MobileNavigationBar sidebarItems={sidebarItems} isFormDirty={isFormDirty} setIsFormDirty={setIsFormDirty} />
 
       <div className="flex flex-row w-full">
-        {/* Sticky Sidebar (Visible on Desktop & Tablet) */}
+        {/* Desktop Sidebar */}
         <div className="hidden lg:block lg:w-1/6 bg-white border-r border-gray-200 h-screen sticky top-0">
           <nav className="flex flex-col py-4">
             {sidebarItems.map((item) => (
@@ -101,23 +111,23 @@ function CompleteProfileFormSection() {
           </nav>
         </div>
 
-        {/* Scrollable Main Content */}
+        {/* Main Content */}
         <div className="flex-1 h-[calc(100vh-80px)] overflow-y-auto p-4 mt-10 md:mt-8">
           <Outlet context={{ setIsFormDirty }} />
         </div>
       </div>
 
-      {/* ✅ MODAL FOR UNSAVED CHANGES */}
+      {/* Unsaved Changes Modal */}
       {isModalOpen && (
-         <ConfirmationModal
-         isOpen={isModalOpen}
-         onClose={() => setIsModalOpen(false)}
-         onConfirm={confirmNavigation}
-         title="Leave this page"
-         message="There might be unsaved changes. Are you sure want to leave this page?"
-         confirmText="Confirm"
-         cancelText="Cancel"
-       />
+        <ConfirmationModal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          onConfirm={confirmNavigation}
+          title="Leave this page"
+          message="There might be unsaved changes. Are you sure you want to leave this page?"
+          confirmText="Confirm"
+          cancelText="Cancel"
+        />
       )}
     </div>
   );

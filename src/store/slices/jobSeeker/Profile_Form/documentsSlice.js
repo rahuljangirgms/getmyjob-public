@@ -1,64 +1,80 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  data: null,
   loading: false,
-  error: null,
-  status: false,
   message: "",
+  status: false,
+  error: null,
+  uploadedDocuments: [],
 };
 
-const documentSlice = createSlice({
-  name: "JobSeekerDocuments",
+const documentsSlice = createSlice({
+  name: "attachment",
   initialState,
   reducers: {
-    //POST Documents Requests
-
-    postDocumentsRequest: (state) => {
+    addDocumentRequest: (state) => {
+      state.loading = true;
+      state.message = "";
+      state.status = false;
+    },
+    addDocumentSuccess: (state, action) => {
+      const newDoc = action.payload?.data; // server response
+      if (newDoc) {
+        state.uploadedDocuments.push(newDoc); // do not push File object!
+      }
+      state.loading = false;
+    },
+    addDocumentFailure: (state, action) => {
+      state.loading = false;
+      state.status = false;
+      state.message = action.payload.message || "Document upload failed.";
+      state.error = action.payload;
+    },
+    getDocumentRequest: (state) => {
       state.loading = true;
       state.error = null;
     },
-    postDocumentsSuccess: (state, action) => {
+    getDocumentSuccess: (state, action) => {
       state.loading = false;
-      state.message = action.payload?.message;
+      state.uploadedDocuments = action.payload.documents;
+    },
+    getDocumentFailure: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    },
+    deleteDocumentRequest: (state) => {
+      state.loading = true;
       state.error = null;
     },
-    postDocumentsFailure: (state, action) => {
+    deleteDocumentSuccess: (state, action) => {
+      state.loading = false;
+      state.message = action.payload.message;
+    },
+    deleteDocumentFailure: (state, action) => {
       state.loading = false;
       state.error = action.payload;
     },
 
-    // GET Documents Requests
 
-    getDocumentsRequest: (state) =>{
-        state.loading = true;
-        state.error = null;
-    },
-    getDocumentsSuccess: (state,action) =>{
-        state.loading = false;
-        state.data = action.payload?.data || null; // ✅ Ensure valid data assignment
-        state.status = action.payload?.status || false;
-        state.message = action.payload?.message || "";
-        state.error = null;
-    },
-    getDocumentsFailure: (state,action) =>{
-        state.loading = false;
-        state.error = action.payload;
-    },
 
+    clearDocMessage: (state) => {
+      state.message = "";
+      state.status = false;
+    },
   },
 });
 
-
 export const {
-    postDocumentsRequest,
-    postDocumentsSuccess,
-    postDocumentsFailure,
+  addDocumentRequest,
+  addDocumentSuccess,
+  addDocumentFailure,
+  getDocumentRequest,
+  getDocumentFailure,
+  getDocumentSuccess,
+  deleteDocumentFailure,
+  deleteDocumentRequest,
+  deleteDocumentSuccess,
+  clearDocMessage,
+} = documentsSlice.actions;
 
-    getDocumentsRequest,
-    getDocumentsSuccess,
-    getDocumentsFailure
-} = documentSlice.actions;
-
-
-export default documentSlice.reducer;
+export default documentsSlice.reducer;

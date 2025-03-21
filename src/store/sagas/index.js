@@ -5,7 +5,7 @@ import {watchJobSeekerAuth} from './../sagas/jobSeeker/handler/authSaga'
 import {watchPersonalInfo} from './../sagas/jobSeeker/handler/JobSeeker_Profile_Form/profileForm/profileSaga'
 import {watchContactInfo} from './../sagas/jobSeeker/handler/JobSeeker_Profile_Form/contactForm/contactFromSaga'
 import {watchEducationInfo} from './../sagas/jobSeeker/handler/JobSeeker_Profile_Form/educationForm/educationSaga'
-import {watchAddDocuments} from './../sagas/jobSeeker/handler/JobSeeker_Profile_Form/addDocument/addDocumentSaga';
+import {watchUploadDocument} from './../sagas/jobSeeker/handler/JobSeeker_Profile_Form/addDocument/addDocumentSaga';
 import {watchProfessionalExperience} from './../sagas/jobSeeker/handler/JobSeeker_Profile_Form/professionalExpForm/professionalExpFormSaga';
 import {watchInternshipExperience} from './../sagas/jobSeeker/handler/JobSeeker_Profile_Form/InternshipExpForm/InternshipExpFormSaga';
 import {watchProjectDetail} from './../sagas/jobSeeker/handler/JobSeeker_Profile_Form/projectForm/projectFormSaga';
@@ -24,7 +24,7 @@ export default function* rootSaga() {
     watchPersonalInfo(),
     watchContactInfo(),
     watchEducationInfo(),
-    watchAddDocuments(),
+    watchUploadDocument(),
     watchProfessionalExperience(),
     watchInternshipExperience(),
     watchProjectDetail(),

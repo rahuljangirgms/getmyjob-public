@@ -15,6 +15,7 @@ export const getOtherDetailsApi = async (token) => {
 
 // ✅ ADD Other Details
 export const addOtherDetailsApi = async (data, token) => {
+
   try {
     const response = await axios.post(
       `${JobSeeker_API_URL}/profile_other_details`,

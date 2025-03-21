@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { FiChevronLeft } from "react-icons/fi";
 import { FiChevronRight } from "react-icons/fi";
@@ -7,7 +7,9 @@ import { LuFileUser } from "react-icons/lu";
 import { useNavigate } from 'react-router-dom';
 import JobCard from './JobCard';
 import CompleteProfileToast from './ReusableComponents/CompleteProfileToast';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import {checkProfileCompleteRequest} from './../../store/slices/jobSeeker/isProfileCompleted/isProfileCompleteSlice'
+import Loader from './ReusableComponents/Loader';
 
 
 const jobListings = [
@@ -119,7 +121,15 @@ const SkeletonCard = () => (
 
 function JobListingContainer() {
 
-  const isProfileCompleted = useSelector(state => state.profileForms.isProfileCompleted);
+  const dispatch = useDispatch();
+
+  useEffect(()=>{
+    dispatch(checkProfileCompleteRequest());
+  },[dispatch]);
+
+  const isProfileCompleted = useSelector(state => state.isProfileComplete.isComplete);  
+
+  const {loading} = useSelector((state) => state.isProfileComplete);
 
   const navigate = useNavigate();
 
@@ -176,7 +186,7 @@ function JobListingContainer() {
         {/* Job Cards (Behind Red Box) */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 relative z-10">
           {paginatedJobs.map((job, index) =>
-            !isProfileCompleted ? (
+            isProfileCompleted && !loading ?  (
               <JobCard key={index} job={job}  />
             ) : (
               <SkeletonCard key={index} />

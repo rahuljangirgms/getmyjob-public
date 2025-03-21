@@ -129,7 +129,7 @@ function CertificationForm() {
           />
         )}
 
-        {tempCertificationList.length > 0  && isSaved && (
+        {tempCertificationList.length > 0  && !isSaved && (
           <div className="flex justify-end">
             <button
               type="submit"

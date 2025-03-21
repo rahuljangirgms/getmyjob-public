@@ -1,7 +1,7 @@
 import React, { use, useEffect } from "react";
 import { AiOutlineMail } from "react-icons/ai";
 
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { GrTrophy } from "react-icons/gr";
 import { TiStar } from "react-icons/ti";
 import { MdOutlinePhone } from "react-icons/md";
@@ -9,15 +9,26 @@ import SkillBedge from "./SkillBedge";
 import TestScore from "./TestScore";
 
 import dummyPrfileImg from './../../../../assets/images/dummyuser.png'
+import {getMasterResumeRequest} from './../../../../store/slices/jobSeeker/master_Resume_Data/masterResumeSlice'
 
 function Sidebar() {
+
+  const dispatch = useDispatch();
+
+  useEffect(()=>{
+    dispatch(getMasterResumeRequest());
+  },[dispatch])
+
+  const masterResumeJson = useSelector((state) => state.masterResumeJson.data); 
+  const { loading } = useSelector((state) => state.masterResumeJson);
+
   const personalInformation = useSelector(
     (state) => state.profileForms.personalInformation
   );
 
-  const {user} = useSelector((state) => state.jobSeekerAuth);
+  // const {user} = useSelector((state) => state.jobSeekerAuth);
+  const {user} = JSON.parse(localStorage.getItem("auth"));
 
-  console.log("Data from JOb seeker Auth: ", user?.name);
 
   useEffect(()=>{
     if(!user){
@@ -27,14 +38,13 @@ function Sidebar() {
   },[user]);
 
 
-  // const {user} = JSON.parse(localStorage.getItem("auth"));
 
 
   return (
     <div className="w-full row-span-3 col-start-5 bg-white rounded-2xl p-6 border-2 border-gray-200 shadow-lg">
       <div className="flex flex-col items-center text-center border-b-2 border-gray-200 pb-4">
         <img
-          src={personalInformation.profilePicture || dummyPrfileImg}
+          src={masterResumeJson?.personalInformation?.profilePicture || dummyPrfileImg}
           alt="user-image"
           className="w-20 h-20 rounded-full bg-indigo-100"
         />
