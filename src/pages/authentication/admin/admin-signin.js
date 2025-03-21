@@ -129,12 +129,12 @@ function AdminSignIn() {
             </div>
           </form>
 
-          <p className="my-4 text-sm text-gray-500 text-center">
+          {/* <p className="my-4 text-sm text-gray-500 text-center">
             Don't have an account?{" "}
             <Link to="/admin/signup" className="font-semibold text-blue-600 hover:text-blue-500">
               Sign Up
             </Link>
-          </p>
+          </p> */}
 
           <div className="relative my-4">
             <div className="absolute inset-0 flex items-center">
