@@ -11,6 +11,8 @@ const skills = [
     "Aws",
     "Laravel",
     "Angular Js",
+    "Cad",
+    "Auto cad"
   ];
   
   export default skills;

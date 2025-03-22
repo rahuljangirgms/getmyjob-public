@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import Skeleton from "react-loading-skeleton";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchJobsRequest } from "../../../../store/slices/jobSlice";
+import { fetchJobsRequest } from "../../../../store/slices/recruiter/jobSlice";
 import { Folder, House, IndianRupee, Mail, Notebook, PersonStanding, User } from "lucide-react";
 // If you have an icon library for the star icon, import it here.
 // Example: import { Sparkles } from "lucide-react"; // or any star icon

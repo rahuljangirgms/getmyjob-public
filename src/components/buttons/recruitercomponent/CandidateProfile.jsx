@@ -1,12 +1,8 @@
-// CandidateDetail.jsx
-import React, { useState, useEffect } from "react";
-import { useParams, Link, useNavigate, useLocation } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import { fetchCandidatesRequest, updateCandidateInvitationRequest,  fetchCandidateTestsRequest, } from "../../../../store/slices/recruiter/candidateSlice";
-import { fetchJobsRequest } from "../../../../store/slices/recruiter/jobSlice";
-import CandidatePerformanceCard from "../../../../components/buttons/recruitercomponent/CandidatePerformanceCard";
+// CandidateProfile.jsx
+import React, { useState } from "react";
+import CandidatePerformanceCard from "../../buttons/recruitercomponent/CandidatePerformanceCard";
 
-// Helper functions remain the same:
+// Reuse your existing helper functions or copy them in here
 function parseExperienceRange(requiredExperience) {
   if (typeof requiredExperience !== "string") return null;
   if (requiredExperience === "10-above") {
@@ -35,8 +31,9 @@ function partialExperienceScore(totalMonths, lowerMonths, upperMonths) {
 }
 
 function calculateTotalExperience(experienceArray) {
-  if (!experienceArray || experienceArray.length === 0)
+  if (!experienceArray || experienceArray.length === 0) {
     return { totalMonths: 0, totalDuration: "", overallRange: "" };
+  }
 
   let totalMonths = 0;
   let earliestStart = null;
@@ -44,7 +41,8 @@ function calculateTotalExperience(experienceArray) {
 
   experienceArray.forEach((exp) => {
     const startDate = new Date(exp.from);
-    const endDate = exp.to.toLowerCase() === "present" ? new Date() : new Date(exp.to);
+    const endDate =
+      exp.to.toLowerCase() === "present" ? new Date() : new Date(exp.to);
 
     if (!earliestStart || startDate < earliestStart) {
       earliestStart = startDate;
@@ -64,24 +62,55 @@ function calculateTotalExperience(experienceArray) {
 
   return {
     totalMonths,
-    totalDuration: `${years} years${leftoverMonths ? ` ${leftoverMonths} months` : ""}`,
+    totalDuration: `${years} years${
+      leftoverMonths ? ` ${leftoverMonths} months` : ""
+    }`,
     overallRange: `From ${earliestStart.toLocaleDateString()} to ${latestEnd.toLocaleDateString()}`,
   };
 }
 
+// Simple caret icon for accordions
+const CaretIcon = ({ isOpen }) => (
+  <svg
+    className={`w-4 h-4 ml-2 transform transition-transform duration-200 ${
+      isOpen ? "rotate-180" : ""
+    }`}
+    fill="none"
+    stroke="currentColor"
+    strokeWidth={2}
+    viewBox="0 0 24 24"
+  >
+    <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+  </svg>
+);
 
+// Reusable Accordion section
+const AccordionSection = ({ title, isOpen, onClick, children }) => (
+  <div className="border rounded-md mb-4 overflow-hidden">
+    <button
+      className="flex items-center justify-between w-full p-4 bg-transparent hover:bg-transparent transition-colors"
+      onClick={onClick}
+    >
+      <span className="font-semibold text-sm md:text-base">{title}</span>
+      <CaretIcon isOpen={isOpen} />
+    </button>
+    {isOpen && (
+      <div className="p-4 text-sm text-gray-700 transition-all ease-in-out duration-200">
+        {children}
+      </div>
+    )}
+  </div>
+);
 
-const CandidateDetail = () => {
-  const { id } = useParams();
-  const dispatch = useDispatch();
-  const location = useLocation();
-  const navigate = useNavigate();
-
-  // Parse jobId from query string
-  const searchParams = new URLSearchParams(location.search);
-  const jobId = searchParams.get("jobId");
-
-  // Collapsible section states
+const CandidateProfile = ({
+  candidate,
+  candidateTestSession,
+  jobId,
+  onSendInvite, // callback if you want to handle "Send Invitation"
+  requiredSkills = [],
+  requiredExperience = "",
+}) => {
+  // Same local states for collapsible sections
   const [showAbout, setShowAbout] = useState(true);
   const [showExperience, setShowExperience] = useState(true);
   const [showSkills, setShowSkills] = useState(false);
@@ -90,45 +119,9 @@ const CandidateDetail = () => {
   const [showResume, setShowResume] = useState(false);
   const [showInterviewRounds, setShowInterviewRounds] = useState(false);
 
-  // Redux state
-  const { candidates,candidateTests, loading, error } = useSelector((state) => state.candidates);
-  const { jobs } = useSelector((state) => state.jobs) || {};
-  const allJobs = [
-    ...(jobs?.activeJobs || []),
-    ...(jobs?.draftJobs || []),
-    ...(jobs?.expiredJobs || []),
-  ];
-
-  useEffect(() => {
-    if (!candidates || candidates.length === 0) {
-      dispatch(fetchCandidatesRequest({}));
-    }
-    dispatch(fetchJobsRequest());
-  }, [dispatch, candidates]);
-  useEffect(() => {
-    if (id && jobId) {
-      dispatch(fetchCandidateTestsRequest({ candidateId: id, jobId }));
-    }
-  }, [dispatch, id, jobId]);
-
-
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error}</p>;
-
-  const candidate = candidates.find((cand) => cand.id.toString() === id);
-  if (!candidate) {
-    return (
-      <div className="p-6 max-w-5xl mx-auto">
-        <h2 className="text-xl font-semibold mb-2">Candidate not found</h2>
-        <Link to="/recruiter/dashboard/candidates" className="text-blue-600 hover:underline">
-          &larr; Back to Candidates List
-        </Link>
-      </div>
-    );
-  }
-
-  // Destructure candidate fields (new fields: interviewRounds, interviewScore, roundsLeft)
+  // Destructure candidate
   const {
+    id,
     name,
     title,
     location: candidateLocation,
@@ -138,15 +131,11 @@ const CandidateDetail = () => {
     education,
     certifications,
     skills,
-    appliedJobs,
-    jobinvitation,
     resumeUrl,
-    interviewRounds, // array of round scores, e.g. [{ score: 80 }, { score: 70 }]
-    interviewScore,  // overall interview score (e.g. average)
-    roundsLeft,      // number of remaining rounds
+    jobinvitation,
   } = candidate;
 
-  // Calculate total experience from candidate experience data
+  // Experience calculations
   let totalExpObj = { totalMonths: 0, totalDuration: "", overallRange: "" };
   if (Array.isArray(experience) && experience.length > 0) {
     totalExpObj = calculateTotalExperience(experience);
@@ -159,19 +148,7 @@ const CandidateDetail = () => {
     };
   }
 
-  // Get the job's required skills and experience (from the first applied job)
-  let requiredSkills = [];
-  let requiredExperience = "";
-  if (appliedJobs && appliedJobs.length > 0) {
-    const appliedJobId = parseInt(appliedJobs[0]);
-    const matchedJob = allJobs.find((job) => job.id === appliedJobId);
-    if (matchedJob) {
-      requiredSkills = matchedJob.skills || [];
-      requiredExperience = matchedJob.experience || "";
-    }
-  }
-
-  // Calculate experience match percentage
+  // For performance card: compute experience match
   let experienceRangeMatch = 0;
   const range = parseExperienceRange(requiredExperience);
   if (range && typeof totalExpObj.totalMonths === "number") {
@@ -182,54 +159,12 @@ const CandidateDetail = () => {
     );
   }
 
-  // Handler to send an invitation (updates candidate record)
-  const handleSendInvite = () => {
-    dispatch(updateCandidateInvitationRequest({ id: candidate.id, jobId, jobinvitation: 1 }));
-    if (jobId) {
-      navigate(`/recruiter/dashboard/candidates?jobId=${jobId}`);
-    } else {
-      navigate("/recruiter/dashboard/candidates");
-    }
-  };
-
-  // Simple caret icon component for accordions
-  const CaretIcon = ({ isOpen }) => (
-    <svg
-      className={`w-4 h-4 ml-2 transform transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`}
-      fill="none"
-      stroke="currentColor"
-      strokeWidth={2}
-      viewBox="0 0 24 24"
-    >
-      <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-    </svg>
-  );
-
-  // Reusable Accordion section component
-  const AccordionSection = ({ title, isOpen, onClick, children }) => (
-    <div className="border rounded-md mb-4 overflow-hidden">
-      <button
-        className="flex items-center justify-between w-full p-4 bg-transparent hover:bg-transparent transition-colors"
-        onClick={onClick}
-      >
-        <span className="font-semibold text-sm md:text-base">{title}</span>
-        <CaretIcon isOpen={isOpen} />
-      </button>
-      {isOpen && (
-        <div className="p-4 text-sm text-gray-700 transition-all ease-in-out duration-200">
-          {children}
-        </div>
-      )}
-    </div>
-  );
-  const candidateTestSession = candidateTests.find(
-    (test) => test.candidateId.toString() === id && test.jobId.toString() === jobId
-  );
   return (
     <div className="p-6 bg-white rounded shadow-sm">
-      <Link to="/recruiter/dashboard/candidates" className="text-blue-600 hover:underline inline-block mb-4 text-sm">
+      {/* If you want a back button, you can add it here. */}
+      {/* <Link to="/recruiter/dashboard/candidates" className="text-blue-600 hover:underline inline-block mb-4 text-sm">
         &larr; Back to Candidates List
-      </Link>
+      </Link> */}
 
       <div className="flex flex-col md:flex-row md:items-center md:justify-between">
         <div className="mb-4 md:mb-0">
@@ -239,9 +174,10 @@ const CandidateDetail = () => {
           <p className="text-sm text-gray-500 mb-2">{email}</p>
         </div>
         <div>
+          {/* Example "Send Invitation" button */}
           {jobinvitation === 0 && (
             <button
-              onClick={handleSendInvite}
+              onClick={() => onSendInvite && onSendInvite(candidate)}
               className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors"
             >
               Send Invitation
@@ -267,7 +203,9 @@ const CandidateDetail = () => {
         isOpen={showInterviewRounds}
         onClick={() => setShowInterviewRounds(!showInterviewRounds)}
       >
-        {candidateTestSession && candidateTestSession.interviewRounds && candidateTestSession.interviewRounds.length > 0 ? (
+        {candidateTestSession &&
+        candidateTestSession.interviewRounds &&
+        candidateTestSession.interviewRounds.length > 0 ? (
           candidateTestSession.interviewRounds.map((round, index) => (
             <div key={index} className="mb-2">
               <strong>Round {index + 1}:</strong> Score: {round.score}%
@@ -287,29 +225,27 @@ const CandidateDetail = () => {
             <strong>Overall Interview Score:</strong>{" "}
             {candidateTestSession && candidateTestSession.interviewScore != null
               ? candidateTestSession.interviewScore
-              : "N/A"}%
+              : "N/A"}
+            %
           </p>
         </div>
-        {candidateTestSession && candidateTestSession.interviewScore >= 70 && (
-          <div className="mt-4">
-            <button
-              onClick={() =>
-                navigate(`/recruiter/dashboard/interview?candidateId=${candidate.id}&jobId=${jobId}`)
-              }
-              className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition-colors"
-            >
-              Schedule Interview
-            </button>
-          </div>
-        )}
       </AccordionSection>
 
-      {/* Other Accordion Sections */}
-      <AccordionSection title="About" isOpen={showAbout} onClick={() => setShowAbout(!showAbout)}>
+      {/* About */}
+      <AccordionSection
+        title="About"
+        isOpen={showAbout}
+        onClick={() => setShowAbout(!showAbout)}
+      >
         {about || "No summary provided."}
       </AccordionSection>
 
-      <AccordionSection title="Experience" isOpen={showExperience} onClick={() => setShowExperience(!showExperience)}>
+      {/* Experience */}
+      <AccordionSection
+        title="Experience"
+        isOpen={showExperience}
+        onClick={() => setShowExperience(!showExperience)}
+      >
         {Array.isArray(experience) && experience.length > 0 ? (
           <>
             {totalExpObj.totalDuration && (
@@ -319,7 +255,8 @@ const CandidateDetail = () => {
                 <em>{totalExpObj.overallRange}</em>
                 {range && (
                   <p className="text-xs text-gray-600 mt-1">
-                    Candidate meets {experienceRangeMatch}% of this job's experience range.
+                    Candidate meets {experienceRangeMatch}% of this job's
+                    experience range.
                   </p>
                 )}
               </div>
@@ -336,16 +273,30 @@ const CandidateDetail = () => {
           </>
         ) : (
           <p>
-            {typeof experience === "string" ? totalExpObj.totalDuration : "No experience listed."}
+            {typeof experience === "string"
+              ? totalExpObj.totalDuration
+              : "No experience listed."}
           </p>
         )}
       </AccordionSection>
 
-      <AccordionSection title="Skills" isOpen={showSkills} onClick={() => setShowSkills(!showSkills)}>
-        {Array.isArray(skills) && skills.length > 0 ? skills.join(", ") : "No skills listed."}
+      {/* Skills */}
+      <AccordionSection
+        title="Skills"
+        isOpen={showSkills}
+        onClick={() => setShowSkills(!showSkills)}
+      >
+        {Array.isArray(skills) && skills.length > 0
+          ? skills.join(", ")
+          : "No skills listed."}
       </AccordionSection>
 
-      <AccordionSection title="Education" isOpen={showEducation} onClick={() => setShowEducation(!showEducation)}>
+      {/* Education */}
+      <AccordionSection
+        title="Education"
+        isOpen={showEducation}
+        onClick={() => setShowEducation(!showEducation)}
+      >
         {Array.isArray(education) && education.length > 0 ? (
           education.map((edu, i) => (
             <div key={i} className="mb-2">
@@ -357,7 +308,12 @@ const CandidateDetail = () => {
         )}
       </AccordionSection>
 
-      <AccordionSection title="Certifications" isOpen={showCertifications} onClick={() => setShowCertifications(!showCertifications)}>
+      {/* Certifications */}
+      <AccordionSection
+        title="Certifications"
+        isOpen={showCertifications}
+        onClick={() => setShowCertifications(!showCertifications)}
+      >
         {Array.isArray(certifications) && certifications.length > 0 ? (
           certifications.map((cert, i) => (
             <div key={i} className="mb-2">
@@ -369,10 +325,20 @@ const CandidateDetail = () => {
         )}
       </AccordionSection>
 
-      <AccordionSection title="Resume" isOpen={showResume} onClick={() => setShowResume(!showResume)}>
+      {/* Resume */}
+      <AccordionSection
+        title="Resume"
+        isOpen={showResume}
+        onClick={() => setShowResume(!showResume)}
+      >
         {resumeUrl ? (
           <div style={{ height: "800px" }}>
-            <iframe src={resumeUrl} title="Candidate Resume" width="100%" height="100%" />
+            <iframe
+              src={resumeUrl}
+              title="Candidate Resume"
+              width="100%"
+              height="100%"
+            />
           </div>
         ) : (
           <p>No resume uploaded.</p>
@@ -382,4 +348,4 @@ const CandidateDetail = () => {
   );
 };
 
-export default CandidateDetail;
+export default CandidateProfile;

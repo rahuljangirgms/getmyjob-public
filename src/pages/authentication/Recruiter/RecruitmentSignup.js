@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import group from '../../../assets/images/group.jpg';
 import { FcGoogle } from "react-icons/fc";
 import { useDispatch, useSelector } from "react-redux";
-import { authRequest } from "../../../store/slices/authSlice";
+import { authRequest } from "../../../store/slices/recruiter/authSlice";
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { toast, ToastContainer } from 'react-toastify';
