@@ -3,8 +3,8 @@ import React, { useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import Skeleton from "react-loading-skeleton";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchJobsRequest } from "../../../../store/slices/jobSlice";
-import { Folder, House, Mail } from "lucide-react";
+import { fetchJobsRequest } from "../../../../store/slices/recruiter/jobSlice";
+import { Folder, House, IndianRupee, Mail, Notebook, PersonStanding, User } from "lucide-react";
 // If you have an icon library for the star icon, import it here.
 // Example: import { Sparkles } from "lucide-react"; // or any star icon
 
@@ -45,7 +45,7 @@ const JobDetail = () => {
     return (
       <div className="p-6 max-w-5xl mx-auto">
         <h2 className="text-xl font-semibold mb-2">Job not found</h2>
-        <Link to="/" className="text-blue-600 hover:underline">
+        <Link to="/recruiter/dashboard/jobs" className="text-blue-600 hover:underline">
           &larr; Back to Jobs List
         </Link>
       </div>
@@ -55,7 +55,7 @@ const JobDetail = () => {
   return (
     <div className="p-6 max-w-7xl h-full my-auto bg-white mx-auto">
       {/* Back to Jobs List */}
-      <Link to="/" className="text-blue-600 hover:underline inline-block mb-4 text-sm">
+      <Link to="/recruiter/dashboard/jobs" className="text-blue-600 hover:underline inline-block mb-4 text-sm">
         &larr; Back to Jobs List
       </Link>
 
@@ -70,13 +70,16 @@ const JobDetail = () => {
       {/* Sub-header: Company, Location, Time posted */}
       <div className="text-gray-500 text-sm mb-6">
         {job.company} &mdash; {job.locations } &mdash;{" "}
-        <span>14 hours ago</span>
+        <span>  Posted on{" "}
+  {job.postedDate
+    ? new Date(job.postedDate).toLocaleDateString()
+    : "N/A"}</span>
       </div>
 
       {/* Main Content: 2 columns */}
       <div className="flex flex-col md:flex-row gap-6">
         {/* Left Column */}
-        <div className="w-full rounded-xl border-solid border-gray-400 border-2 border-opacity-5  md:w-2/3 space-y-4">
+        <div className="w-full rounded-xl border-solid border-gray-950 border-2 border-opacity-5  md:w-2/3 space-y-4">
           {/* About the job */}
           <div className=" p-4 rounded-md ">
             <h2 className="text-lg font-semibold mb-2">About the job</h2>
@@ -100,7 +103,7 @@ const JobDetail = () => {
           </div>
 
           {/* Skills */}
-          <div className=" p-4 rounded-xl  shadow-sm">
+          <div className=" p-4 rounded-xl  ">
   <h2 className="text-lg font-semibold mb-2">Skills</h2>
   {/* If job.skills is an array, map over it */}
   <div className="flex flex-wrap gap-2">
@@ -121,15 +124,18 @@ const JobDetail = () => {
         <div className="w-full md:w-1/3 space-y-4">
           {/* Salary & Info */}
           <div className="bg-gray-50 p-4 rounded-md shadow-sm">
-            <h3 className="text-xl font-bold mb-2">
-              {job.salary || "$135,700"}
-              <span className="text-sm text-gray-500 ml-2">Avg. salary</span>
+            <h3 className="text-xl font-bold mb-2 flex justify-start my-2">
+            <span className="rounded-full p-2 border-gray-300 border-2 my-auto"><IndianRupee size={18}/></span>  <span className=" my-auto mx-2 font-medium text-start"> {job.salary || "₹ 0"}  <span className="text-sm text-gray-500 ml-2">Avg. salary</span></span> 
+             
             </h3>
             <p className="text-sm text-gray-600 flex justify-start my-2 ">
             <span className="rounded-full p-2 border-gray-300 border-2 my-auto"><Folder size={18}/></span> <span className=" my-auto mx-2 font-medium text-start">{job.industries}</span> 
             </p>
             <p className="text-sm text-gray-600 flex justify-start my-2 ">
             <span className="rounded-full p-2 border-gray-300 border-2 my-auto"><House size={18}/></span> <span className=" my-auto mx-2 font-medium text-start"> {job.employmentType || "Full-time"}</span>
+            </p>
+            <p className="text-sm text-gray-600 flex justify-start my-2 ">
+            <span className="rounded-full p-2 border-gray-300 border-2 my-auto"><Notebook size={18}/></span> <span className=" my-auto mx-2 font-medium text-start"> {job.experience || "Experience"} Experience</span>
             </p>
             {/* <p className="text-sm text-gray-600 mb-1">
               {job.industries?.join(", ") || "Information technology"}
@@ -139,6 +145,15 @@ const JobDetail = () => {
             <span className="rounded-full p-2 border-gray-300 border-2 my-auto"><Mail size={18}/></span> <span className=" my-auto mx-2 text-start font-medium">
               {job.email || "jobs@microsoft.com"} </span>
             </p>
+<br className="divide-solid divide-x divide-gray-700 "/>
+            <div className="bg-gray-50  rounded-md my-10 ">
+            <h3 className="text-xl font-bold mb-2">
+             candidates 
+             <p className="text-sm text-gray-600 flex justify-start my-2 ">
+            <span className="rounded-full p-2 border-gray-300 border-2 my-auto"><User size={18}/></span> <span className=" my-auto mx-2 font-medium text-start">Applicants</span> 
+            </p>
+            </h3>
+            </div>
           </div>
 
           {/* Placeholder or Additional Info */}

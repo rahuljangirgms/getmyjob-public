@@ -2,44 +2,41 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
-// import { fetchCompaniesRequest } from "../../../../store/slices/companySlice";
 import withChipInput from "../../../../components/textinput/withChipInput";
-import { createCompanyRequest } from "../../../../store/slices/companySlice";
+// Use updateCompanyRequest instead of createCompanyRequest:
+import { updateCompanyRequest } from "../../../../store/slices/recruiter/companySlice";
 
 const CreateCompany = () => {
   const dispatch = useDispatch();
   const ChipInput = withChipInput();
-  const { loading, error } = useSelector((state) => state.companies);
-  const [logoPreview, setLogoPreview] = useState(null); // For displaying uploaded logo
+  // Note: our updated slice is now under state.company (singular)
+  const { loading, error } = useSelector((state) => state.company);
+  const [logoPreview, setLogoPreview] = useState(null);
 
-  // ✅ Validation Schema
+  // Validation Schema
   const validationSchema = Yup.object({
     name: Yup.string().min(3, "Must be at least 3 characters").required("Company Name is required"),
     locations: Yup.array()
-    .of(Yup.string().required("Location is required"))
-    .min(1, "At least one location is required") // ✅ At least one location
-    .max(5, "Max 5 locations allowed") // ✅ Max limit
-    .test("unique", "Locations must be unique", (value) => 
-      new Set(value).size === value.length // ✅ Ensure no duplicates
-    ),
+      .of(Yup.string().required("Location is required"))
+      .min(1, "At least one location is required")
+      .max(5, "Max 5 locations allowed")
+      .test("unique", "Locations must be unique", (value) => new Set(value).size === value.length),
     industries: Yup.array()
-    .of(Yup.string().required("Industry is required"))
-    .min(1, "At least one industry is required") // ✅ At least one industry
-    .max(5, "Max 5 industries allowed") // ✅ Max limit
-    .test("unique", "Industries must be unique", (value) => 
-      new Set(value).size === value.length // ✅ Ensure no duplicates
-    ),
+      .of(Yup.string().required("Industry is required"))
+      .min(1, "At least one industry is required")
+      .max(5, "Max 5 industries allowed")
+      .test("unique", "Industries must be unique", (value) => new Set(value).size === value.length),
     website: Yup.string().url("Enter a valid URL").required("Website is required"),
     about: Yup.string().min(10, "Minimum 10 characters").required("Company Description is required"),
     size: Yup.string().matches(/^\d+$/, "Enter a valid number").required("Company Size is required"),
     logo: Yup.mixed().required("Company Logo is required"),
   });
 
-  // ✅ Handle Logo Upload
+  // Handle Logo Upload
   const handleLogoChange = (event, setFieldValue) => {
     const file = event.target.files[0];
     if (file) {
-      setFieldValue("logo", file); // ✅ Update Formik State
+      setFieldValue("logo", file);
       const reader = new FileReader();
       reader.onloadend = () => setLogoPreview(reader.result);
       reader.readAsDataURL(file);
@@ -51,7 +48,6 @@ const CreateCompany = () => {
       <h2 className="text-xl font-bold text-gray-800">Create a New Company</h2>
       <p className="text-sm text-gray-600 mb-4">Fill out the form to register a new company.</p>
 
-      {/* ✅ FORM STARTS HERE */}
       <Formik
         initialValues={{
           name: "",
@@ -63,22 +59,21 @@ const CreateCompany = () => {
           logo: null,
         }}
         validationSchema={validationSchema}
-        validateOnChange={false} // ✅ Fixes the issue with FieldArray
+        validateOnChange={false}
         onSubmit={(values, { setSubmitting }) => {
           console.log("🚀 Form Submitted!");
-          console.log("Company Data:", values); // ✅ Logs all form values
+          console.log("Company Data:", values);
           const formData = new FormData();
-  Object.keys(values).forEach((key) => {
-    if (key === "logo" && values.logo) {
-      formData.append("logo", values.logo);
-    } else {
-      formData.append(key, values[key]);
-    }
-  });
-          // Dispatch Redux action (Uncomment when API is ready)
-          dispatch(createCompanyRequest(formData));
-          
-          setSubmitting(false); // ✅ Reset Form Submission State
+          Object.keys(values).forEach((key) => {
+            if (key === "logo" && values.logo) {
+              formData.append("logo", values.logo);
+            } else {
+              formData.append(key, values[key]);
+            }
+          });
+          // Dispatch updateCompanyRequest (it will work as a create if no profile exists)
+          dispatch(updateCompanyRequest(formData));
+          setSubmitting(false);
         }}
       >
         {({ values, handleChange, setFieldValue, errors, touched }) => (
@@ -89,11 +84,15 @@ const CreateCompany = () => {
               <input
                 type="file"
                 accept="image/*"
-                onChange={(e) => handleLogoChange(e, setFieldValue)} // ✅ Fix File Upload
+                onChange={(e) => handleLogoChange(e, setFieldValue)}
                 className="w-full border p-2 rounded-md"
               />
               {logoPreview && (
-                <img src={logoPreview} alt="Company Logo Preview" className="mt-3 w-28 h-28 object-fill rounded-md border" />
+                <img
+                  src={logoPreview}
+                  alt="Company Logo Preview"
+                  className="mt-3 w-28 h-28 object-fill rounded-md border"
+                />
               )}
               {touched.logo && errors.logo && <p className="text-red-500 text-sm">{errors.logo}</p>}
             </div>
@@ -121,9 +120,7 @@ const CreateCompany = () => {
                 placeholder="Enter a location and press Enter"
                 type="location"
               />
-               {touched.locations && errors.locations && (
-    <p className="text-red-500 text-sm">{errors.locations}</p>
-  )}
+              {touched.locations && errors.locations && <p className="text-red-500 text-sm">{errors.locations}</p>}
             </div>
 
             {/* Industries (With Chip Input) */}
@@ -136,9 +133,7 @@ const CreateCompany = () => {
                 placeholder="Enter an industry and press Enter"
                 type="industry"
               />
-               {touched.industries && errors.industries && (
-    <p className="text-red-500 text-sm">{errors.industries}</p>
-  )}
+              {touched.industries && errors.industries && <p className="text-red-500 text-sm">{errors.industries}</p>}
             </div>
 
             {/* Company Website */}

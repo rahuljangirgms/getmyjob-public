@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useField } from "formik";
-import locations from "../../dummydata/locations";
-import industries from "../../dummydata/industries";
+// import locations from "../../dummydata/locations";
+// import industries from "../../dummydata/industries";
 
 const ChipInput = ({ label, placeholder, name, type }) => {
   if (!name || typeof name !== "string") {

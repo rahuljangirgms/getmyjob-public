@@ -40,6 +40,16 @@ import CompanyManagement from './pages/dashboard/recruiter/Companymanagement/Com
 import CreateCompany from './pages/dashboard/recruiter/Companymanagement/CreateCompany'
 import IndexUser from './pages/dashboard/recruiter/userManagement/IndexUser'
 import JobDetail from './pages/dashboard/recruiter/Jobmanagement/JobDetail'
+import CandidateManagement from './pages/dashboard/recruiter/candidateManagement/CandidateManagement'
+import CandidateDetail from './pages/dashboard/recruiter/candidateManagement/CandidateDetail'
+import InterviewInvitation from './pages/dashboard/recruiter/InterviewInvitation'
+import Billing from './pages/dashboard/recruiter/dropdowns/Billing'
+import Subscriptions from './pages/dashboard/recruiter/dropdowns/Subscriptions'
+import Contactus from './pages/dashboard/recruiter/dropdowns/Contactus'
+import AccountSettings from './pages/dashboard/recruiter/dropdowns/AccountSettings'
+import EmployeerSettings from './pages/dashboard/recruiter/dropdowns/EmployeerSettings'
+import CandidateTestPage from './pages/dashboard/recruiter/candidateManagement/CandidateTestPage'
+import PermissionRoute from './routes/PermissionRoute'
 
 const App = () => {
   return (
@@ -77,16 +87,38 @@ const App = () => {
       <Route path="/recruiter/reset-password" element={<RecruitmentResetPassword />} />
       <Route path="/recruiter/forgot-password" element={<RecruitmentForgotpassword />} />
       
-      {/* <Route path="/recruiter/dashboard" element={<RecruitmentAuthRoutes element={<RecruiterLayout />} allowedRoles={["recruiter"]} />}></Route> */}
-      <Route path="/recruiter/dashboard" element={<RecruiterLayout /> }>
-        <Route index element={<RecruiterDashboard />} />
-        <Route path='companies' element={<CompanyManagement/>}/>
-        <Route path="companies/create" element={<CreateCompany />} />
-        <Route path="jobs" element={<JobManagement />} />
-        <Route path="jobs/create" element={<CreateJob />} />
-        <Route path="jobs/detail/:id" element={<JobDetail />} />
-        <Route path="jobs/edit/:id" element={<EditJob />} />
-        <Route path="users" element={<IndexUser />} />
+         {/* Protected recruiter dashboard routes */}
+         <Route path="/recruiter/dashboard" element={<RecruitmentAuthRoutes allowedRoles={["recruiter","Senior Recruiter","HR-Admin","Admin","Manager"]} />}>
+          {/* The RecruitmentAuthRoutes component now checks for valid token and allowed role.
+              Nested inside, we render the RecruiterLayout that includes the sidebar/header */}
+          <Route element={<RecruiterLayout />}>
+          <Route index element={<PermissionRoute menu="dashboard" action="view"><RecruiterDashboard /></PermissionRoute>} />
+            <Route path="companies" element={<CompanyManagement />} />
+            <Route path="companies/create" element={<CreateCompany />} />
+            <Route path="jobs"element={<PermissionRoute menu="job management" action="view"><JobManagement /></PermissionRoute>}/>
+            <Route path="jobs/create" element={<CreateJob />} />
+            <Route path="jobs/detail/:id" element={<JobDetail />} />
+            <Route path="jobs/edit/:id" element={<EditJob />} />
+            <Route path="users" element={<PermissionRoute menu="users" action="view"><IndexUser /></PermissionRoute>} />
+            <Route path="candidates" element={<PermissionRoute menu="candidate" action="view"><CandidateManagement /></PermissionRoute>} />
+            <Route path="candidates/detail/:id" element={<CandidateDetail />} />
+            <Route path="candidates/test/:testSessionId" element={<CandidateTestPage />} />
+            <Route path="candidates/open-to-work" element={<CandidateManagement />} />
+            <Route path="candidates/jobId" element={<CandidateManagement />} />
+            <Route path="interview" element={<PermissionRoute menu="interview" action="view"><InterviewInvitation /></PermissionRoute>} />
+
+            {/* Recruiter profile routes */}
+            <Route path="billing-plans" element={<Billing />} />
+            <Route path="subscriptions" element={<Subscriptions />} />
+            <Route path="contact-us" element={<Contactus />} />
+            <Route path="account-settings" element={<AccountSettings />} />
+            <Route path="employeer-settings" element={<EmployeerSettings />} />
+          </Route>
+        
+
+
+
+
       </Route>
 
 

@@ -1,21 +1,27 @@
 import React, { useState } from "react";
+import { useField } from "formik";
 import { FaUpload } from "react-icons/fa";
 
-function FileUploadField({ label, name, setFieldValue, error }) {
-  const [preview, setPreview] = useState(null);
+function FileUploadField({ label, name, setFieldValue }) {
+  const [field, meta] = useField(name);
+  const [preview, setPreview] = useState(field.value || null); // If already set, show preview
 
-  const handleFileChange = (event) => {
+  const handleFileChange = async (event) => {
     const file = event.currentTarget.files?.[0];
     if (file) {
-      setFieldValue(name, file);
-
-      // Generate preview
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setPreview(reader.result);
-      };
-      reader.readAsDataURL(file);
+      const base64 = await convertFileToBase64(file);
+      setFieldValue(name, base64); // Save as Base64
+      setPreview(base64); // Update preview
     }
+  };
+
+  const convertFileToBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = (error) => reject(error);
+    });
   };
 
   return (
@@ -24,8 +30,6 @@ function FileUploadField({ label, name, setFieldValue, error }) {
       <div className="flex items-center justify-center">
         <div className="relative h-40 w-40">
           <div className="flex h-full w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 hover:bg-gray-100">
-            
-            {/* Show uploaded image preview */}
             {preview ? (
               <img src={preview} alt="Preview" className="h-full w-full object-cover rounded-lg" />
             ) : (
@@ -35,8 +39,6 @@ function FileUploadField({ label, name, setFieldValue, error }) {
                 <p className="mt-1 text-xs text-gray-400">File size must be below 3MB</p>
               </div>
             )}
-            
-            {/* Hidden Input Field */}
             <input
               type="file"
               name={name}
@@ -47,9 +49,9 @@ function FileUploadField({ label, name, setFieldValue, error }) {
           </div>
         </div>
       </div>
-      
-      {/* Error Message */}
-      {error && <div className="mt-1 text-sm text-red-600">{error}</div>}
+      {meta.touched && meta.error && (
+        <div className="mt-1 text-sm text-center py-2 text-red-600">{meta.error}</div>
+      )}
     </div>
   );
 }

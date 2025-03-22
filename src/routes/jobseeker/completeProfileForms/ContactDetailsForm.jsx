@@ -1,58 +1,45 @@
 import React from "react";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
-
 import InputField from "./../../../components/JobSeekerComponents/InputField";
-import DropDown from "./../../../components/JobSeekerComponents/DropDown";
-import TextAreaField from "./../../../components/JobSeekerComponents/TextAreaField";
-import WebLinksField from "./../../../components/JobSeekerComponents/WebLinksField";
-import { FaSave } from 'react-icons/fa';
+import { FaSave } from "react-icons/fa";
+import {saveContactDetails} from './../../../store/slices/profileFormsSlice';
+import { useDispatch, useSelector } from 'react-redux';
+
 
 const validationSchema = Yup.object({
   secondaryPhone: Yup.string()
     .matches(/^[0-9]+$/, "Must be only digits")
     .min(10, "Must be exactly 10 digits")
-    .max(10, "Must be exactly 10 digits"),
-  primaryEmail: Yup.string()
+    .max(10, "Must be exactly 10 digits")
+    .required("Secondary phone number is required"),
+  otherEmail: Yup.string()
     .email("Invalid email address")
-    .required("Primary email is required"),
-  otherEmail: Yup.string().email("Invalid email address"),
-  webLinks: Yup.array()
-    .of(
-      Yup.object().shape({
-        type: Yup.string().required("Platform is required"),
-        url: Yup.string().url("Invalid URL").required("URL is required"),
-      })
-    )
-    .min(1, "At least one web link is required"),
-  currentAddress: Yup.string().required("Current address is required"),
-  country: Yup.string().required("Country is required"),
-  state: Yup.string().required("State is required"),
-  city: Yup.string().required("City is required"),
-  zipCode: Yup.string()
-    .matches(/^[0-9]+$/, "Must be only digits")
-    .min(6, "Must be exactly 6 digits")
-    .max(6, "Must be exactly 6 digits")
-    .required("ZIP code is required"),
-  permanentAddress: Yup.string().required("Permanent address is required"),
+    .required("Other email is required"),
+  linkedInUrl: Yup.string().url("Invalid URL"), // Optional
+  githubUrl: Yup.string().url("Invalid URL"), // Optional
 });
 
-const initialValues = {
-  secondaryPhone: "",
-  primaryEmail: "",
-  otherEmail: "",
-  webLinks: [{ type: "", url: "" }], // Start with an empty link
-  currentAddress: "",
-  country: "",
-  state: "",
-  city: "",
-  zipCode: "",
-  permanentAddress: "",
-};
 
 function ContactDetailsForm() {
+
+  const savedContactDetails = useSelector((state) => state.profileForms.contactDetails);
+  
+const initialValues = {
+  secondaryPhone: savedContactDetails.secondaryPhone|| "",
+  otherEmail: savedContactDetails.otherEmail  || "",
+  linkedInUrl: savedContactDetails.linkedInUrl  ||"", // Optional field
+  githubUrl: savedContactDetails.githubUrl || "", // Optional field
+};
+
+
+  const dispatch = useDispatch();
+
+
+
   const handleSubmit = (values, { setSubmitting }) => {
-    console.log(values);
+    console.log("Form submitted with values:", values);
+    dispatch(saveContactDetails(values));
     setSubmitting(false);
   };
 
@@ -62,19 +49,29 @@ function ContactDetailsForm() {
         <Formik
           initialValues={initialValues}
           validationSchema={validationSchema}
+          validateOnChange={false} // Run validation only on submit
+          validateOnBlur={true}
           onSubmit={handleSubmit}
         >
-          {({ isSubmitting, setFieldValue }) => (
+          {({ isSubmitting }) => (
             <Form className="space-y-8 rounded-lg bg-white p-6 shadow-sm">
               <InputField label="Secondary Phone Number" name="secondaryPhone" />
-              <InputField label="Primary Email" name="primaryEmail" type="email" />
               <InputField label="Other Email" name="otherEmail" type="email" />
-
-              {/* Web Links Field */}
-              <WebLinksField name="webLinks" setFieldValue={setFieldValue} />
-
-          
-
+              <InputField
+                  optional={true}
+                  label="LinkedIn URL"
+                  name="linkedInUrl"
+                  type="url"
+                  placeholder="https://www.linkedin.com/in/your-profile"
+                /> 
+               <InputField
+                  optional={true}
+                  label="GitHub URL"
+                  name="githubUrl"
+                  type="url"
+                  placeholder="https://github.com/your-username"
+                />
+    
               <div className="flex justify-end">
                 <button
                   type="submit"

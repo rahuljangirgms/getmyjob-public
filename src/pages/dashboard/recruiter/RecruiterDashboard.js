@@ -37,14 +37,14 @@ const RecruiterDashboard = () => {
   return (
     <>
       <div>
-        <div className="p-6 bg-gradient-to-br from-blue-400 to-blue-500 text-white">
+        <div className="p-6 bg-gradient-to-br rounded-md from-blue-400 to-blue-500 text-white">
           {/* Top Navbar */}
-          <div className="flex justify-between items-center pb-4">
+          {/* <div className="flex justify-between items-center pb-4">
             <h1 className="text-2xl font-bold">DASHBOARD</h1>
             <div className="bg-white text-blue-600 px-4 py-2 rounded-full font-semibold">
               JHON DOE
             </div>
-          </div>
+          </div> */}
 
           {/* Stats Cards */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">

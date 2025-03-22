@@ -2,7 +2,7 @@ import React from "react";
 import { RiDeleteBinLine } from "react-icons/ri";
 import { MdOutlineEdit } from "react-icons/md";
 
-function ExperienceDetailsDisplay({ title, data }) {
+function ExperienceDetailsDisplay({ title, data, onDelete,onEdit }) {
   console.log(data);
 
   function formatDate(dateString) {
@@ -23,12 +23,14 @@ function ExperienceDetailsDisplay({ title, data }) {
           <button
             type="button"
             className="text-blue-700 border border-blue-700 hover:bg-blue-700 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-xs md:text-sm p-2 text-center inline-flex items-center"
+            onClick={onEdit}
           >
             <MdOutlineEdit size={16} />
           </button>
           <button
             type="button"
             className="text-red-700 border border-red-700 hover:bg-red-700 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-xs md:text-sm p-2 text-center inline-flex items-center"
+            onClick={() => onDelete()}
           >
             <RiDeleteBinLine size={16} />
           </button>
@@ -124,7 +126,7 @@ function ExperienceDetailsDisplay({ title, data }) {
           </p>
         )}
 
-        {data.to && data.from && (
+        {data.from && (
           <p>
             <span className="text-blue-700 font-semibold">
               {formatDate(data.from)}

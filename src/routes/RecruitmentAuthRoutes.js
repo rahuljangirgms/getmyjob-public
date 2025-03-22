@@ -1,20 +1,23 @@
-
+// src/routes/RecruitmentAuthRoutes.js
+import React from 'react';
 import { useSelector } from 'react-redux';
 import { Navigate, Outlet } from 'react-router-dom';
 
 const RecruitmentAuthRoutes = ({ allowedRoles }) => {
   const { user, token } = useSelector((state) => state.auth);
-  const role = user?.role || localStorage.getItem("role"); // Get role from Redux or localStorage
+  const role = user?.role || localStorage.getItem("role"); // Fallback if Redux state is empty
 
   if (!token) {
-    return <Navigate to="/recruiter/login" replace />; // Redirect if not logged in
+    // If not logged in, redirect to login
+    return <Navigate to="/recruiter/login" replace />;
   }
 
   if (!allowedRoles.includes(role)) {
-    return <Navigate to="/unauthorized" replace />; // Redirect if role not allowed
+    // If logged in but role is not allowed, redirect to unauthorized page
+    return <Navigate to="/unauthorized" replace />;
   }
 
   return <Outlet />;
-}
+};
 
-export default RecruitmentAuthRoutes
+export default RecruitmentAuthRoutes;

@@ -2,11 +2,35 @@ import React, { useState } from "react";
 import EducationAddBox from "./../../../components/JobSeekerComponents/EducationAddBox";
 import EducationDetailsDisplay from "./../../../components/JobSeekerComponents/EducationDetailsDisplay";
 import { FaSave } from "react-icons/fa";
+import { useDispatch, useSelector } from 'react-redux';
+import {saveEducationalDetails,saveTenthDetails} from './../../../store/slices/profileFormsSlice';
 
 function EducationalDetailsFrom() {
+
   const [tenthData, setTenthData] = useState(null);
   const [twelfthData, setTwelfthData] = useState(null);
   const [graduationData, setGraduationData] = useState(null);
+
+  const dispatch = useDispatch();
+
+  const degreeDetails = useSelector(state => state.profileForms.educationalDetails.degreeGraduation);
+
+  //console.log("Degree Details: ", degreeDetails);
+  const twelthDetails = useSelector(state => state.profileForms.educationalDetails.twelfthDetails);
+  const tenthDetails = useSelector(state => state.profileForms.educationalDetails.tenthDetails);
+
+
+  const handleSaveDetails = () =>{
+    const combinedEducationalDetails = {
+      degreeDetails,
+      twelthDetails,
+      tenthDetails,
+    };
+
+
+    //dispatch(saveEducationalDetails(combinedEducationalDetails));
+  }
+
 
   const demodata = {
     degree: "10th SSC",
@@ -29,7 +53,7 @@ function EducationalDetailsFrom() {
 
       <div className="flex justify-end">
           <button
-            type="submit"
+            onClick={handleSaveDetails}
             className="inline-flex items-center gap-2 rounded-md bg-blue-600 px-6 py-2 text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 mb-4"
           >
             <FaSave />
@@ -38,49 +62,59 @@ function EducationalDetailsFrom() {
         </div>
 
 
-        <EducationDetailsDisplay
+        {/* <EducationDetailsDisplay
           title={"Masters in Bussiness Intelligence"}
           data={demodata}
-        />
+        /> */}
 
         {/* For Degree / Graduation */}
-        {graduationData ? (
+        {degreeDetails && Object.keys(degreeDetails).length > 0 ? (
           <EducationDetailsDisplay
             title={"Degree / Graduation"}
-            data={graduationData}
+            data={degreeDetails}
           />
         ) : (
           <EducationAddBox
             title={"Degree / Graduation"}
-            onSubmit={(data) => setGraduationData(data)}
+            onSubmit={(data) => {
+              setGraduationData(data);
+              dispatch(saveEducationalDetails({ degreeGraduation: data }));
+            }}
+            
           />
         )}
 
         {/* for 12th HSC  */}
 
-        {twelfthData ? (
+        {twelthDetails && Object.keys(twelthDetails).length > 0 ? (
           <EducationDetailsDisplay
             title={"12th Standard (Higher / Senior Secondary)"}
-            data={twelfthData}
+            data={twelthDetails}
           />
         ) : (
           <EducationAddBox
-            title={"12th Details"}
-            onSubmit={(data) => setTwelfthData(data)}
+            title={"12th Standard (Higher / Senior Secondary)"}
+            onSubmit={(data) => {
+              setTwelfthData(data);
+              dispatch(saveEducationalDetails({ twelfthDetails: data }));
+            }}
           />
         )}
 
         {/* for 10th SSC */}
 
-        {tenthData ? (
+        {tenthDetails && Object.keys(tenthDetails).length > 0 ? (
           <EducationDetailsDisplay
             title={"10th Standard (Secondary)"}
-            data={tenthData}
+            data={tenthDetails}
           />
         ) : (
           <EducationAddBox
-            title={"10th Details"}
-            onSubmit={(data) => setTenthData(data)}
+            title={"10th Standard (Secondary)"}
+            onSubmit={(data) => {
+              setTenthData(data);
+              dispatch(saveTenthDetails(data));
+            }}
           />
         )}
 

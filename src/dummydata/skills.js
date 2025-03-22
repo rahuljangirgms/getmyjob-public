@@ -1,16 +1,18 @@
 const skills = [
-    "React Js",
+    "React",
     "React Native",
-    "Core Java",
+    "Java",
     "Advance Java",
     "Spring",
     "Spring Boot",
-    "Node Js",
+    "Node",
     "Asp.net",
     "Python",
     "Aws",
     "Laravel",
     "Angular Js",
+    "Cad",
+    "Auto cad"
   ];
   
   export default skills;
