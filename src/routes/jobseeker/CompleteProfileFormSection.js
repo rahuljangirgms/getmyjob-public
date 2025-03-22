@@ -12,12 +12,17 @@ import {
 } from "react-icons/fa";
 import { FaInfoCircle, FaPhoneAlt } from "react-icons/fa";
 import { useNavigate, useLocation, Outlet } from "react-router-dom";
-import MobileNavigationBar from './../../components/JobSeekerComponents/MobileNavigationBar';
+import MobileNavigationBar from "./../../components/JobSeekerComponents/MobileNavigationBar";
+import ConfirmationModal from './../../components/JobSeekerComponents/ReusableComponents/ConfirmationModal';
 
 function CompleteProfileFormSection() {
   const navigate = useNavigate();
   const location = useLocation();
-  const [activeTab, setActiveTab] = useState("");
+
+  const [activeTab, setActiveTab] = useState(localStorage.getItem("activeTab") || "personalInfo");
+  const [isFormDirty, setIsFormDirty] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [pendingRoute, setPendingRoute] = useState(null);
 
   const sidebarItems = [
     { id: "personalInfo", label: "Personal Information", icon: <FaUser size={20} />, route: "/jobseeker/complete-profile-form/personal-info" },
@@ -33,27 +38,60 @@ function CompleteProfileFormSection() {
     { id: "otherdetails", label: "Other Details", icon: <FaInfoCircle size={20} />, route: "/jobseeker/complete-profile-form/other-details" },
   ];
 
-  // Update active tab based on URL
+  // ✅ Save active tab to localStorage
   useEffect(() => {
-    const activeItem = sidebarItems.find((item) => location.pathname.includes(item.route));
-    if (activeItem) {
-      setActiveTab(activeItem.id);
+    localStorage.setItem("activeTab", activeTab);
+  }, [activeTab]);
+
+  // ✅ Reset active tab when user navigates away
+  useEffect(() => {
+    const isProfileFormRoute = location.pathname.startsWith("/jobseeker/complete-profile-form");
+    if (!isProfileFormRoute) {
+      localStorage.removeItem("activeTab");
+      setActiveTab("personalInfo");
     }
-  }, [location.pathname, sidebarItems]);
+  }, [location.pathname]);
+
+  // ✅ Warn before browser close or reload
+  useEffect(() => {
+    const handleBeforeUnload = (event) => {
+      if (isFormDirty) {
+        event.preventDefault();
+        event.returnValue = "You have unsaved changes. Are you sure you want to leave?";
+      }
+    };
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    return () => window.removeEventListener("beforeunload", handleBeforeUnload);
+  }, [isFormDirty]);
 
   const handleTabClick = (id, route) => {
-    setActiveTab(id);
-    navigate(route);
+    if (isFormDirty) {
+      setIsModalOpen(true);
+      setPendingRoute({ id, route });
+    } else {
+      setActiveTab(id);
+      navigate(route);
+    }
+  };
+
+  const confirmNavigation = () => {
+    if (pendingRoute) {
+      setActiveTab(pendingRoute.id);
+      navigate(pendingRoute.route);
+      setIsModalOpen(false);
+      setIsFormDirty(false);
+      setPendingRoute(null);
+    }
   };
 
   return (
     <div className="flex flex-col min-h-screen bg-gray-50 pt-20">
-      {/* Mobile Navigation Bar (Tabs at the top) */}
-      <MobileNavigationBar sidebarItems={sidebarItems} />
+      {/* Mobile Tabs */}
+      <MobileNavigationBar sidebarItems={sidebarItems} isFormDirty={isFormDirty} setIsFormDirty={setIsFormDirty} />
 
       <div className="flex flex-row w-full">
-        {/* Sidebar (Visible on Desktop & Tablet) */}
-        <div className="hidden md:block md:w-1/5 bg-white border-r border-gray-200">
+        {/* Desktop Sidebar */}
+        <div className="hidden lg:block lg:w-1/6 bg-white border-r border-gray-200 h-screen sticky top-0">
           <nav className="flex flex-col py-4">
             {sidebarItems.map((item) => (
               <button
@@ -74,10 +112,23 @@ function CompleteProfileFormSection() {
         </div>
 
         {/* Main Content */}
-        <div className="w-full mt-16 md:mt-0">
-          <Outlet />
+        <div className="flex-1 h-[calc(100vh-80px)] overflow-y-auto p-4 mt-10 md:mt-8">
+          <Outlet context={{ setIsFormDirty }} />
         </div>
       </div>
+
+      {/* Unsaved Changes Modal */}
+      {isModalOpen && (
+        <ConfirmationModal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          onConfirm={confirmNavigation}
+          title="Leave this page"
+          message="There might be unsaved changes. Are you sure you want to leave this page?"
+          confirmText="Confirm"
+          cancelText="Cancel"
+        />
+      )}
     </div>
   );
 }

@@ -1,6 +1,8 @@
 import React from "react";
 
-import AIButton from "./../../components/JobSeekerComponents/AIButton";
+import AIButton from "./../../components/JobSeekerComponents/Buttons/AIButton";
+
+import { useNavigate } from 'react-router-dom';
 
 import {
   Briefcase,
@@ -9,9 +11,19 @@ import {
   FileCode2,
   BookmarkPlus,
   Wallet,
-} from "lucide-react";
+} from "lucide-react";  
+
+
 
 const JobDetailsPage = () => {
+
+  const navigate = useNavigate();
+
+  const handleApplyBtn = () =>{
+    navigate('/jobseeker/apply-job');
+  }
+
+
   const skills = ["Business", "Marketing", "Development"];
   const latestJobs = [
     {
@@ -72,7 +84,9 @@ const JobDetailsPage = () => {
               <BookmarkPlus className="mr-2 w-4 h-4" /> Save
             </button>
             <AIButton btnTxt={"Generate Resume By Job Description"} />
-            <button className="px-6 py-2 border rounded-lg text-sm font-medium text-white bg-green-600 hover:bg-green-700 transition-colors">
+            <button className="px-6 py-2 border rounded-lg text-sm font-medium text-white bg-green-600 hover:bg-green-700 transition-colors"
+            onClick={()=> handleApplyBtn()}
+            >
               Apply
             </button>
           </div>

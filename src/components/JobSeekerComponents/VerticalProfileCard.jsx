@@ -5,20 +5,25 @@ import { PiBagFill } from "react-icons/pi";
 import { RiMessage2Fill } from "react-icons/ri";
 import { RiMap2Fill } from "react-icons/ri";
 
-function VerticalProfileCard() {
+
+
+function VerticalProfileCard({profileData}) {
+
+
+  
   return (
     <div className="max-w-sm mx-auto space-y-4">
     {/* Profile Section */}
     <div className="bg-white rounded-2xl p-6 border-2 border-gray-200">
       <div className="flex flex-col items-center text-center  border-b-2 border-gray-200 pb-3">
         <img
-          src={avtar}
+          src={profileData.profilePicture}
           alt='user-image'
           className="w-20 h-20 rounded-full bg-indigo-100"
         />
-        <h2 className="mt-4 text-xl font-semibold text-gray-900">Emma Carter</h2>
-        <p className="text-gray-600">Software Engineer</p>
-        <p className="text-gray-500 text-sm">5 Years</p>
+        <h2 className="mt-4 text-xl font-semibold text-gray-900">{profileData.firstName} {profileData.lastName}</h2>
+        <p className="text-gray-600">{profileData.specialization}</p>
+        <p className="text-gray-500 text-sm">Experience: {profileData.totalExpYear} Years {profileData.totalExpMonth} Months</p>
       </div>
       <div className="mt-6 space-y-4">
         <div className="flex items-center space-x-3">
