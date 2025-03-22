@@ -5,6 +5,10 @@ import breifcaseLogo from "./../../../assets/images/brief-case.png";
 import avtarGroupImg from "./../../../assets/images/avtar-group.png";
 import { FaEye, FaEyeSlash } from "react-icons/fa"; // Add the icons
 
+import { login } from "../../../services/admin/authService";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 const flipAnimation = {
   initial: { rotateY: 90, opacity: 0 },
   animate: { rotateY: 0, opacity: 1, transition: { duration: 0.6 } },
@@ -12,23 +16,38 @@ const flipAnimation = {
 };
 
 function AdminSignIn() {
-  const [passwordVisible, setPasswordVisible] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  
-  const navigate = useNavigate();  // Use navigate hook to programmatically navigate
+  const [passwordVisible, setPasswordVisible] = useState(false);
+  const navigate = useNavigate();
 
-  // Form submit handler
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Here you can add form validation logic if needed
-    if (email && password) {
-      // Navigate to the dashboard page after successful login
-      navigate("/admin/dashboard");
-    } else {
-      alert("Please fill in all fields");
+    if (!email || !password) {
+      toast.error("Please fill in all fields");
+      return;
     }
+
+    try {
+      const response = await login(email, password);
+
+      toast.success(response.message || "Login successful!");
+
+      // Store the token and user info
+      localStorage.setItem("authToken", response.token);
+      localStorage.setItem("userInfo", JSON.stringify(response.data));
+      localStorage.setItem("permissions", JSON.stringify(response.permissions));
+
+      // Redirect after login
+      setTimeout(() => {
+        navigate("/admin/dashboard");
+      }, 1500);
+
+    } catch (error) {
+      toast.error(error.message || "Login failed. Please try again.");
+    }
+
   };
 
   return (
@@ -40,6 +59,8 @@ function AdminSignIn() {
         backgroundPosition: "center",
       }}
     >
+
+      
       {/* Login Form Section */}
       <div className="flex flex-col justify-center items-center p-6 md:p-12 w-full h-screen bg-white shadow-lg rounded-lg">
         <motion.div
@@ -49,6 +70,12 @@ function AdminSignIn() {
           animate="animate"
           exit="exit"
         >
+
+          <motion.div>
+             <ToastContainer position="top-right" autoClose={3000} />
+          </motion.div>
+
+         
           <h2 className="text-3xl font-bold text-center text-gray-900">
             Welcome back 🎉
           </h2>

@@ -97,8 +97,6 @@ import ApplyForJobPage from './pages/jobseekerpages/ApplyForJobPage';
 // import Users from './pages/dashboard/admin/modules/usermanagment/users'
 // import UserProfile from './pages/dashboard/admin/components/UserProfile/UserProfile'
 // added by admin rahul to use flowbit 
-import "flowbite";
-import "./index.css";
 
 
 
@@ -121,11 +119,13 @@ import EmployeerSettings from './pages/dashboard/recruiter/dropdowns/EmployeerSe
 import CandidateTestPage from './pages/dashboard/recruiter/candidateManagement/CandidateTestPage'
 import PermissionRoute from './routes/PermissionRoute'
 
+
+// added by admin rahul
 import AdminSignIn from './pages/authentication/admin/admin-signin'
 import AdminSignUp from './pages/authentication/admin/admin-signup'
 import ForgotPassword from './pages/authentication/admin/admin-forgot-password'
 import Dashboard from './pages/dashboard/admin/Dashboard'
-import Recruiters  from './pages/dashboard/admin/modules/recruiters/recruiters'
+import Recruiters from './pages/dashboard/admin/modules/recruiters/recruiters'
 import Jobseekers from './pages/dashboard/admin/modules/jobseekers/jobseekers'
 import ReportsAnalytics from './pages/dashboard/admin/modules/reportsanalytics/reportsanalytics'
 import SupportManagement from './pages/dashboard/admin/modules/supportmanagment/supportmanagment'
@@ -134,151 +134,236 @@ import Roles from './pages/dashboard/admin/modules/usermanagment/roles';
 import Permissions from './pages/dashboard/admin/modules/usermanagment/permission';
 import Users from './pages/dashboard/admin/modules/usermanagment/users'
 import UserProfile from './pages/dashboard/admin/components/UserProfile/UserProfile'
-// added by admin rahul to use flowbit 
+// added by admin rahul to use flowbit
 import "flowbite";
 import "./index.css";
+
+// Adminguards
+import AdminProtectedRoute from './services/Guards/ProtectedRoute'
+import PermissionGuard from './services/Guards/PermissionGuard'
 
 const App = () => {
   return (
     <>
-    <Routes>
-  {/* Public (unprotected) jobseeker routes */}
-  <Route path="/jobseeker/" element={<JobSeekerHomePage />} />
-  <Route path="/jobseeker/login" element={<JobseekerLogin />} />
-  <Route path="/jobseeker/signup" element={<JobSeekerSignUp />} />
-  <Route path="/jobseeker/forgetpassword" element={<JobseekerForgetPass />} />
-  <Route path="/jobseeker/resetpassword" element={<JobseekerResetPass />} />
+      <Routes>
+        {/* Public (unprotected) jobseeker routes */}
+        <Route path="/jobseeker/" element={<JobSeekerHomePage />} />
+        <Route path="/jobseeker/login" element={<JobseekerLogin />} />
+        <Route path="/jobseeker/signup" element={<JobSeekerSignUp />} />
+        <Route path="/jobseeker/forgetpassword" element={<JobseekerForgetPass />} />
+        <Route path="/jobseeker/resetpassword" element={<JobseekerResetPass />} />
 
-  {/* Prevent logged-in users from accessing these routes */}
-  <Route element={<RedirectIfAuthenticated />}>
-    <Route path="/jobseeker/" element={<JobSeekerHomePage />} />
-    <Route path="/jobseeker/login" element={<JobseekerLogin />} />
-    <Route path="/jobseeker/signup" element={<JobSeekerSignUp />} />
-    <Route path="/jobseeker/forgetpassword" element={<JobseekerForgetPass />} />
-    <Route path="/jobseeker/resetpassword" element={<JobseekerResetPass />} />
-  </Route>
+        {/* Prevent logged-in users from accessing these routes */}
+        <Route element={<RedirectIfAuthenticated />}>
+          <Route path="/jobseeker/" element={<JobSeekerHomePage />} />
+          <Route path="/jobseeker/login" element={<JobseekerLogin />} />
+          <Route path="/jobseeker/signup" element={<JobSeekerSignUp />} />
+          <Route path="/jobseeker/forgetpassword" element={<JobseekerForgetPass />} />
+          <Route path="/jobseeker/resetpassword" element={<JobseekerResetPass />} />
+        </Route>
 
-  {/* Protected jobseeker routes */}
-  <Route path="/jobseeker" element={<ProtectedRoute />}>
-    <Route element={<JobseekerLayout />}>
-      <Route path="dashboard" element={<JobseekerDashboard />} />
-      <Route path="job-detail" element={<JobDetailsPage />} />
-      <Route path="apply-job" element={<ApplyForJobPage />} />
-      <Route path="profile" element={<JobSeekerProfile />} />
-      <Route path="resume-builder" element={<ResumeBuilder />} />
+        {/* Protected jobseeker routes */}
+        <Route path="/jobseeker" element={<ProtectedRoute />}>
+          <Route element={<JobseekerLayout />}>
+            <Route path="dashboard" element={<JobseekerDashboard />} />
+            <Route path="job-detail" element={<JobDetailsPage />} />
+            <Route path="apply-job" element={<ApplyForJobPage />} />
+            <Route path="profile" element={<JobSeekerProfile />} />
+            <Route path="resume-builder" element={<ResumeBuilder />} />
 
-      <Route path="complete-profile-form" element={<CompleteProfileFormSection />}>
-        <Route path="personal-info" element={<PersonalInfoForm />} />
-        <Route path="contact-info" element={<ContactDetailsForm />} />
-        <Route path="education" element={<EducationalDetailsFrom />} />
-        <Route path="attachments" element={<AttachementsFrom />} />
-        <Route path="professional" element={<ProfessionalDetailForm />} />
-        <Route path="internship" element={<InternshipForm />} />
-        <Route path="projects" element={<ProjectsForm />} />
-        <Route path="publications" element={<ResearchPaperForm />} />
-        <Route path="trainings" element={<TraningForm />} />
-        <Route path="certifications" element={<CertificationForm />} />
-        <Route path="other-details" element={<OtherDetailsForm />} />
-      </Route>
+            <Route path="complete-profile-form" element={<CompleteProfileFormSection />}>
+              <Route path="personal-info" element={<PersonalInfoForm />} />
+              <Route path="contact-info" element={<ContactDetailsForm />} />
+              <Route path="education" element={<EducationalDetailsFrom />} />
+              <Route path="attachments" element={<AttachementsFrom />} />
+              <Route path="professional" element={<ProfessionalDetailForm />} />
+              <Route path="internship" element={<InternshipForm />} />
+              <Route path="projects" element={<ProjectsForm />} />
+              <Route path="publications" element={<ResearchPaperForm />} />
+              <Route path="trainings" element={<TraningForm />} />
+              <Route path="certifications" element={<CertificationForm />} />
+              <Route path="other-details" element={<OtherDetailsForm />} />
+            </Route>
 
-      <Route path="trail-quiz" element={<QuizHomePage />}>
-        <Route index element={<QuizPlanPage />} />
-        <Route path="quiz-topic" element={<QuizTopics />} />
-        <Route path="quiz-page" element={<QuizPage />} />
-      </Route>
-    </Route>
-  </Route>
+            <Route path="trail-quiz" element={<QuizHomePage />}>
+              <Route index element={<QuizPlanPage />} />
+              <Route path="quiz-topic" element={<QuizTopics />} />
+              <Route path="quiz-page" element={<QuizPage />} />
+            </Route>
+          </Route>
+        </Route>
 
-  {/* Recruiter Routes (public) */}
-  <Route path="/recruiter/login" element={<RecruitmentLogin />} />
-  <Route path="/recruiter/signup" element={<RecruitmentSignup />} />
-  <Route path="/recruiter/reset-password" element={<RecruitmentResetPassword />} />
-  <Route path="/recruiter/forgot-password" element={<RecruitmentForgotpassword />} />
+        {/* Recruiter Routes (public) */}
+        <Route path="/recruiter/login" element={<RecruitmentLogin />} />
+        <Route path="/recruiter/signup" element={<RecruitmentSignup />} />
+        <Route path="/recruiter/reset-password" element={<RecruitmentResetPassword />} />
+        <Route path="/recruiter/forgot-password" element={<RecruitmentForgotpassword />} />
 
-  {/* Protected recruiter dashboard routes */}
-  <Route
-    path="/recruiter/dashboard"
-    element={<RecruitmentAuthRoutes allowedRoles={["recruiter", "Senior Recruiter", "HR-Admin", "Admin", "Manager"]} />}
-  >
-    <Route element={<RecruiterLayout />}>
-      <Route
-        index
-        element={
-          <PermissionRoute menu="dashboard" action="view">
-            <RecruiterDashboard />
-          </PermissionRoute>
-        }
-      />
-      <Route path="companies" element={<CompanyManagement />} />
-      <Route path="companies/create" element={<CreateCompany />} />
-      <Route
-        path="jobs"
-        element={
-          <PermissionRoute menu="job management" action="view">
-            <JobManagement />
-          </PermissionRoute>
-        }
-      />
-      <Route path="jobs/create" element={<CreateJob />} />
-      <Route path="jobs/detail/:id" element={<JobDetail />} />
-      <Route path="jobs/edit/:id" element={<EditJob />} />
-      <Route
-        path="users"
-        element={
-          <PermissionRoute menu="users" action="view">
-            <IndexUser />
-          </PermissionRoute>
-        }
-      />
-      <Route
-        path="candidates"
-        element={
-          <PermissionRoute menu="candidate" action="view">
-            <CandidateManagement />
-          </PermissionRoute>
-        }
-      />
-      <Route path="candidates/detail/:id" element={<CandidateDetail />} />
-      <Route path="candidates/test/:testSessionId" element={<CandidateTestPage />} />
-      <Route path="candidates/open-to-work" element={<CandidateManagement />} />
-      <Route path="candidates/jobId" element={<CandidateManagement />} />
-      <Route
-        path="interview"
-        element={
-          <PermissionRoute menu="interview" action="view">
-            <InterviewInvitation />
-          </PermissionRoute>
-        }
-      />
+        {/* Protected recruiter dashboard routes */}
+        <Route
+          path="/recruiter/dashboard"
+          element={<RecruitmentAuthRoutes allowedRoles={["recruiter", "Senior Recruiter", "HR-Admin", "Admin", "Manager"]} />}
+        >
+          <Route element={<RecruiterLayout />}>
+            <Route
+              index
+              element={
+                <PermissionRoute menu="dashboard" action="view">
+                  <RecruiterDashboard />
+                </PermissionRoute>
+              }
+            />
+            <Route path="companies" element={<CompanyManagement />} />
+            <Route path="companies/create" element={<CreateCompany />} />
+            <Route
+              path="jobs"
+              element={
+                <PermissionRoute menu="job management" action="view">
+                  <JobManagement />
+                </PermissionRoute>
+              }
+            />
+            <Route path="jobs/create" element={<CreateJob />} />
+            <Route path="jobs/detail/:id" element={<JobDetail />} />
+            <Route path="jobs/edit/:id" element={<EditJob />} />
+            <Route
+              path="users"
+              element={
+                <PermissionRoute menu="users" action="view">
+                  <IndexUser />
+                </PermissionRoute>
+              }
+            />
+            <Route
+              path="candidates"
+              element={
+                <PermissionRoute menu="candidate" action="view">
+                  <CandidateManagement />
+                </PermissionRoute>
+              }
+            />
+            <Route path="candidates/detail/:id" element={<CandidateDetail />} />
+            <Route path="candidates/test/:testSessionId" element={<CandidateTestPage />} />
+            <Route path="candidates/open-to-work" element={<CandidateManagement />} />
+            <Route path="candidates/jobId" element={<CandidateManagement />} />
+            <Route
+              path="interview"
+              element={
+                <PermissionRoute menu="interview" action="view">
+                  <InterviewInvitation />
+                </PermissionRoute>
+              }
+            />
 
-      {/* Recruiter profile routes */}
-      <Route path="billing-plans" element={<Billing />} />
-      <Route path="subscriptions" element={<Subscriptions />} />
-      <Route path="contact-us" element={<Contactus />} />
-      <Route path="account-settings" element={<AccountSettings />} />
-      <Route path="employeer-settings" element={<EmployeerSettings />} />
-    </Route>
-  </Route>
+            {/* Recruiter profile routes */}
+            <Route path="billing-plans" element={<Billing />} />
+            <Route path="subscriptions" element={<Subscriptions />} />
+            <Route path="contact-us" element={<Contactus />} />
+            <Route path="account-settings" element={<AccountSettings />} />
+            <Route path="employeer-settings" element={<EmployeerSettings />} />
+          </Route>
+        </Route>
 
-  {/* Admin Routes */}
-  <Route path="/admin" element="">
-    <Route path="dashboard" element={<Dashboard />} />
-    <Route path="userprofile" element={<UserProfile />} />
-  </Route>
-  <Route path="/usermanagment" element="">
-    <Route path="roles" element={<Roles />} />
-    <Route path="permission" element={<Permissions />} />
-    <Route path="user" element={<Users />} />
-  </Route>
-  <Route path="recruiters" element={<Recruiters />} />
-  <Route path="jobseekers" element={<Jobseekers />} />
-  <Route path="/admin/reportsanalytics" element={<ReportsAnalytics />} />
-  <Route path="/admin/supportmanagement" element={<SupportManagement />} />
-  <Route path="/admin/subscriptionpayment" element={<SubscriptionPayment />} />
-  <Route path="/admin/signin" element={<AdminSignIn />} />
-  <Route path="/admin/signup" element={<AdminSignUp />} />
-  <Route path="/admin/forgot-password" element={<ForgotPassword />} />
-</Routes>
+        {/* Admin Routes */}
+        <Route path="/admin" element="">
+          <Route
+            path="dashboard"
+            element={
+              <PermissionGuard menuKey="admin-dashboard" action="view">
+                <Dashboard />
+              </PermissionGuard>
+            }
+          />
+          <Route
+            path="userprofile"
+            element={
+              <PermissionGuard menuKey="profile" action="view">
+                <UserProfile />
+              </PermissionGuard>
+            }
+          />
+        </Route>
+
+        <Route path="/usermanagment" element="">
+          <Route
+            path="roles"
+            element={
+              <PermissionGuard menuKey="role-management" action="view">
+                <Roles />
+              </PermissionGuard>
+            }
+          />
+          <Route
+            path="permission"
+            element={
+              <PermissionGuard menuKey="role-permission" action="view">
+                <Permissions />
+              </PermissionGuard>
+            }
+          />
+          <Route
+            path="user"
+            element={
+              <PermissionGuard menuKey="user-management" action="view">
+                <Users />
+              </PermissionGuard>
+            }
+          />
+        </Route>
+
+        <Route
+          path="/recruiters"
+          element={
+            <PermissionGuard menuKey="recruiter-management" action="view">
+              <Recruiters />
+            </PermissionGuard>
+          }
+        />
+
+        <Route
+          path="/jobseekers"
+          element={
+            <PermissionGuard menuKey="jobseeker-management" action="view">
+              <Jobseekers />
+            </PermissionGuard>
+          }
+        />
+
+        <Route
+          path="/admin/reportsanalytics"
+          element={
+            <PermissionGuard menuKey="reports-analytics" action="view">
+              <ReportsAnalytics />
+            </PermissionGuard>
+          }
+        />
+
+        <Route
+          path="/admin/supportmanagement"
+          element={
+            <PermissionGuard menuKey="profile" action="view">
+              <SupportManagement />
+            </PermissionGuard>
+          }
+        />
+
+        <Route
+          path="/admin/subscriptionpayment"
+          element={
+            <PermissionGuard menuKey="subscription-payment" action="view">
+              <SubscriptionPayment />
+            </PermissionGuard>
+          }
+        />
+
+        {/* Public Routes – No Permission Required */}
+        <Route path="/admin/signin" element={<AdminSignIn />} />
+        <Route path="/admin/signup" element={<AdminSignUp />} />
+        <Route path="/admin/forgot-password" element={<ForgotPassword />} />
+
+        {/* Admin Routes */}
+
+      </Routes>
     </>
   );
 };
