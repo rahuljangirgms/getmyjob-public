@@ -1,5 +1,8 @@
 {
     "files.autoSaveWhenNoErrors": false,
     "files.autoSaveWorkspaceFilesOnly": true,
-    "files.autoSaveDelay": 0
+    "files.autoSaveDelay": 0,
+    "javascript.updateImportsOnFileMove.enabled": "always",
+    "typescript.updateImportsOnFileMove.enabled": "always",
+    "markdown.updateLinksOnFileMove.enabled": "always"
 }
