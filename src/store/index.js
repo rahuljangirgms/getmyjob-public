@@ -3,6 +3,15 @@ import createSagaMiddleware from 'redux-saga';
 import rootSaga from './sagas';
 // import jobReducer from './slices/jobSlice';
 // import authReducer from "./slices/authSlice";
+// import companyReducer from "./slices/companySlice";
+
+// admin 
+import jobseekerReducer from "./slices/admin/usermanagment/jobseekerSlice";
+
+import searchReducer from "./slices/admin/searchSlice";
+import filterReducer from "./slices/admin/filterSlice";
+// import jobReducer from './slices/jobSlice';
+// import authReducer from "./slices/authSlice";
 import profileFormReducer from './slices/profileFormsSlice';
 import resumeReducer from './slices/resumeSlice';
 import quizReducer from './slices/quizSlice';
@@ -34,6 +43,13 @@ const store = configureStore({
   reducer: {
     jobs: jobReducer, 
     auth: authReducer,
+    companies: companyReducer, 
+
+    // admin
+   jobseekers: jobseekerReducer,
+   search: searchReducer, 
+   filters: filterReducer, 
+
     profileForms: profileFormReducer,
     resume: resumeReducer,
     quiz: quizReducer,
