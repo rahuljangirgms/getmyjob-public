@@ -20,6 +20,7 @@ import certificationFormReducer from './slices/jobSeeker/Profile_Form/certificat
 import otherDetailsReducer from './slices/jobSeeker/Profile_Form/otherDetailsFormSlice';
 import masterResumeReducer from './slices/jobSeeker/master_Resume_Data/masterResumeSlice';
 import isProfilCompleteReducer from './slices/jobSeeker/isProfileCompleted/isProfileCompleteSlice';
+import openToWorkReducer from './slices/jobSeeker/openToWork/openToWorkSlice';
 
 // Create Saga Middleware
 const sagaMiddleware = createSagaMiddleware();
@@ -58,6 +59,8 @@ const store = configureStore({
     masterResumeJson: masterResumeReducer,
     // isProfileCompleted (After Filling Create Profile Forms)
     isProfileComplete: isProfilCompleteReducer,
+    // open to work
+    openToWork: openToWorkReducer,
 
 
 

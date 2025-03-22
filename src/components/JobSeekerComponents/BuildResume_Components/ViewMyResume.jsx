@@ -10,13 +10,26 @@ import { arrayMoveImmutable } from "array-move";
 import { FaRegSave } from "react-icons/fa";
 import SaveResumeModal from "./SaveResumeModal";
 import { addResume } from "./../../../store/slices/resumeSlice";
+import {getMasterResumeRequest} from './../../../store/slices/jobSeeker/master_Resume_Data/masterResumeSlice';
+import ResumeSkeloton from './ResumeSkeloton';
+
 
 function ViewMyResume({ template, onSaveComplete }) {
-  // profileData follows your provided structure
-  const profileData = useSelector((state) => state.profileForms.finalData);
+  
+  // profileData === Master Resume Data
+
+  const {loading} = useSelector((state) => state.masterResumeJson);
+  
+  const profileData = useSelector((state) => state.masterResumeJson.data);
+
   console.log("PROFILE DATA: ", profileData);
 
   const dispatch = useDispatch();
+
+  useEffect(()=>{
+    dispatch(getMasterResumeRequest());
+  },[dispatch]);
+
 
   const [style, setStyle] = useState({ color: "#000", fontFamily: "Arial" });
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -317,160 +330,162 @@ function ViewMyResume({ template, onSaveComplete }) {
             </div>
 
             {/* Modal Body */}
-            <div className="p-4 space-y-4">
-              <SortableList
-                onSortEnd={onOuterSortEnd}
-                className="space-y-4"
-                draggedItemClassName="dragged"
-                lockAxis="y"
-              >
-                {sectionOrder.map((section) => {
-                  const sectionData = profileData[section];
-                  const allSelected =
-                    selectedFields[section] &&
-                    Object.values(selectedFields[section]).every(Boolean);
-
-                  return (
-                    <SortableItem
-                      key={section}
-                      style={{ display: "block" }}
-                    >
-                      <div className="border-b pb-2">
-                        <div className="flex justify-between items-center cursor-move">
-                          <label className="flex items-center space-x-2 cursor-move">
-                            <input
-                              type="checkbox"
-                              checked={allSelected}
-                              onChange={() => handleSectionSelect(section)}
-                              className="w-5 h-5 accent-blue-500"
-                            />
-                            <h4 className="font-bold text-gray-900">
-                              {formatLabel(section)}
-                            </h4>
-                          </label>
-                          <button
-                            type="button"
-                            className="text-gray-500 cursor-pointer"
-                            onClick={() => toggleSection(section)}
+            {loading ? <ResumeSkeloton/> :
+                          <div className="p-4 space-y-4">
+                          <SortableList
+                            onSortEnd={onOuterSortEnd}
+                            className="space-y-4"
+                            draggedItemClassName="dragged"
+                            lockAxis="y"
                           >
-                            {expandedSections[section] ? (
-                              <GoChevronUp
-                                size={25}
-                                className="text-gray-700"
-                              />
-                            ) : (
-                              <GoChevronDown
-                                size={25}
-                                className="text-gray-700"
-                              />
-                            )}
-                          </button>
-                        </div>
-                        {expandedSections[section] && (
-                          <div className="mt-2 pl-6 space-y-1 cursor-move">
-                            <SortableList
-                              onSortEnd={(oldIndex, newIndex) =>
-                                onInnerSortEnd(section, oldIndex, newIndex)
-                              }
-                              className="space-y-1 cursor-move"
-                              draggedItemClassName="dragged"
-                              lockAxis="y"
-                            >
-                              {Array.isArray(sectionData)
-                                ? subSectionOrder[section]?.map(
-                                    (subIndex) => {
-                                      const item = sectionData[subIndex];
-                                      let itemLabel = `Item ${
-                                        subIndex + 1
-                                      }`;
-                                      if (section === "professionalDetails")
-                                        itemLabel =
-                                          item.organisation || itemLabel;
-                                      if (section === "educationDetails")
-                                        itemLabel =
-                                          item.data?.qualification ||
-                                          itemLabel;
-                                      if (section === "projectDetails")
-                                        itemLabel =
-                                          item.name || itemLabel;
-                                      if (section === "certificationDetails")
-                                        itemLabel =
-                                          item.name || itemLabel;
-                                      if (section === "researchPapers")
-                                        itemLabel =
-                                          item.name || itemLabel;
-                                      if (section === "trainingDetails")
-                                        itemLabel =
-                                          item.name || itemLabel;
-                                      return (
-                                        <SortableItem
-                                          key={subIndex}
-                                          style={{ display: "block" }}
-                                        >
-                                          <div className="ml-4">
-                                            <label className="flex items-center space-x-2 cursor-move">
-                                              <input
-                                                type="checkbox"
-                                                checked={
-                                                  selectedFields[section]?.[
-                                                    subIndex
-                                                  ] || false
-                                                }
-                                                onChange={() =>
-                                                  handleCheckboxChange(
-                                                    section,
-                                                    subIndex
-                                                  )
-                                                }
-                                                className="w-4 h-4"
-                                              />
-                                              <span className="text-gray-700 cursor-move">
-                                                {formatLabel(itemLabel)}
-                                              </span>
-                                            </label>
-                                          </div>
-                                        </SortableItem>
-                                      );
-                                    }
-                                  )
-                                : subSectionOrder[section]?.map(
-                                    (fieldKey) => (
-                                      <SortableItem
-                                        key={fieldKey}
-                                        style={{ display: "block" }}
+                            {sectionOrder.map((section) => {
+                              const sectionData = profileData[section];
+                              const allSelected =
+                                selectedFields[section] &&
+                                Object.values(selectedFields[section]).every(Boolean);
+            
+                              return (
+                                <SortableItem
+                                  key={section}
+                                  style={{ display: "block" }}
+                                >
+                                  <div className="border-b pb-2">
+                                    <div className="flex justify-between items-center cursor-move">
+                                      <label className="flex items-center space-x-2 cursor-move">
+                                        <input
+                                          type="checkbox"
+                                          checked={allSelected}
+                                          onChange={() => handleSectionSelect(section)}
+                                          className="w-5 h-5 accent-blue-500"
+                                        />
+                                        <h4 className="font-bold text-gray-900">
+                                          {formatLabel(section)}
+                                        </h4>
+                                      </label>
+                                      <button
+                                        type="button"
+                                        className="text-gray-500 cursor-pointer"
+                                        onClick={() => toggleSection(section)}
                                       >
-                                        <label className="flex items-center space-x-2 ml-6 cursor-move">
-                                          <input
-                                            type="checkbox"
-                                            checked={
-                                              selectedFields[section]?.[
-                                                fieldKey
-                                              ] || false
-                                            }
-                                            onChange={() =>
-                                              handleCheckboxChange(
-                                                section,
-                                                fieldKey
-                                              )
-                                            }
-                                            className="w-4 h-4 cursor-move"
+                                        {expandedSections[section] ? (
+                                          <GoChevronUp
+                                            size={25}
+                                            className="text-gray-700"
                                           />
-                                          <span className="text-gray-700 cursor-move">
-                                            {formatLabel(fieldKey)}
-                                          </span>
-                                        </label>
-                                      </SortableItem>
-                                    )
-                                  )}
-                            </SortableList>
-                          </div>
-                        )}
-                      </div>
-                    </SortableItem>
-                  );
-                })}
-              </SortableList>
-            </div>
+                                        ) : (
+                                          <GoChevronDown
+                                            size={25}
+                                            className="text-gray-700"
+                                          />
+                                        )}
+                                      </button>
+                                    </div>
+                                    {expandedSections[section] && (
+                                      <div className="mt-2 pl-6 space-y-1 cursor-move">
+                                        <SortableList
+                                          onSortEnd={(oldIndex, newIndex) =>
+                                            onInnerSortEnd(section, oldIndex, newIndex)
+                                          }
+                                          className="space-y-1 cursor-move"
+                                          draggedItemClassName="dragged"
+                                          lockAxis="y"
+                                        >
+                                          {Array.isArray(sectionData)
+                                            ? subSectionOrder[section]?.map(
+                                                (subIndex) => {
+                                                  const item = sectionData[subIndex];
+                                                  let itemLabel = `Item ${
+                                                    subIndex + 1
+                                                  }`;
+                                                  if (section === "professionalDetails")
+                                                    itemLabel =
+                                                      item.organisation || itemLabel;
+                                                  if (section === "educationDetails")
+                                                    itemLabel =
+                                                      item.data?.qualification ||
+                                                      itemLabel;
+                                                  if (section === "projectDetails")
+                                                    itemLabel =
+                                                      item.name || itemLabel;
+                                                  if (section === "certificationDetails")
+                                                    itemLabel =
+                                                      item.name || itemLabel;
+                                                  if (section === "researchPapers")
+                                                    itemLabel =
+                                                      item.name || itemLabel;
+                                                  if (section === "trainingDetails")
+                                                    itemLabel =
+                                                      item.name || itemLabel;
+                                                  return (
+                                                    <SortableItem
+                                                      key={subIndex}
+                                                      style={{ display: "block" }}
+                                                    >
+                                                      <div className="ml-4">
+                                                        <label className="flex items-center space-x-2 cursor-move">
+                                                          <input
+                                                            type="checkbox"
+                                                            checked={
+                                                              selectedFields[section]?.[
+                                                                subIndex
+                                                              ] || false
+                                                            }
+                                                            onChange={() =>
+                                                              handleCheckboxChange(
+                                                                section,
+                                                                subIndex
+                                                              )
+                                                            }
+                                                            className="w-4 h-4"
+                                                          />
+                                                          <span className="text-gray-700 cursor-move">
+                                                            {formatLabel(itemLabel)}
+                                                          </span>
+                                                        </label>
+                                                      </div>
+                                                    </SortableItem>
+                                                  );
+                                                }
+                                              )
+                                            : subSectionOrder[section]?.map(
+                                                (fieldKey) => (
+                                                  <SortableItem
+                                                    key={fieldKey}
+                                                    style={{ display: "block" }}
+                                                  >
+                                                    <label className="flex items-center space-x-2 ml-6 cursor-move">
+                                                      <input
+                                                        type="checkbox"
+                                                        checked={
+                                                          selectedFields[section]?.[
+                                                            fieldKey
+                                                          ] || false
+                                                        }
+                                                        onChange={() =>
+                                                          handleCheckboxChange(
+                                                            section,
+                                                            fieldKey
+                                                          )
+                                                        }
+                                                        className="w-4 h-4 cursor-move"
+                                                      />
+                                                      <span className="text-gray-700 cursor-move">
+                                                        {formatLabel(fieldKey)}
+                                                      </span>
+                                                    </label>
+                                                  </SortableItem>
+                                                )
+                                              )}
+                                        </SortableList>
+                                      </div>
+                                    )}
+                                  </div>
+                                </SortableItem>
+                              );
+                            })}
+                          </SortableList>
+                        </div>
+            }
 
             {/* Modal Footer */}
             <div className="flex items-center p-4 border-t sticky bg-white bottom-0 justify-end">

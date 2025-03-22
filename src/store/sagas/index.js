@@ -15,6 +15,7 @@ import {watchCertification} from './../sagas/jobSeeker/handler/JobSeeker_Profile
 import {watchOtherDetails} from './../sagas/jobSeeker/handler/JobSeeker_Profile_Form/otherDetailsForm/otherDetailsFormSaga'
 import {watchMasterResume} from './../sagas/jobSeeker/handler/master_Resume_Data/masterResumeSaga';
 import {watchCheckProfileComplete} from './../sagas/jobSeeker/handler/check_Profile_completed/isProfileCompleteSaga';
+import {watchOpenToWork} from './../sagas/jobSeeker/handler/Open_To_Work/openToWorkSaga';
 
 export default function* rootSaga() {
   yield all([
@@ -33,6 +34,7 @@ export default function* rootSaga() {
     watchCertification(),
     watchOtherDetails(),
     watchMasterResume(),
-    watchCheckProfileComplete()
+    watchCheckProfileComplete(),
+    watchOpenToWork(),
   ]);
 }

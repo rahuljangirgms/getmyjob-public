@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { logout } from "./../../store/slices/jobSeeker/authentication/jobSeekerAuthSlice";
 import dummyUserLogo from "./../../assets/images/dummyuser.png";
 import { getMasterResumeRequest } from "./../../store/slices/jobSeeker/master_Resume_Data/masterResumeSlice";
+import { IoDocumentTextOutline } from "react-icons/io5";
 
 function ProfileDropdown() {
   const profileData = useSelector(
@@ -73,6 +74,15 @@ function ProfileDropdown() {
           </MenuItem>
         </div>
         <div className="py-1">
+          <MenuItem onClick={() => navigate("/jobseeker/resume-builder")}>
+            <button className="group flex w-full items-center gap-2 rounded-lg py-1.5 px-3 text-sm text-gray-700 font-semibold hover:bg-gray-100">
+              <IoDocumentTextOutline className="size-4 text-gray-700" />
+              Resume Builder
+            </button>
+          </MenuItem>
+        </div>
+        
+        <div className="py-1">
           <MenuItem>
             <button className="group flex w-full items-center gap-2 rounded-lg py-1.5 px-3 text-sm text-gray-700 font-semibold hover:bg-gray-100">
               <MdOutlinePassword className="size-4 text-gray-700" />
@@ -80,6 +90,7 @@ function ProfileDropdown() {
             </button>
           </MenuItem>
         </div>
+
         <div className="py-1">
           <MenuItem onClick={handleLogout}>
             <button className="group flex w-full items-center gap-2 rounded-lg py-1.5 px-3 text-sm text-gray-700 font-semibold hover:bg-gray-100">
