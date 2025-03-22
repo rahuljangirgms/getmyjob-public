@@ -1,0 +1,4519 @@
+{
+  "users": [
+    {
+      "id": "42b2",
+      "role": "recruiter",
+      "name": "abhishek",
+      "email": "abhi@gmail.com",
+      "password": "12345678",
+      "company": "GetMy Solutitions Pvt. Ltd.",
+      "mobile": "0987654321",
+      "permissions": [
+        {
+          "menu": "dashboard",
+          "view": 1,
+          "add": 0,
+          "edit": 0,
+          "delete": 0
+        },
+        {
+          "menu": "company profile",
+          "view": 1,
+          "add": 0,
+          "edit": 0,
+          "delete": 0
+        },
+        {
+          "menu": "job management",
+          "view": 1,
+          "add": 0,
+          "edit": 0,
+          "delete": 0
+        },
+        {
+          "menu": "users",
+          "view": 1,
+          "add": 0,
+          "edit": 0,
+          "delete": 0
+        },
+        {
+          "menu": "candidate",
+          "view": 0,
+          "add": 0,
+          "edit": 0,
+          "delete": 0
+        },
+        {
+          "menu": "interview",
+          "view": 0,
+          "add": 0,
+          "edit": 0,
+          "delete": 0
+        }
+      ]
+    }
+  ],
+  "questions": [
+    {
+      "id": "1",
+      "skill": "React",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 1 for React: What does React do?",
+      "options": [
+        "Option A for React",
+        "Option B for React",
+        "Option C for React",
+        "Option D for React"
+      ],
+      "correctAnswer": "Option B for React"
+    },
+    {
+      "id": "2",
+      "skill": "React",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 2 for React: What does React do?",
+      "options": [
+        "Option A for React",
+        "Option B for React",
+        "Option C for React",
+        "Option D for React"
+      ],
+      "correctAnswer": "Option B for React"
+    },
+    {
+      "id": "3",
+      "skill": "React",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 3 for React: What does React do?",
+      "options": [
+        "Option A for React",
+        "Option B for React",
+        "Option C for React",
+        "Option D for React"
+      ],
+      "correctAnswer": "Option B for React"
+    },
+    {
+      "id": "4",
+      "skill": "React",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 4 for React: What does React do?",
+      "options": [
+        "Option A for React",
+        "Option B for React",
+        "Option C for React",
+        "Option D for React"
+      ],
+      "correctAnswer": "Option B for React"
+    },
+    {
+      "id": "5",
+      "skill": "React",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 5 for React: What does React do?",
+      "options": [
+        "Option A for React",
+        "Option B for React",
+        "Option C for React",
+        "Option D for React"
+      ],
+      "correctAnswer": "Option B for React"
+    },
+    {
+      "id": "6",
+      "skill": "React",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 6 for React: What does React do?",
+      "options": [
+        "Option A for React",
+        "Option B for React",
+        "Option C for React",
+        "Option D for React"
+      ],
+      "correctAnswer": "Option B for React"
+    },
+    {
+      "id": "7",
+      "skill": "React",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 7 for React: What does React do?",
+      "options": [
+        "Option A for React",
+        "Option B for React",
+        "Option C for React",
+        "Option D for React"
+      ],
+      "correctAnswer": "Option B for React"
+    },
+    {
+      "id": "8",
+      "skill": "React",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 8 for React: What does React do?",
+      "options": [
+        "Option A for React",
+        "Option B for React",
+        "Option C for React",
+        "Option D for React"
+      ],
+      "correctAnswer": "Option B for React"
+    },
+    {
+      "id": "9",
+      "skill": "React",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 9 for React: What does React do?",
+      "options": [
+        "Option A for React",
+        "Option B for React",
+        "Option C for React",
+        "Option D for React"
+      ],
+      "correctAnswer": "Option B for React"
+    },
+    {
+      "id": "10",
+      "skill": "React",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 10 for React: What does React do?",
+      "options": [
+        "Option A for React",
+        "Option B for React",
+        "Option C for React",
+        "Option D for React"
+      ],
+      "correctAnswer": "Option B for React"
+    },
+    {
+      "id": "11",
+      "skill": "React",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 11 for React: What does React do?",
+      "options": [
+        "Option A for React",
+        "Option B for React",
+        "Option C for React",
+        "Option D for React"
+      ],
+      "correctAnswer": "Option B for React"
+    },
+    {
+      "id": "12",
+      "skill": "React",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 12 for React: What does React do?",
+      "options": [
+        "Option A for React",
+        "Option B for React",
+        "Option C for React",
+        "Option D for React"
+      ],
+      "correctAnswer": "Option B for React"
+    },
+    {
+      "id": "13",
+      "skill": "React",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 13 for React: What does React do?",
+      "options": [
+        "Option A for React",
+        "Option B for React",
+        "Option C for React",
+        "Option D for React"
+      ],
+      "correctAnswer": "Option B for React"
+    },
+    {
+      "id": "14",
+      "skill": "React",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 14 for React: What does React do?",
+      "options": [
+        "Option A for React",
+        "Option B for React",
+        "Option C for React",
+        "Option D for React"
+      ],
+      "correctAnswer": "Option B for React"
+    },
+    {
+      "id": "15",
+      "skill": "React",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 15 for React: What does React do?",
+      "options": [
+        "Option A for React",
+        "Option B for React",
+        "Option C for React",
+        "Option D for React"
+      ],
+      "correctAnswer": "Option B for React"
+    },
+    {
+      "id": "16",
+      "skill": "React",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 16 for React: What does React do?",
+      "options": [
+        "Option A for React",
+        "Option B for React",
+        "Option C for React",
+        "Option D for React"
+      ],
+      "correctAnswer": "Option B for React"
+    },
+    {
+      "id": "17",
+      "skill": "React",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 17 for React: What does React do?",
+      "options": [
+        "Option A for React",
+        "Option B for React",
+        "Option C for React",
+        "Option D for React"
+      ],
+      "correctAnswer": "Option B for React"
+    },
+    {
+      "id": "18",
+      "skill": "React",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 18 for React: What does React do?",
+      "options": [
+        "Option A for React",
+        "Option B for React",
+        "Option C for React",
+        "Option D for React"
+      ],
+      "correctAnswer": "Option B for React"
+    },
+    {
+      "id": "19",
+      "skill": "React",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 19 for React: What does React do?",
+      "options": [
+        "Option A for React",
+        "Option B for React",
+        "Option C for React",
+        "Option D for React"
+      ],
+      "correctAnswer": "Option B for React"
+    },
+    {
+      "id": "20",
+      "skill": "React",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 20 for React: What does React do?",
+      "options": [
+        "Option A for React",
+        "Option B for React",
+        "Option C for React",
+        "Option D for React"
+      ],
+      "correctAnswer": "Option B for React"
+    },
+    {
+      "id": "21",
+      "skill": "React Native",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 1 for React Native: What does React Native do?",
+      "options": [
+        "Option A for React Native",
+        "Option B for React Native",
+        "Option C for React Native",
+        "Option D for React Native"
+      ],
+      "correctAnswer": "Option B for React Native"
+    },
+    {
+      "id": "22",
+      "skill": "React Native",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 2 for React Native: What does React Native do?",
+      "options": [
+        "Option A for React Native",
+        "Option B for React Native",
+        "Option C for React Native",
+        "Option D for React Native"
+      ],
+      "correctAnswer": "Option B for React Native"
+    },
+    {
+      "id": "23",
+      "skill": "React Native",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 3 for React Native: What does React Native do?",
+      "options": [
+        "Option A for React Native",
+        "Option B for React Native",
+        "Option C for React Native",
+        "Option D for React Native"
+      ],
+      "correctAnswer": "Option B for React Native"
+    },
+    {
+      "id": "24",
+      "skill": "React Native",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 4 for React Native: What does React Native do?",
+      "options": [
+        "Option A for React Native",
+        "Option B for React Native",
+        "Option C for React Native",
+        "Option D for React Native"
+      ],
+      "correctAnswer": "Option B for React Native"
+    },
+    {
+      "id": "25",
+      "skill": "React Native",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 5 for React Native: What does React Native do?",
+      "options": [
+        "Option A for React Native",
+        "Option B for React Native",
+        "Option C for React Native",
+        "Option D for React Native"
+      ],
+      "correctAnswer": "Option B for React Native"
+    },
+    {
+      "id": "26",
+      "skill": "React Native",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 6 for React Native: What does React Native do?",
+      "options": [
+        "Option A for React Native",
+        "Option B for React Native",
+        "Option C for React Native",
+        "Option D for React Native"
+      ],
+      "correctAnswer": "Option B for React Native"
+    },
+    {
+      "id": "27",
+      "skill": "React Native",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 7 for React Native: What does React Native do?",
+      "options": [
+        "Option A for React Native",
+        "Option B for React Native",
+        "Option C for React Native",
+        "Option D for React Native"
+      ],
+      "correctAnswer": "Option B for React Native"
+    },
+    {
+      "id": "28",
+      "skill": "React Native",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 8 for React Native: What does React Native do?",
+      "options": [
+        "Option A for React Native",
+        "Option B for React Native",
+        "Option C for React Native",
+        "Option D for React Native"
+      ],
+      "correctAnswer": "Option B for React Native"
+    },
+    {
+      "id": "29",
+      "skill": "React Native",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 9 for React Native: What does React Native do?",
+      "options": [
+        "Option A for React Native",
+        "Option B for React Native",
+        "Option C for React Native",
+        "Option D for React Native"
+      ],
+      "correctAnswer": "Option B for React Native"
+    },
+    {
+      "id": "30",
+      "skill": "React Native",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 10 for React Native: What does React Native do?",
+      "options": [
+        "Option A for React Native",
+        "Option B for React Native",
+        "Option C for React Native",
+        "Option D for React Native"
+      ],
+      "correctAnswer": "Option B for React Native"
+    },
+    {
+      "id": "31",
+      "skill": "React Native",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 11 for React Native: What does React Native do?",
+      "options": [
+        "Option A for React Native",
+        "Option B for React Native",
+        "Option C for React Native",
+        "Option D for React Native"
+      ],
+      "correctAnswer": "Option B for React Native"
+    },
+    {
+      "id": "32",
+      "skill": "React Native",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 12 for React Native: What does React Native do?",
+      "options": [
+        "Option A for React Native",
+        "Option B for React Native",
+        "Option C for React Native",
+        "Option D for React Native"
+      ],
+      "correctAnswer": "Option B for React Native"
+    },
+    {
+      "id": "33",
+      "skill": "React Native",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 13 for React Native: What does React Native do?",
+      "options": [
+        "Option A for React Native",
+        "Option B for React Native",
+        "Option C for React Native",
+        "Option D for React Native"
+      ],
+      "correctAnswer": "Option B for React Native"
+    },
+    {
+      "id": "34",
+      "skill": "React Native",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 14 for React Native: What does React Native do?",
+      "options": [
+        "Option A for React Native",
+        "Option B for React Native",
+        "Option C for React Native",
+        "Option D for React Native"
+      ],
+      "correctAnswer": "Option B for React Native"
+    },
+    {
+      "id": "35",
+      "skill": "React Native",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 15 for React Native: What does React Native do?",
+      "options": [
+        "Option A for React Native",
+        "Option B for React Native",
+        "Option C for React Native",
+        "Option D for React Native"
+      ],
+      "correctAnswer": "Option B for React Native"
+    },
+    {
+      "id": "36",
+      "skill": "React Native",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 16 for React Native: What does React Native do?",
+      "options": [
+        "Option A for React Native",
+        "Option B for React Native",
+        "Option C for React Native",
+        "Option D for React Native"
+      ],
+      "correctAnswer": "Option B for React Native"
+    },
+    {
+      "id": "37",
+      "skill": "React Native",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 17 for React Native: What does React Native do?",
+      "options": [
+        "Option A for React Native",
+        "Option B for React Native",
+        "Option C for React Native",
+        "Option D for React Native"
+      ],
+      "correctAnswer": "Option B for React Native"
+    },
+    {
+      "id": "38",
+      "skill": "React Native",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 18 for React Native: What does React Native do?",
+      "options": [
+        "Option A for React Native",
+        "Option B for React Native",
+        "Option C for React Native",
+        "Option D for React Native"
+      ],
+      "correctAnswer": "Option B for React Native"
+    },
+    {
+      "id": "39",
+      "skill": "React Native",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 19 for React Native: What does React Native do?",
+      "options": [
+        "Option A for React Native",
+        "Option B for React Native",
+        "Option C for React Native",
+        "Option D for React Native"
+      ],
+      "correctAnswer": "Option B for React Native"
+    },
+    {
+      "id": "40",
+      "skill": "React Native",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 20 for React Native: What does React Native do?",
+      "options": [
+        "Option A for React Native",
+        "Option B for React Native",
+        "Option C for React Native",
+        "Option D for React Native"
+      ],
+      "correctAnswer": "Option B for React Native"
+    },
+    {
+      "id": "41",
+      "skill": "Java",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 1 for Java: What does Java do?",
+      "options": [
+        "Option A for Java",
+        "Option B for Java",
+        "Option C for Java",
+        "Option D for Java"
+      ],
+      "correctAnswer": "Option B for Java"
+    },
+    {
+      "id": "42",
+      "skill": "Java",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 2 for Java: What does Java do?",
+      "options": [
+        "Option A for Java",
+        "Option B for Java",
+        "Option C for Java",
+        "Option D for Java"
+      ],
+      "correctAnswer": "Option B for Java"
+    },
+    {
+      "id": "43",
+      "skill": "Java",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 3 for Java: What does Java do?",
+      "options": [
+        "Option A for Java",
+        "Option B for Java",
+        "Option C for Java",
+        "Option D for Java"
+      ],
+      "correctAnswer": "Option B for Java"
+    },
+    {
+      "id": "44",
+      "skill": "Java",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 4 for Java: What does Java do?",
+      "options": [
+        "Option A for Java",
+        "Option B for Java",
+        "Option C for Java",
+        "Option D for Java"
+      ],
+      "correctAnswer": "Option B for Java"
+    },
+    {
+      "id": "45",
+      "skill": "Java",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 5 for Java: What does Java do?",
+      "options": [
+        "Option A for Java",
+        "Option B for Java",
+        "Option C for Java",
+        "Option D for Java"
+      ],
+      "correctAnswer": "Option B for Java"
+    },
+    {
+      "id": "46",
+      "skill": "Java",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 6 for Java: What does Java do?",
+      "options": [
+        "Option A for Java",
+        "Option B for Java",
+        "Option C for Java",
+        "Option D for Java"
+      ],
+      "correctAnswer": "Option B for Java"
+    },
+    {
+      "id": "47",
+      "skill": "Java",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 7 for Java: What does Java do?",
+      "options": [
+        "Option A for Java",
+        "Option B for Java",
+        "Option C for Java",
+        "Option D for Java"
+      ],
+      "correctAnswer": "Option B for Java"
+    },
+    {
+      "id": "48",
+      "skill": "Java",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 8 for Java: What does Java do?",
+      "options": [
+        "Option A for Java",
+        "Option B for Java",
+        "Option C for Java",
+        "Option D for Java"
+      ],
+      "correctAnswer": "Option B for Java"
+    },
+    {
+      "id": "49",
+      "skill": "Java",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 9 for Java: What does Java do?",
+      "options": [
+        "Option A for Java",
+        "Option B for Java",
+        "Option C for Java",
+        "Option D for Java"
+      ],
+      "correctAnswer": "Option B for Java"
+    },
+    {
+      "id": "50",
+      "skill": "Java",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 10 for Java: What does Java do?",
+      "options": [
+        "Option A for Java",
+        "Option B for Java",
+        "Option C for Java",
+        "Option D for Java"
+      ],
+      "correctAnswer": "Option B for Java"
+    },
+    {
+      "id": "51",
+      "skill": "Java",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 11 for Java: What does Java do?",
+      "options": [
+        "Option A for Java",
+        "Option B for Java",
+        "Option C for Java",
+        "Option D for Java"
+      ],
+      "correctAnswer": "Option B for Java"
+    },
+    {
+      "id": "52",
+      "skill": "Java",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 12 for Java: What does Java do?",
+      "options": [
+        "Option A for Java",
+        "Option B for Java",
+        "Option C for Java",
+        "Option D for Java"
+      ],
+      "correctAnswer": "Option B for Java"
+    },
+    {
+      "id": "53",
+      "skill": "Java",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 13 for Java: What does Java do?",
+      "options": [
+        "Option A for Java",
+        "Option B for Java",
+        "Option C for Java",
+        "Option D for Java"
+      ],
+      "correctAnswer": "Option B for Java"
+    },
+    {
+      "id": "54",
+      "skill": "Java",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 14 for Java: What does Java do?",
+      "options": [
+        "Option A for Java",
+        "Option B for Java",
+        "Option C for Java",
+        "Option D for Java"
+      ],
+      "correctAnswer": "Option B for Java"
+    },
+    {
+      "id": "55",
+      "skill": "Java",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 15 for Java: What does Java do?",
+      "options": [
+        "Option A for Java",
+        "Option B for Java",
+        "Option C for Java",
+        "Option D for Java"
+      ],
+      "correctAnswer": "Option B for Java"
+    },
+    {
+      "id": "56",
+      "skill": "Java",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 16 for Java: What does Java do?",
+      "options": [
+        "Option A for Java",
+        "Option B for Java",
+        "Option C for Java",
+        "Option D for Java"
+      ],
+      "correctAnswer": "Option B for Java"
+    },
+    {
+      "id": "57",
+      "skill": "Java",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 17 for Java: What does Java do?",
+      "options": [
+        "Option A for Java",
+        "Option B for Java",
+        "Option C for Java",
+        "Option D for Java"
+      ],
+      "correctAnswer": "Option B for Java"
+    },
+    {
+      "id": "58",
+      "skill": "Java",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 18 for Java: What does Java do?",
+      "options": [
+        "Option A for Java",
+        "Option B for Java",
+        "Option C for Java",
+        "Option D for Java"
+      ],
+      "correctAnswer": "Option B for Java"
+    },
+    {
+      "id": "59",
+      "skill": "Java",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 19 for Java: What does Java do?",
+      "options": [
+        "Option A for Java",
+        "Option B for Java",
+        "Option C for Java",
+        "Option D for Java"
+      ],
+      "correctAnswer": "Option B for Java"
+    },
+    {
+      "id": "60",
+      "skill": "Java",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 20 for Java: What does Java do?",
+      "options": [
+        "Option A for Java",
+        "Option B for Java",
+        "Option C for Java",
+        "Option D for Java"
+      ],
+      "correctAnswer": "Option B for Java"
+    },
+    {
+      "id": "61",
+      "skill": "Advance Java",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 1 for Advance Java: What does Advance Java do?",
+      "options": [
+        "Option A for Advance Java",
+        "Option B for Advance Java",
+        "Option C for Advance Java",
+        "Option D for Advance Java"
+      ],
+      "correctAnswer": "Option B for Advance Java"
+    },
+    {
+      "id": "62",
+      "skill": "Advance Java",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 2 for Advance Java: What does Advance Java do?",
+      "options": [
+        "Option A for Advance Java",
+        "Option B for Advance Java",
+        "Option C for Advance Java",
+        "Option D for Advance Java"
+      ],
+      "correctAnswer": "Option B for Advance Java"
+    },
+    {
+      "id": "63",
+      "skill": "Advance Java",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 3 for Advance Java: What does Advance Java do?",
+      "options": [
+        "Option A for Advance Java",
+        "Option B for Advance Java",
+        "Option C for Advance Java",
+        "Option D for Advance Java"
+      ],
+      "correctAnswer": "Option B for Advance Java"
+    },
+    {
+      "id": "64",
+      "skill": "Advance Java",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 4 for Advance Java: What does Advance Java do?",
+      "options": [
+        "Option A for Advance Java",
+        "Option B for Advance Java",
+        "Option C for Advance Java",
+        "Option D for Advance Java"
+      ],
+      "correctAnswer": "Option B for Advance Java"
+    },
+    {
+      "id": "65",
+      "skill": "Advance Java",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 5 for Advance Java: What does Advance Java do?",
+      "options": [
+        "Option A for Advance Java",
+        "Option B for Advance Java",
+        "Option C for Advance Java",
+        "Option D for Advance Java"
+      ],
+      "correctAnswer": "Option B for Advance Java"
+    },
+    {
+      "id": "66",
+      "skill": "Advance Java",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 6 for Advance Java: What does Advance Java do?",
+      "options": [
+        "Option A for Advance Java",
+        "Option B for Advance Java",
+        "Option C for Advance Java",
+        "Option D for Advance Java"
+      ],
+      "correctAnswer": "Option B for Advance Java"
+    },
+    {
+      "id": "67",
+      "skill": "Advance Java",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 7 for Advance Java: What does Advance Java do?",
+      "options": [
+        "Option A for Advance Java",
+        "Option B for Advance Java",
+        "Option C for Advance Java",
+        "Option D for Advance Java"
+      ],
+      "correctAnswer": "Option B for Advance Java"
+    },
+    {
+      "id": "68",
+      "skill": "Advance Java",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 8 for Advance Java: What does Advance Java do?",
+      "options": [
+        "Option A for Advance Java",
+        "Option B for Advance Java",
+        "Option C for Advance Java",
+        "Option D for Advance Java"
+      ],
+      "correctAnswer": "Option B for Advance Java"
+    },
+    {
+      "id": "69",
+      "skill": "Advance Java",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 9 for Advance Java: What does Advance Java do?",
+      "options": [
+        "Option A for Advance Java",
+        "Option B for Advance Java",
+        "Option C for Advance Java",
+        "Option D for Advance Java"
+      ],
+      "correctAnswer": "Option B for Advance Java"
+    },
+    {
+      "id": "70",
+      "skill": "Advance Java",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 10 for Advance Java: What does Advance Java do?",
+      "options": [
+        "Option A for Advance Java",
+        "Option B for Advance Java",
+        "Option C for Advance Java",
+        "Option D for Advance Java"
+      ],
+      "correctAnswer": "Option B for Advance Java"
+    },
+    {
+      "id": "71",
+      "skill": "Advance Java",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 11 for Advance Java: What does Advance Java do?",
+      "options": [
+        "Option A for Advance Java",
+        "Option B for Advance Java",
+        "Option C for Advance Java",
+        "Option D for Advance Java"
+      ],
+      "correctAnswer": "Option B for Advance Java"
+    },
+    {
+      "id": "72",
+      "skill": "Advance Java",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 12 for Advance Java: What does Advance Java do?",
+      "options": [
+        "Option A for Advance Java",
+        "Option B for Advance Java",
+        "Option C for Advance Java",
+        "Option D for Advance Java"
+      ],
+      "correctAnswer": "Option B for Advance Java"
+    },
+    {
+      "id": "73",
+      "skill": "Advance Java",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 13 for Advance Java: What does Advance Java do?",
+      "options": [
+        "Option A for Advance Java",
+        "Option B for Advance Java",
+        "Option C for Advance Java",
+        "Option D for Advance Java"
+      ],
+      "correctAnswer": "Option B for Advance Java"
+    },
+    {
+      "id": "74",
+      "skill": "Advance Java",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 14 for Advance Java: What does Advance Java do?",
+      "options": [
+        "Option A for Advance Java",
+        "Option B for Advance Java",
+        "Option C for Advance Java",
+        "Option D for Advance Java"
+      ],
+      "correctAnswer": "Option B for Advance Java"
+    },
+    {
+      "id": "75",
+      "skill": "Advance Java",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 15 for Advance Java: What does Advance Java do?",
+      "options": [
+        "Option A for Advance Java",
+        "Option B for Advance Java",
+        "Option C for Advance Java",
+        "Option D for Advance Java"
+      ],
+      "correctAnswer": "Option B for Advance Java"
+    },
+    {
+      "id": "76",
+      "skill": "Advance Java",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 16 for Advance Java: What does Advance Java do?",
+      "options": [
+        "Option A for Advance Java",
+        "Option B for Advance Java",
+        "Option C for Advance Java",
+        "Option D for Advance Java"
+      ],
+      "correctAnswer": "Option B for Advance Java"
+    },
+    {
+      "id": "77",
+      "skill": "Advance Java",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 17 for Advance Java: What does Advance Java do?",
+      "options": [
+        "Option A for Advance Java",
+        "Option B for Advance Java",
+        "Option C for Advance Java",
+        "Option D for Advance Java"
+      ],
+      "correctAnswer": "Option B for Advance Java"
+    },
+    {
+      "id": "78",
+      "skill": "Advance Java",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 18 for Advance Java: What does Advance Java do?",
+      "options": [
+        "Option A for Advance Java",
+        "Option B for Advance Java",
+        "Option C for Advance Java",
+        "Option D for Advance Java"
+      ],
+      "correctAnswer": "Option B for Advance Java"
+    },
+    {
+      "id": "79",
+      "skill": "Advance Java",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 19 for Advance Java: What does Advance Java do?",
+      "options": [
+        "Option A for Advance Java",
+        "Option B for Advance Java",
+        "Option C for Advance Java",
+        "Option D for Advance Java"
+      ],
+      "correctAnswer": "Option B for Advance Java"
+    },
+    {
+      "id": "80",
+      "skill": "Advance Java",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 20 for Advance Java: What does Advance Java do?",
+      "options": [
+        "Option A for Advance Java",
+        "Option B for Advance Java",
+        "Option C for Advance Java",
+        "Option D for Advance Java"
+      ],
+      "correctAnswer": "Option B for Advance Java"
+    },
+    {
+      "id": "81",
+      "skill": "Spring",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 1 for Spring: What does Spring do?",
+      "options": [
+        "Option A for Spring",
+        "Option B for Spring",
+        "Option C for Spring",
+        "Option D for Spring"
+      ],
+      "correctAnswer": "Option B for Spring"
+    },
+    {
+      "id": "82",
+      "skill": "Spring",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 2 for Spring: What does Spring do?",
+      "options": [
+        "Option A for Spring",
+        "Option B for Spring",
+        "Option C for Spring",
+        "Option D for Spring"
+      ],
+      "correctAnswer": "Option B for Spring"
+    },
+    {
+      "id": "83",
+      "skill": "Spring",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 3 for Spring: What does Spring do?",
+      "options": [
+        "Option A for Spring",
+        "Option B for Spring",
+        "Option C for Spring",
+        "Option D for Spring"
+      ],
+      "correctAnswer": "Option B for Spring"
+    },
+    {
+      "id": "84",
+      "skill": "Spring",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 4 for Spring: What does Spring do?",
+      "options": [
+        "Option A for Spring",
+        "Option B for Spring",
+        "Option C for Spring",
+        "Option D for Spring"
+      ],
+      "correctAnswer": "Option B for Spring"
+    },
+    {
+      "id": "85",
+      "skill": "Spring",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 5 for Spring: What does Spring do?",
+      "options": [
+        "Option A for Spring",
+        "Option B for Spring",
+        "Option C for Spring",
+        "Option D for Spring"
+      ],
+      "correctAnswer": "Option B for Spring"
+    },
+    {
+      "id": "86",
+      "skill": "Spring",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 6 for Spring: What does Spring do?",
+      "options": [
+        "Option A for Spring",
+        "Option B for Spring",
+        "Option C for Spring",
+        "Option D for Spring"
+      ],
+      "correctAnswer": "Option B for Spring"
+    },
+    {
+      "id": "87",
+      "skill": "Spring",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 7 for Spring: What does Spring do?",
+      "options": [
+        "Option A for Spring",
+        "Option B for Spring",
+        "Option C for Spring",
+        "Option D for Spring"
+      ],
+      "correctAnswer": "Option B for Spring"
+    },
+    {
+      "id": "88",
+      "skill": "Spring",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 8 for Spring: What does Spring do?",
+      "options": [
+        "Option A for Spring",
+        "Option B for Spring",
+        "Option C for Spring",
+        "Option D for Spring"
+      ],
+      "correctAnswer": "Option B for Spring"
+    },
+    {
+      "id": "89",
+      "skill": "Spring",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 9 for Spring: What does Spring do?",
+      "options": [
+        "Option A for Spring",
+        "Option B for Spring",
+        "Option C for Spring",
+        "Option D for Spring"
+      ],
+      "correctAnswer": "Option B for Spring"
+    },
+    {
+      "id": "90",
+      "skill": "Spring",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 10 for Spring: What does Spring do?",
+      "options": [
+        "Option A for Spring",
+        "Option B for Spring",
+        "Option C for Spring",
+        "Option D for Spring"
+      ],
+      "correctAnswer": "Option B for Spring"
+    },
+    {
+      "id": "91",
+      "skill": "Spring",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 11 for Spring: What does Spring do?",
+      "options": [
+        "Option A for Spring",
+        "Option B for Spring",
+        "Option C for Spring",
+        "Option D for Spring"
+      ],
+      "correctAnswer": "Option B for Spring"
+    },
+    {
+      "id": "92",
+      "skill": "Spring",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 12 for Spring: What does Spring do?",
+      "options": [
+        "Option A for Spring",
+        "Option B for Spring",
+        "Option C for Spring",
+        "Option D for Spring"
+      ],
+      "correctAnswer": "Option B for Spring"
+    },
+    {
+      "id": "93",
+      "skill": "Spring",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 13 for Spring: What does Spring do?",
+      "options": [
+        "Option A for Spring",
+        "Option B for Spring",
+        "Option C for Spring",
+        "Option D for Spring"
+      ],
+      "correctAnswer": "Option B for Spring"
+    },
+    {
+      "id": "94",
+      "skill": "Spring",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 14 for Spring: What does Spring do?",
+      "options": [
+        "Option A for Spring",
+        "Option B for Spring",
+        "Option C for Spring",
+        "Option D for Spring"
+      ],
+      "correctAnswer": "Option B for Spring"
+    },
+    {
+      "id": "95",
+      "skill": "Spring",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 15 for Spring: What does Spring do?",
+      "options": [
+        "Option A for Spring",
+        "Option B for Spring",
+        "Option C for Spring",
+        "Option D for Spring"
+      ],
+      "correctAnswer": "Option B for Spring"
+    },
+    {
+      "id": "96",
+      "skill": "Spring",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 16 for Spring: What does Spring do?",
+      "options": [
+        "Option A for Spring",
+        "Option B for Spring",
+        "Option C for Spring",
+        "Option D for Spring"
+      ],
+      "correctAnswer": "Option B for Spring"
+    },
+    {
+      "id": "97",
+      "skill": "Spring",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 17 for Spring: What does Spring do?",
+      "options": [
+        "Option A for Spring",
+        "Option B for Spring",
+        "Option C for Spring",
+        "Option D for Spring"
+      ],
+      "correctAnswer": "Option B for Spring"
+    },
+    {
+      "id": "98",
+      "skill": "Spring",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 18 for Spring: What does Spring do?",
+      "options": [
+        "Option A for Spring",
+        "Option B for Spring",
+        "Option C for Spring",
+        "Option D for Spring"
+      ],
+      "correctAnswer": "Option B for Spring"
+    },
+    {
+      "id": "99",
+      "skill": "Spring",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 19 for Spring: What does Spring do?",
+      "options": [
+        "Option A for Spring",
+        "Option B for Spring",
+        "Option C for Spring",
+        "Option D for Spring"
+      ],
+      "correctAnswer": "Option B for Spring"
+    },
+    {
+      "id": "100",
+      "skill": "Spring",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 20 for Spring: What does Spring do?",
+      "options": [
+        "Option A for Spring",
+        "Option B for Spring",
+        "Option C for Spring",
+        "Option D for Spring"
+      ],
+      "correctAnswer": "Option B for Spring"
+    },
+    {
+      "id": "101",
+      "skill": "Spring Boot",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 1 for Spring Boot: What does Spring Boot do?",
+      "options": [
+        "Option A for Spring Boot",
+        "Option B for Spring Boot",
+        "Option C for Spring Boot",
+        "Option D for Spring Boot"
+      ],
+      "correctAnswer": "Option B for Spring Boot"
+    },
+    {
+      "id": "102",
+      "skill": "Spring Boot",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 2 for Spring Boot: What does Spring Boot do?",
+      "options": [
+        "Option A for Spring Boot",
+        "Option B for Spring Boot",
+        "Option C for Spring Boot",
+        "Option D for Spring Boot"
+      ],
+      "correctAnswer": "Option B for Spring Boot"
+    },
+    {
+      "id": "103",
+      "skill": "Spring Boot",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 3 for Spring Boot: What does Spring Boot do?",
+      "options": [
+        "Option A for Spring Boot",
+        "Option B for Spring Boot",
+        "Option C for Spring Boot",
+        "Option D for Spring Boot"
+      ],
+      "correctAnswer": "Option B for Spring Boot"
+    },
+    {
+      "id": "104",
+      "skill": "Spring Boot",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 4 for Spring Boot: What does Spring Boot do?",
+      "options": [
+        "Option A for Spring Boot",
+        "Option B for Spring Boot",
+        "Option C for Spring Boot",
+        "Option D for Spring Boot"
+      ],
+      "correctAnswer": "Option B for Spring Boot"
+    },
+    {
+      "id": "105",
+      "skill": "Spring Boot",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 5 for Spring Boot: What does Spring Boot do?",
+      "options": [
+        "Option A for Spring Boot",
+        "Option B for Spring Boot",
+        "Option C for Spring Boot",
+        "Option D for Spring Boot"
+      ],
+      "correctAnswer": "Option B for Spring Boot"
+    },
+    {
+      "id": "106",
+      "skill": "Spring Boot",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 6 for Spring Boot: What does Spring Boot do?",
+      "options": [
+        "Option A for Spring Boot",
+        "Option B for Spring Boot",
+        "Option C for Spring Boot",
+        "Option D for Spring Boot"
+      ],
+      "correctAnswer": "Option B for Spring Boot"
+    },
+    {
+      "id": "107",
+      "skill": "Spring Boot",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 7 for Spring Boot: What does Spring Boot do?",
+      "options": [
+        "Option A for Spring Boot",
+        "Option B for Spring Boot",
+        "Option C for Spring Boot",
+        "Option D for Spring Boot"
+      ],
+      "correctAnswer": "Option B for Spring Boot"
+    },
+    {
+      "id": "108",
+      "skill": "Spring Boot",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 8 for Spring Boot: What does Spring Boot do?",
+      "options": [
+        "Option A for Spring Boot",
+        "Option B for Spring Boot",
+        "Option C for Spring Boot",
+        "Option D for Spring Boot"
+      ],
+      "correctAnswer": "Option B for Spring Boot"
+    },
+    {
+      "id": "109",
+      "skill": "Spring Boot",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 9 for Spring Boot: What does Spring Boot do?",
+      "options": [
+        "Option A for Spring Boot",
+        "Option B for Spring Boot",
+        "Option C for Spring Boot",
+        "Option D for Spring Boot"
+      ],
+      "correctAnswer": "Option B for Spring Boot"
+    },
+    {
+      "id": "110",
+      "skill": "Spring Boot",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 10 for Spring Boot: What does Spring Boot do?",
+      "options": [
+        "Option A for Spring Boot",
+        "Option B for Spring Boot",
+        "Option C for Spring Boot",
+        "Option D for Spring Boot"
+      ],
+      "correctAnswer": "Option B for Spring Boot"
+    },
+    {
+      "id": "111",
+      "skill": "Spring Boot",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 11 for Spring Boot: What does Spring Boot do?",
+      "options": [
+        "Option A for Spring Boot",
+        "Option B for Spring Boot",
+        "Option C for Spring Boot",
+        "Option D for Spring Boot"
+      ],
+      "correctAnswer": "Option B for Spring Boot"
+    },
+    {
+      "id": "112",
+      "skill": "Spring Boot",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 12 for Spring Boot: What does Spring Boot do?",
+      "options": [
+        "Option A for Spring Boot",
+        "Option B for Spring Boot",
+        "Option C for Spring Boot",
+        "Option D for Spring Boot"
+      ],
+      "correctAnswer": "Option B for Spring Boot"
+    },
+    {
+      "id": "113",
+      "skill": "Spring Boot",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 13 for Spring Boot: What does Spring Boot do?",
+      "options": [
+        "Option A for Spring Boot",
+        "Option B for Spring Boot",
+        "Option C for Spring Boot",
+        "Option D for Spring Boot"
+      ],
+      "correctAnswer": "Option B for Spring Boot"
+    },
+    {
+      "id": "114",
+      "skill": "Spring Boot",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 14 for Spring Boot: What does Spring Boot do?",
+      "options": [
+        "Option A for Spring Boot",
+        "Option B for Spring Boot",
+        "Option C for Spring Boot",
+        "Option D for Spring Boot"
+      ],
+      "correctAnswer": "Option B for Spring Boot"
+    },
+    {
+      "id": "115",
+      "skill": "Spring Boot",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 15 for Spring Boot: What does Spring Boot do?",
+      "options": [
+        "Option A for Spring Boot",
+        "Option B for Spring Boot",
+        "Option C for Spring Boot",
+        "Option D for Spring Boot"
+      ],
+      "correctAnswer": "Option B for Spring Boot"
+    },
+    {
+      "id": "116",
+      "skill": "Spring Boot",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 16 for Spring Boot: What does Spring Boot do?",
+      "options": [
+        "Option A for Spring Boot",
+        "Option B for Spring Boot",
+        "Option C for Spring Boot",
+        "Option D for Spring Boot"
+      ],
+      "correctAnswer": "Option B for Spring Boot"
+    },
+    {
+      "id": "117",
+      "skill": "Spring Boot",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 17 for Spring Boot: What does Spring Boot do?",
+      "options": [
+        "Option A for Spring Boot",
+        "Option B for Spring Boot",
+        "Option C for Spring Boot",
+        "Option D for Spring Boot"
+      ],
+      "correctAnswer": "Option B for Spring Boot"
+    },
+    {
+      "id": "118",
+      "skill": "Spring Boot",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 18 for Spring Boot: What does Spring Boot do?",
+      "options": [
+        "Option A for Spring Boot",
+        "Option B for Spring Boot",
+        "Option C for Spring Boot",
+        "Option D for Spring Boot"
+      ],
+      "correctAnswer": "Option B for Spring Boot"
+    },
+    {
+      "id": "119",
+      "skill": "Spring Boot",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 19 for Spring Boot: What does Spring Boot do?",
+      "options": [
+        "Option A for Spring Boot",
+        "Option B for Spring Boot",
+        "Option C for Spring Boot",
+        "Option D for Spring Boot"
+      ],
+      "correctAnswer": "Option B for Spring Boot"
+    },
+    {
+      "id": "120",
+      "skill": "Spring Boot",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 20 for Spring Boot: What does Spring Boot do?",
+      "options": [
+        "Option A for Spring Boot",
+        "Option B for Spring Boot",
+        "Option C for Spring Boot",
+        "Option D for Spring Boot"
+      ],
+      "correctAnswer": "Option B for Spring Boot"
+    },
+    {
+      "id": "121",
+      "skill": "Node",
+      "experienceLevel": "Junior",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 1 for Node: What does Node do?",
+      "options": [
+        "Option A for Node",
+        "Option B for Node",
+        "Option C for Node",
+        "Option D for Node"
+      ],
+      "correctAnswer": "Option B for Node"
+    },
+    {
+      "id": "122",
+      "skill": "Node",
+      "experienceLevel": "Junior",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 2 for Node: What does Node do?",
+      "options": [
+        "Option A for Node",
+        "Option B for Node",
+        "Option C for Node",
+        "Option D for Node"
+      ],
+      "correctAnswer": "Option B for Node"
+    },
+    {
+      "id": "123",
+      "skill": "Node",
+      "experienceLevel": "Junior",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 3 for Node: What does Node do?",
+      "options": [
+        "Option A for Node",
+        "Option B for Node",
+        "Option C for Node",
+        "Option D for Node"
+      ],
+      "correctAnswer": "Option B for Node"
+    },
+    {
+      "id": "124",
+      "skill": "Node",
+      "experienceLevel": "Junior",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 4 for Node: What does Node do?",
+      "options": [
+        "Option A for Node",
+        "Option B for Node",
+        "Option C for Node",
+        "Option D for Node"
+      ],
+      "correctAnswer": "Option B for Node"
+    },
+    {
+      "id": "125",
+      "skill": "Node",
+      "experienceLevel": "Junior",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 5 for Node: What does Node do?",
+      "options": [
+        "Option A for Node",
+        "Option B for Node",
+        "Option C for Node",
+        "Option D for Node"
+      ],
+      "correctAnswer": "Option B for Node"
+    },
+    {
+      "id": "126",
+      "skill": "Node",
+      "experienceLevel": "Junior",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 6 for Node: What does Node do?",
+      "options": [
+        "Option A for Node",
+        "Option B for Node",
+        "Option C for Node",
+        "Option D for Node"
+      ],
+      "correctAnswer": "Option B for Node"
+    },
+    {
+      "id": "127",
+      "skill": "Node",
+      "experienceLevel": "Junior",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 7 for Node: What does Node do?",
+      "options": [
+        "Option A for Node",
+        "Option B for Node",
+        "Option C for Node",
+        "Option D for Node"
+      ],
+      "correctAnswer": "Option B for Node"
+    },
+    {
+      "id": "128",
+      "skill": "Node",
+      "experienceLevel": "Junior",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 8 for Node: What does Node do?",
+      "options": [
+        "Option A for Node",
+        "Option B for Node",
+        "Option C for Node",
+        "Option D for Node"
+      ],
+      "correctAnswer": "Option B for Node"
+    },
+    {
+      "id": "129",
+      "skill": "Node",
+      "experienceLevel": "Junior",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 9 for Node: What does Node do?",
+      "options": [
+        "Option A for Node",
+        "Option B for Node",
+        "Option C for Node",
+        "Option D for Node"
+      ],
+      "correctAnswer": "Option B for Node"
+    },
+    {
+      "id": "130",
+      "skill": "Node",
+      "experienceLevel": "Junior",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 10 for Node: What does Node do?",
+      "options": [
+        "Option A for Node",
+        "Option B for Node",
+        "Option C for Node",
+        "Option D for Node"
+      ],
+      "correctAnswer": "Option B for Node"
+    },
+    {
+      "id": "131",
+      "skill": "Node",
+      "experienceLevel": "Junior",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 11 for Node: What does Node do?",
+      "options": [
+        "Option A for Node",
+        "Option B for Node",
+        "Option C for Node",
+        "Option D for Node"
+      ],
+      "correctAnswer": "Option B for Node"
+    },
+    {
+      "id": "132",
+      "skill": "Node",
+      "experienceLevel": "Junior",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 12 for Node: What does Node do?",
+      "options": [
+        "Option A for Node",
+        "Option B for Node",
+        "Option C for Node",
+        "Option D for Node"
+      ],
+      "correctAnswer": "Option B for Node"
+    },
+    {
+      "id": "133",
+      "skill": "Node",
+      "experienceLevel": "Junior",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 13 for Node: What does Node do?",
+      "options": [
+        "Option A for Node",
+        "Option B for Node",
+        "Option C for Node",
+        "Option D for Node"
+      ],
+      "correctAnswer": "Option B for Node"
+    },
+    {
+      "id": "134",
+      "skill": "Node",
+      "experienceLevel": "Junior",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 14 for Node: What does Node do?",
+      "options": [
+        "Option A for Node",
+        "Option B for Node",
+        "Option C for Node",
+        "Option D for Node"
+      ],
+      "correctAnswer": "Option B for Node"
+    },
+    {
+      "id": "135",
+      "skill": "Node",
+      "experienceLevel": "Junior",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 15 for Node: What does Node do?",
+      "options": [
+        "Option A for Node",
+        "Option B for Node",
+        "Option C for Node",
+        "Option D for Node"
+      ],
+      "correctAnswer": "Option B for Node"
+    },
+    {
+      "id": "136",
+      "skill": "Node",
+      "experienceLevel": "Junior",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 16 for Node: What does Node do?",
+      "options": [
+        "Option A for Node",
+        "Option B for Node",
+        "Option C for Node",
+        "Option D for Node"
+      ],
+      "correctAnswer": "Option B for Node"
+    },
+    {
+      "id": "137",
+      "skill": "Node",
+      "experienceLevel": "Junior",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 17 for Node: What does Node do?",
+      "options": [
+        "Option A for Node",
+        "Option B for Node",
+        "Option C for Node",
+        "Option D for Node"
+      ],
+      "correctAnswer": "Option B for Node"
+    },
+    {
+      "id": "138",
+      "skill": "Node",
+      "experienceLevel": "Junior",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 18 for Node: What does Node do?",
+      "options": [
+        "Option A for Node",
+        "Option B for Node",
+        "Option C for Node",
+        "Option D for Node"
+      ],
+      "correctAnswer": "Option B for Node"
+    },
+    {
+      "id": "139",
+      "skill": "Node",
+      "experienceLevel": "Junior",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 19 for Node: What does Node do?",
+      "options": [
+        "Option A for Node",
+        "Option B for Node",
+        "Option C for Node",
+        "Option D for Node"
+      ],
+      "correctAnswer": "Option B for Node"
+    },
+    {
+      "id": "140",
+      "skill": "Node",
+      "experienceLevel": "Junior",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 20 for Node: What does Node do?",
+      "options": [
+        "Option A for Node",
+        "Option B for Node",
+        "Option C for Node",
+        "Option D for Node"
+      ],
+      "correctAnswer": "Option B for Node"
+    },
+    {
+      "id": "141",
+      "skill": "Asp.net",
+      "experienceLevel": "Junior",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 1 for Asp.net: What does Asp.net do?",
+      "options": [
+        "Option A for Asp.net",
+        "Option B for Asp.net",
+        "Option C for Asp.net",
+        "Option D for Asp.net"
+      ],
+      "correctAnswer": "Option B for Asp.net"
+    },
+    {
+      "id": "142",
+      "skill": "Asp.net",
+      "experienceLevel": "Junior",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 2 for Asp.net: What does Asp.net do?",
+      "options": [
+        "Option A for Asp.net",
+        "Option B for Asp.net",
+        "Option C for Asp.net",
+        "Option D for Asp.net"
+      ],
+      "correctAnswer": "Option B for Asp.net"
+    },
+    {
+      "id": "143",
+      "skill": "Asp.net",
+      "experienceLevel": "Junior",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 3 for Asp.net: What does Asp.net do?",
+      "options": [
+        "Option A for Asp.net",
+        "Option B for Asp.net",
+        "Option C for Asp.net",
+        "Option D for Asp.net"
+      ],
+      "correctAnswer": "Option B for Asp.net"
+    },
+    {
+      "id": "144",
+      "skill": "Asp.net",
+      "experienceLevel": "Junior",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 4 for Asp.net: What does Asp.net do?",
+      "options": [
+        "Option A for Asp.net",
+        "Option B for Asp.net",
+        "Option C for Asp.net",
+        "Option D for Asp.net"
+      ],
+      "correctAnswer": "Option B for Asp.net"
+    },
+    {
+      "id": "145",
+      "skill": "Asp.net",
+      "experienceLevel": "Junior",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 5 for Asp.net: What does Asp.net do?",
+      "options": [
+        "Option A for Asp.net",
+        "Option B for Asp.net",
+        "Option C for Asp.net",
+        "Option D for Asp.net"
+      ],
+      "correctAnswer": "Option B for Asp.net"
+    },
+    {
+      "id": "146",
+      "skill": "Asp.net",
+      "experienceLevel": "Junior",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 6 for Asp.net: What does Asp.net do?",
+      "options": [
+        "Option A for Asp.net",
+        "Option B for Asp.net",
+        "Option C for Asp.net",
+        "Option D for Asp.net"
+      ],
+      "correctAnswer": "Option B for Asp.net"
+    },
+    {
+      "id": "147",
+      "skill": "Asp.net",
+      "experienceLevel": "Junior",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 7 for Asp.net: What does Asp.net do?",
+      "options": [
+        "Option A for Asp.net",
+        "Option B for Asp.net",
+        "Option C for Asp.net",
+        "Option D for Asp.net"
+      ],
+      "correctAnswer": "Option B for Asp.net"
+    },
+    {
+      "id": "148",
+      "skill": "Asp.net",
+      "experienceLevel": "Junior",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 8 for Asp.net: What does Asp.net do?",
+      "options": [
+        "Option A for Asp.net",
+        "Option B for Asp.net",
+        "Option C for Asp.net",
+        "Option D for Asp.net"
+      ],
+      "correctAnswer": "Option B for Asp.net"
+    },
+    {
+      "id": "149",
+      "skill": "Asp.net",
+      "experienceLevel": "Junior",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 9 for Asp.net: What does Asp.net do?",
+      "options": [
+        "Option A for Asp.net",
+        "Option B for Asp.net",
+        "Option C for Asp.net",
+        "Option D for Asp.net"
+      ],
+      "correctAnswer": "Option B for Asp.net"
+    },
+    {
+      "id": "150",
+      "skill": "Asp.net",
+      "experienceLevel": "Junior",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 10 for Asp.net: What does Asp.net do?",
+      "options": [
+        "Option A for Asp.net",
+        "Option B for Asp.net",
+        "Option C for Asp.net",
+        "Option D for Asp.net"
+      ],
+      "correctAnswer": "Option B for Asp.net"
+    },
+    {
+      "id": "151",
+      "skill": "Asp.net",
+      "experienceLevel": "Junior",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 11 for Asp.net: What does Asp.net do?",
+      "options": [
+        "Option A for Asp.net",
+        "Option B for Asp.net",
+        "Option C for Asp.net",
+        "Option D for Asp.net"
+      ],
+      "correctAnswer": "Option B for Asp.net"
+    },
+    {
+      "id": "152",
+      "skill": "Asp.net",
+      "experienceLevel": "Junior",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 12 for Asp.net: What does Asp.net do?",
+      "options": [
+        "Option A for Asp.net",
+        "Option B for Asp.net",
+        "Option C for Asp.net",
+        "Option D for Asp.net"
+      ],
+      "correctAnswer": "Option B for Asp.net"
+    },
+    {
+      "id": "153",
+      "skill": "Asp.net",
+      "experienceLevel": "Junior",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 13 for Asp.net: What does Asp.net do?",
+      "options": [
+        "Option A for Asp.net",
+        "Option B for Asp.net",
+        "Option C for Asp.net",
+        "Option D for Asp.net"
+      ],
+      "correctAnswer": "Option B for Asp.net"
+    },
+    {
+      "id": "154",
+      "skill": "Asp.net",
+      "experienceLevel": "Junior",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 14 for Asp.net: What does Asp.net do?",
+      "options": [
+        "Option A for Asp.net",
+        "Option B for Asp.net",
+        "Option C for Asp.net",
+        "Option D for Asp.net"
+      ],
+      "correctAnswer": "Option B for Asp.net"
+    },
+    {
+      "id": "155",
+      "skill": "Asp.net",
+      "experienceLevel": "Junior",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 15 for Asp.net: What does Asp.net do?",
+      "options": [
+        "Option A for Asp.net",
+        "Option B for Asp.net",
+        "Option C for Asp.net",
+        "Option D for Asp.net"
+      ],
+      "correctAnswer": "Option B for Asp.net"
+    },
+    {
+      "id": "156",
+      "skill": "Asp.net",
+      "experienceLevel": "Junior",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 16 for Asp.net: What does Asp.net do?",
+      "options": [
+        "Option A for Asp.net",
+        "Option B for Asp.net",
+        "Option C for Asp.net",
+        "Option D for Asp.net"
+      ],
+      "correctAnswer": "Option B for Asp.net"
+    },
+    {
+      "id": "157",
+      "skill": "Asp.net",
+      "experienceLevel": "Junior",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 17 for Asp.net: What does Asp.net do?",
+      "options": [
+        "Option A for Asp.net",
+        "Option B for Asp.net",
+        "Option C for Asp.net",
+        "Option D for Asp.net"
+      ],
+      "correctAnswer": "Option B for Asp.net"
+    },
+    {
+      "id": "158",
+      "skill": "Asp.net",
+      "experienceLevel": "Junior",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 18 for Asp.net: What does Asp.net do?",
+      "options": [
+        "Option A for Asp.net",
+        "Option B for Asp.net",
+        "Option C for Asp.net",
+        "Option D for Asp.net"
+      ],
+      "correctAnswer": "Option B for Asp.net"
+    },
+    {
+      "id": "159",
+      "skill": "Asp.net",
+      "experienceLevel": "Junior",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 19 for Asp.net: What does Asp.net do?",
+      "options": [
+        "Option A for Asp.net",
+        "Option B for Asp.net",
+        "Option C for Asp.net",
+        "Option D for Asp.net"
+      ],
+      "correctAnswer": "Option B for Asp.net"
+    },
+    {
+      "id": "160",
+      "skill": "Asp.net",
+      "experienceLevel": "Junior",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 20 for Asp.net: What does Asp.net do?",
+      "options": [
+        "Option A for Asp.net",
+        "Option B for Asp.net",
+        "Option C for Asp.net",
+        "Option D for Asp.net"
+      ],
+      "correctAnswer": "Option B for Asp.net"
+    },
+    {
+      "id": "161",
+      "skill": "Python",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 1 for Python: What does Python do?",
+      "options": [
+        "Option A for Python",
+        "Option B for Python",
+        "Option C for Python",
+        "Option D for Python"
+      ],
+      "correctAnswer": "Option B for Python"
+    },
+    {
+      "id": "162",
+      "skill": "Python",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 2 for Python: What does Python do?",
+      "options": [
+        "Option A for Python",
+        "Option B for Python",
+        "Option C for Python",
+        "Option D for Python"
+      ],
+      "correctAnswer": "Option B for Python"
+    },
+    {
+      "id": "163",
+      "skill": "Python",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 3 for Python: What does Python do?",
+      "options": [
+        "Option A for Python",
+        "Option B for Python",
+        "Option C for Python",
+        "Option D for Python"
+      ],
+      "correctAnswer": "Option B for Python"
+    },
+    {
+      "id": "164",
+      "skill": "Python",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 4 for Python: What does Python do?",
+      "options": [
+        "Option A for Python",
+        "Option B for Python",
+        "Option C for Python",
+        "Option D for Python"
+      ],
+      "correctAnswer": "Option B for Python"
+    },
+    {
+      "id": "165",
+      "skill": "Python",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 5 for Python: What does Python do?",
+      "options": [
+        "Option A for Python",
+        "Option B for Python",
+        "Option C for Python",
+        "Option D for Python"
+      ],
+      "correctAnswer": "Option B for Python"
+    },
+    {
+      "id": "166",
+      "skill": "Python",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 6 for Python: What does Python do?",
+      "options": [
+        "Option A for Python",
+        "Option B for Python",
+        "Option C for Python",
+        "Option D for Python"
+      ],
+      "correctAnswer": "Option B for Python"
+    },
+    {
+      "id": "167",
+      "skill": "Python",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 7 for Python: What does Python do?",
+      "options": [
+        "Option A for Python",
+        "Option B for Python",
+        "Option C for Python",
+        "Option D for Python"
+      ],
+      "correctAnswer": "Option B for Python"
+    },
+    {
+      "id": "168",
+      "skill": "Python",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 8 for Python: What does Python do?",
+      "options": [
+        "Option A for Python",
+        "Option B for Python",
+        "Option C for Python",
+        "Option D for Python"
+      ],
+      "correctAnswer": "Option B for Python"
+    },
+    {
+      "id": "169",
+      "skill": "Python",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 9 for Python: What does Python do?",
+      "options": [
+        "Option A for Python",
+        "Option B for Python",
+        "Option C for Python",
+        "Option D for Python"
+      ],
+      "correctAnswer": "Option B for Python"
+    },
+    {
+      "id": "170",
+      "skill": "Python",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 10 for Python: What does Python do?",
+      "options": [
+        "Option A for Python",
+        "Option B for Python",
+        "Option C for Python",
+        "Option D for Python"
+      ],
+      "correctAnswer": "Option B for Python"
+    },
+    {
+      "id": "171",
+      "skill": "Python",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 11 for Python: What does Python do?",
+      "options": [
+        "Option A for Python",
+        "Option B for Python",
+        "Option C for Python",
+        "Option D for Python"
+      ],
+      "correctAnswer": "Option B for Python"
+    },
+    {
+      "id": "172",
+      "skill": "Python",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 12 for Python: What does Python do?",
+      "options": [
+        "Option A for Python",
+        "Option B for Python",
+        "Option C for Python",
+        "Option D for Python"
+      ],
+      "correctAnswer": "Option B for Python"
+    },
+    {
+      "id": "173",
+      "skill": "Python",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 13 for Python: What does Python do?",
+      "options": [
+        "Option A for Python",
+        "Option B for Python",
+        "Option C for Python",
+        "Option D for Python"
+      ],
+      "correctAnswer": "Option B for Python"
+    },
+    {
+      "id": "174",
+      "skill": "Python",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 14 for Python: What does Python do?",
+      "options": [
+        "Option A for Python",
+        "Option B for Python",
+        "Option C for Python",
+        "Option D for Python"
+      ],
+      "correctAnswer": "Option B for Python"
+    },
+    {
+      "id": "175",
+      "skill": "Python",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 15 for Python: What does Python do?",
+      "options": [
+        "Option A for Python",
+        "Option B for Python",
+        "Option C for Python",
+        "Option D for Python"
+      ],
+      "correctAnswer": "Option B for Python"
+    },
+    {
+      "id": "176",
+      "skill": "Python",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 16 for Python: What does Python do?",
+      "options": [
+        "Option A for Python",
+        "Option B for Python",
+        "Option C for Python",
+        "Option D for Python"
+      ],
+      "correctAnswer": "Option B for Python"
+    },
+    {
+      "id": "177",
+      "skill": "Python",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 17 for Python: What does Python do?",
+      "options": [
+        "Option A for Python",
+        "Option B for Python",
+        "Option C for Python",
+        "Option D for Python"
+      ],
+      "correctAnswer": "Option B for Python"
+    },
+    {
+      "id": "178",
+      "skill": "Python",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 18 for Python: What does Python do?",
+      "options": [
+        "Option A for Python",
+        "Option B for Python",
+        "Option C for Python",
+        "Option D for Python"
+      ],
+      "correctAnswer": "Option B for Python"
+    },
+    {
+      "id": "179",
+      "skill": "Python",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 19 for Python: What does Python do?",
+      "options": [
+        "Option A for Python",
+        "Option B for Python",
+        "Option C for Python",
+        "Option D for Python"
+      ],
+      "correctAnswer": "Option B for Python"
+    },
+    {
+      "id": "180",
+      "skill": "Python",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 20 for Python: What does Python do?",
+      "options": [
+        "Option A for Python",
+        "Option B for Python",
+        "Option C for Python",
+        "Option D for Python"
+      ],
+      "correctAnswer": "Option B for Python"
+    },
+    {
+      "id": "181",
+      "skill": "Aws",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 1 for Aws: What does Aws do?",
+      "options": [
+        "Option A for Aws",
+        "Option B for Aws",
+        "Option C for Aws",
+        "Option D for Aws"
+      ],
+      "correctAnswer": "Option B for Aws"
+    },
+    {
+      "id": "182",
+      "skill": "Aws",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 2 for Aws: What does Aws do?",
+      "options": [
+        "Option A for Aws",
+        "Option B for Aws",
+        "Option C for Aws",
+        "Option D for Aws"
+      ],
+      "correctAnswer": "Option B for Aws"
+    },
+    {
+      "id": "183",
+      "skill": "Aws",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 3 for Aws: What does Aws do?",
+      "options": [
+        "Option A for Aws",
+        "Option B for Aws",
+        "Option C for Aws",
+        "Option D for Aws"
+      ],
+      "correctAnswer": "Option B for Aws"
+    },
+    {
+      "id": "184",
+      "skill": "Aws",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 4 for Aws: What does Aws do?",
+      "options": [
+        "Option A for Aws",
+        "Option B for Aws",
+        "Option C for Aws",
+        "Option D for Aws"
+      ],
+      "correctAnswer": "Option B for Aws"
+    },
+    {
+      "id": "185",
+      "skill": "Aws",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 5 for Aws: What does Aws do?",
+      "options": [
+        "Option A for Aws",
+        "Option B for Aws",
+        "Option C for Aws",
+        "Option D for Aws"
+      ],
+      "correctAnswer": "Option B for Aws"
+    },
+    {
+      "id": "186",
+      "skill": "Aws",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 6 for Aws: What does Aws do?",
+      "options": [
+        "Option A for Aws",
+        "Option B for Aws",
+        "Option C for Aws",
+        "Option D for Aws"
+      ],
+      "correctAnswer": "Option B for Aws"
+    },
+    {
+      "id": "187",
+      "skill": "Aws",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 7 for Aws: What does Aws do?",
+      "options": [
+        "Option A for Aws",
+        "Option B for Aws",
+        "Option C for Aws",
+        "Option D for Aws"
+      ],
+      "correctAnswer": "Option B for Aws"
+    },
+    {
+      "id": "188",
+      "skill": "Aws",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 8 for Aws: What does Aws do?",
+      "options": [
+        "Option A for Aws",
+        "Option B for Aws",
+        "Option C for Aws",
+        "Option D for Aws"
+      ],
+      "correctAnswer": "Option B for Aws"
+    },
+    {
+      "id": "189",
+      "skill": "Aws",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 9 for Aws: What does Aws do?",
+      "options": [
+        "Option A for Aws",
+        "Option B for Aws",
+        "Option C for Aws",
+        "Option D for Aws"
+      ],
+      "correctAnswer": "Option B for Aws"
+    },
+    {
+      "id": "190",
+      "skill": "Aws",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 10 for Aws: What does Aws do?",
+      "options": [
+        "Option A for Aws",
+        "Option B for Aws",
+        "Option C for Aws",
+        "Option D for Aws"
+      ],
+      "correctAnswer": "Option B for Aws"
+    },
+    {
+      "id": "191",
+      "skill": "Aws",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 11 for Aws: What does Aws do?",
+      "options": [
+        "Option A for Aws",
+        "Option B for Aws",
+        "Option C for Aws",
+        "Option D for Aws"
+      ],
+      "correctAnswer": "Option B for Aws"
+    },
+    {
+      "id": "192",
+      "skill": "Aws",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 12 for Aws: What does Aws do?",
+      "options": [
+        "Option A for Aws",
+        "Option B for Aws",
+        "Option C for Aws",
+        "Option D for Aws"
+      ],
+      "correctAnswer": "Option B for Aws"
+    },
+    {
+      "id": "193",
+      "skill": "Aws",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 13 for Aws: What does Aws do?",
+      "options": [
+        "Option A for Aws",
+        "Option B for Aws",
+        "Option C for Aws",
+        "Option D for Aws"
+      ],
+      "correctAnswer": "Option B for Aws"
+    },
+    {
+      "id": "194",
+      "skill": "Aws",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 14 for Aws: What does Aws do?",
+      "options": [
+        "Option A for Aws",
+        "Option B for Aws",
+        "Option C for Aws",
+        "Option D for Aws"
+      ],
+      "correctAnswer": "Option B for Aws"
+    },
+    {
+      "id": "195",
+      "skill": "Aws",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 15 for Aws: What does Aws do?",
+      "options": [
+        "Option A for Aws",
+        "Option B for Aws",
+        "Option C for Aws",
+        "Option D for Aws"
+      ],
+      "correctAnswer": "Option B for Aws"
+    },
+    {
+      "id": "196",
+      "skill": "Aws",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 16 for Aws: What does Aws do?",
+      "options": [
+        "Option A for Aws",
+        "Option B for Aws",
+        "Option C for Aws",
+        "Option D for Aws"
+      ],
+      "correctAnswer": "Option B for Aws"
+    },
+    {
+      "id": "197",
+      "skill": "Aws",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 17 for Aws: What does Aws do?",
+      "options": [
+        "Option A for Aws",
+        "Option B for Aws",
+        "Option C for Aws",
+        "Option D for Aws"
+      ],
+      "correctAnswer": "Option B for Aws"
+    },
+    {
+      "id": "198",
+      "skill": "Aws",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 18 for Aws: What does Aws do?",
+      "options": [
+        "Option A for Aws",
+        "Option B for Aws",
+        "Option C for Aws",
+        "Option D for Aws"
+      ],
+      "correctAnswer": "Option B for Aws"
+    },
+    {
+      "id": "199",
+      "skill": "Aws",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 19 for Aws: What does Aws do?",
+      "options": [
+        "Option A for Aws",
+        "Option B for Aws",
+        "Option C for Aws",
+        "Option D for Aws"
+      ],
+      "correctAnswer": "Option B for Aws"
+    },
+    {
+      "id": "200",
+      "skill": "Aws",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 20 for Aws: What does Aws do?",
+      "options": [
+        "Option A for Aws",
+        "Option B for Aws",
+        "Option C for Aws",
+        "Option D for Aws"
+      ],
+      "correctAnswer": "Option B for Aws"
+    },
+    {
+      "id": "201",
+      "skill": "Laravel",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 1 for Laravel: What does Laravel do?",
+      "options": [
+        "Option A for Laravel",
+        "Option B for Laravel",
+        "Option C for Laravel",
+        "Option D for Laravel"
+      ],
+      "correctAnswer": "Option B for Laravel"
+    },
+    {
+      "id": "202",
+      "skill": "Laravel",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 2 for Laravel: What does Laravel do?",
+      "options": [
+        "Option A for Laravel",
+        "Option B for Laravel",
+        "Option C for Laravel",
+        "Option D for Laravel"
+      ],
+      "correctAnswer": "Option B for Laravel"
+    },
+    {
+      "id": "203",
+      "skill": "Laravel",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 3 for Laravel: What does Laravel do?",
+      "options": [
+        "Option A for Laravel",
+        "Option B for Laravel",
+        "Option C for Laravel",
+        "Option D for Laravel"
+      ],
+      "correctAnswer": "Option B for Laravel"
+    },
+    {
+      "id": "204",
+      "skill": "Laravel",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 4 for Laravel: What does Laravel do?",
+      "options": [
+        "Option A for Laravel",
+        "Option B for Laravel",
+        "Option C for Laravel",
+        "Option D for Laravel"
+      ],
+      "correctAnswer": "Option B for Laravel"
+    },
+    {
+      "id": "205",
+      "skill": "Laravel",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 5 for Laravel: What does Laravel do?",
+      "options": [
+        "Option A for Laravel",
+        "Option B for Laravel",
+        "Option C for Laravel",
+        "Option D for Laravel"
+      ],
+      "correctAnswer": "Option B for Laravel"
+    },
+    {
+      "id": "206",
+      "skill": "Laravel",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 6 for Laravel: What does Laravel do?",
+      "options": [
+        "Option A for Laravel",
+        "Option B for Laravel",
+        "Option C for Laravel",
+        "Option D for Laravel"
+      ],
+      "correctAnswer": "Option B for Laravel"
+    },
+    {
+      "id": "207",
+      "skill": "Laravel",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 7 for Laravel: What does Laravel do?",
+      "options": [
+        "Option A for Laravel",
+        "Option B for Laravel",
+        "Option C for Laravel",
+        "Option D for Laravel"
+      ],
+      "correctAnswer": "Option B for Laravel"
+    },
+    {
+      "id": "208",
+      "skill": "Laravel",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 8 for Laravel: What does Laravel do?",
+      "options": [
+        "Option A for Laravel",
+        "Option B for Laravel",
+        "Option C for Laravel",
+        "Option D for Laravel"
+      ],
+      "correctAnswer": "Option B for Laravel"
+    },
+    {
+      "id": "209",
+      "skill": "Laravel",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 9 for Laravel: What does Laravel do?",
+      "options": [
+        "Option A for Laravel",
+        "Option B for Laravel",
+        "Option C for Laravel",
+        "Option D for Laravel"
+      ],
+      "correctAnswer": "Option B for Laravel"
+    },
+    {
+      "id": "210",
+      "skill": "Laravel",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 10 for Laravel: What does Laravel do?",
+      "options": [
+        "Option A for Laravel",
+        "Option B for Laravel",
+        "Option C for Laravel",
+        "Option D for Laravel"
+      ],
+      "correctAnswer": "Option B for Laravel"
+    },
+    {
+      "id": "211",
+      "skill": "Laravel",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 11 for Laravel: What does Laravel do?",
+      "options": [
+        "Option A for Laravel",
+        "Option B for Laravel",
+        "Option C for Laravel",
+        "Option D for Laravel"
+      ],
+      "correctAnswer": "Option B for Laravel"
+    },
+    {
+      "id": "212",
+      "skill": "Laravel",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 12 for Laravel: What does Laravel do?",
+      "options": [
+        "Option A for Laravel",
+        "Option B for Laravel",
+        "Option C for Laravel",
+        "Option D for Laravel"
+      ],
+      "correctAnswer": "Option B for Laravel"
+    },
+    {
+      "id": "213",
+      "skill": "Laravel",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 13 for Laravel: What does Laravel do?",
+      "options": [
+        "Option A for Laravel",
+        "Option B for Laravel",
+        "Option C for Laravel",
+        "Option D for Laravel"
+      ],
+      "correctAnswer": "Option B for Laravel"
+    },
+    {
+      "id": "214",
+      "skill": "Laravel",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 14 for Laravel: What does Laravel do?",
+      "options": [
+        "Option A for Laravel",
+        "Option B for Laravel",
+        "Option C for Laravel",
+        "Option D for Laravel"
+      ],
+      "correctAnswer": "Option B for Laravel"
+    },
+    {
+      "id": "215",
+      "skill": "Laravel",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 15 for Laravel: What does Laravel do?",
+      "options": [
+        "Option A for Laravel",
+        "Option B for Laravel",
+        "Option C for Laravel",
+        "Option D for Laravel"
+      ],
+      "correctAnswer": "Option B for Laravel"
+    },
+    {
+      "id": "216",
+      "skill": "Laravel",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 16 for Laravel: What does Laravel do?",
+      "options": [
+        "Option A for Laravel",
+        "Option B for Laravel",
+        "Option C for Laravel",
+        "Option D for Laravel"
+      ],
+      "correctAnswer": "Option B for Laravel"
+    },
+    {
+      "id": "217",
+      "skill": "Laravel",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 17 for Laravel: What does Laravel do?",
+      "options": [
+        "Option A for Laravel",
+        "Option B for Laravel",
+        "Option C for Laravel",
+        "Option D for Laravel"
+      ],
+      "correctAnswer": "Option B for Laravel"
+    },
+    {
+      "id": "218",
+      "skill": "Laravel",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 18 for Laravel: What does Laravel do?",
+      "options": [
+        "Option A for Laravel",
+        "Option B for Laravel",
+        "Option C for Laravel",
+        "Option D for Laravel"
+      ],
+      "correctAnswer": "Option B for Laravel"
+    },
+    {
+      "id": "219",
+      "skill": "Laravel",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 19 for Laravel: What does Laravel do?",
+      "options": [
+        "Option A for Laravel",
+        "Option B for Laravel",
+        "Option C for Laravel",
+        "Option D for Laravel"
+      ],
+      "correctAnswer": "Option B for Laravel"
+    },
+    {
+      "id": "220",
+      "skill": "Laravel",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 20 for Laravel: What does Laravel do?",
+      "options": [
+        "Option A for Laravel",
+        "Option B for Laravel",
+        "Option C for Laravel",
+        "Option D for Laravel"
+      ],
+      "correctAnswer": "Option B for Laravel"
+    },
+    {
+      "id": "221",
+      "skill": "Angular Js",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 1 for Angular Js: What does Angular Js do?",
+      "options": [
+        "Option A for Angular Js",
+        "Option B for Angular Js",
+        "Option C for Angular Js",
+        "Option D for Angular Js"
+      ],
+      "correctAnswer": "Option B for Angular Js"
+    },
+    {
+      "id": "222",
+      "skill": "Angular Js",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 2 for Angular Js: What does Angular Js do?",
+      "options": [
+        "Option A for Angular Js",
+        "Option B for Angular Js",
+        "Option C for Angular Js",
+        "Option D for Angular Js"
+      ],
+      "correctAnswer": "Option B for Angular Js"
+    },
+    {
+      "id": "223",
+      "skill": "Angular Js",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 3 for Angular Js: What does Angular Js do?",
+      "options": [
+        "Option A for Angular Js",
+        "Option B for Angular Js",
+        "Option C for Angular Js",
+        "Option D for Angular Js"
+      ],
+      "correctAnswer": "Option B for Angular Js"
+    },
+    {
+      "id": "224",
+      "skill": "Angular Js",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 4 for Angular Js: What does Angular Js do?",
+      "options": [
+        "Option A for Angular Js",
+        "Option B for Angular Js",
+        "Option C for Angular Js",
+        "Option D for Angular Js"
+      ],
+      "correctAnswer": "Option B for Angular Js"
+    },
+    {
+      "id": "225",
+      "skill": "Angular Js",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 5 for Angular Js: What does Angular Js do?",
+      "options": [
+        "Option A for Angular Js",
+        "Option B for Angular Js",
+        "Option C for Angular Js",
+        "Option D for Angular Js"
+      ],
+      "correctAnswer": "Option B for Angular Js"
+    },
+    {
+      "id": "226",
+      "skill": "Angular Js",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 6 for Angular Js: What does Angular Js do?",
+      "options": [
+        "Option A for Angular Js",
+        "Option B for Angular Js",
+        "Option C for Angular Js",
+        "Option D for Angular Js"
+      ],
+      "correctAnswer": "Option B for Angular Js"
+    },
+    {
+      "id": "227",
+      "skill": "Angular Js",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 7 for Angular Js: What does Angular Js do?",
+      "options": [
+        "Option A for Angular Js",
+        "Option B for Angular Js",
+        "Option C for Angular Js",
+        "Option D for Angular Js"
+      ],
+      "correctAnswer": "Option B for Angular Js"
+    },
+    {
+      "id": "228",
+      "skill": "Angular Js",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 8 for Angular Js: What does Angular Js do?",
+      "options": [
+        "Option A for Angular Js",
+        "Option B for Angular Js",
+        "Option C for Angular Js",
+        "Option D for Angular Js"
+      ],
+      "correctAnswer": "Option B for Angular Js"
+    },
+    {
+      "id": "229",
+      "skill": "Angular Js",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 9 for Angular Js: What does Angular Js do?",
+      "options": [
+        "Option A for Angular Js",
+        "Option B for Angular Js",
+        "Option C for Angular Js",
+        "Option D for Angular Js"
+      ],
+      "correctAnswer": "Option B for Angular Js"
+    },
+    {
+      "id": "230",
+      "skill": "Angular Js",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 10 for Angular Js: What does Angular Js do?",
+      "options": [
+        "Option A for Angular Js",
+        "Option B for Angular Js",
+        "Option C for Angular Js",
+        "Option D for Angular Js"
+      ],
+      "correctAnswer": "Option B for Angular Js"
+    },
+    {
+      "id": "231",
+      "skill": "Angular Js",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 11 for Angular Js: What does Angular Js do?",
+      "options": [
+        "Option A for Angular Js",
+        "Option B for Angular Js",
+        "Option C for Angular Js",
+        "Option D for Angular Js"
+      ],
+      "correctAnswer": "Option B for Angular Js"
+    },
+    {
+      "id": "232",
+      "skill": "Angular Js",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 12 for Angular Js: What does Angular Js do?",
+      "options": [
+        "Option A for Angular Js",
+        "Option B for Angular Js",
+        "Option C for Angular Js",
+        "Option D for Angular Js"
+      ],
+      "correctAnswer": "Option B for Angular Js"
+    },
+    {
+      "id": "233",
+      "skill": "Angular Js",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 13 for Angular Js: What does Angular Js do?",
+      "options": [
+        "Option A for Angular Js",
+        "Option B for Angular Js",
+        "Option C for Angular Js",
+        "Option D for Angular Js"
+      ],
+      "correctAnswer": "Option B for Angular Js"
+    },
+    {
+      "id": "234",
+      "skill": "Angular Js",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 14 for Angular Js: What does Angular Js do?",
+      "options": [
+        "Option A for Angular Js",
+        "Option B for Angular Js",
+        "Option C for Angular Js",
+        "Option D for Angular Js"
+      ],
+      "correctAnswer": "Option B for Angular Js"
+    },
+    {
+      "id": "235",
+      "skill": "Angular Js",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 15 for Angular Js: What does Angular Js do?",
+      "options": [
+        "Option A for Angular Js",
+        "Option B for Angular Js",
+        "Option C for Angular Js",
+        "Option D for Angular Js"
+      ],
+      "correctAnswer": "Option B for Angular Js"
+    },
+    {
+      "id": "236",
+      "skill": "Angular Js",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 16 for Angular Js: What does Angular Js do?",
+      "options": [
+        "Option A for Angular Js",
+        "Option B for Angular Js",
+        "Option C for Angular Js",
+        "Option D for Angular Js"
+      ],
+      "correctAnswer": "Option B for Angular Js"
+    },
+    {
+      "id": "237",
+      "skill": "Angular Js",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 17 for Angular Js: What does Angular Js do?",
+      "options": [
+        "Option A for Angular Js",
+        "Option B for Angular Js",
+        "Option C for Angular Js",
+        "Option D for Angular Js"
+      ],
+      "correctAnswer": "Option B for Angular Js"
+    },
+    {
+      "id": "238",
+      "skill": "Angular Js",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 18 for Angular Js: What does Angular Js do?",
+      "options": [
+        "Option A for Angular Js",
+        "Option B for Angular Js",
+        "Option C for Angular Js",
+        "Option D for Angular Js"
+      ],
+      "correctAnswer": "Option B for Angular Js"
+    },
+    {
+      "id": "239",
+      "skill": "Angular Js",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 19 for Angular Js: What does Angular Js do?",
+      "options": [
+        "Option A for Angular Js",
+        "Option B for Angular Js",
+        "Option C for Angular Js",
+        "Option D for Angular Js"
+      ],
+      "correctAnswer": "Option B for Angular Js"
+    },
+    {
+      "id": "240",
+      "skill": "Angular Js",
+      "experienceLevel": "Intermediate",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 20 for Angular Js: What does Angular Js do?",
+      "options": [
+        "Option A for Angular Js",
+        "Option B for Angular Js",
+        "Option C for Angular Js",
+        "Option D for Angular Js"
+      ],
+      "correctAnswer": "Option B for Angular Js"
+    },
+    {
+      "id": "241",
+      "skill": "Cad",
+      "experienceLevel": "Junior",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 1 for Cad: What does Cad do?",
+      "options": [
+        "Option A for Cad",
+        "Option B for Cad",
+        "Option C for Cad",
+        "Option D for Cad"
+      ],
+      "correctAnswer": "Option B for Cad"
+    },
+    {
+      "id": "242",
+      "skill": "Cad",
+      "experienceLevel": "Junior",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 2 for Cad: What does Cad do?",
+      "options": [
+        "Option A for Cad",
+        "Option B for Cad",
+        "Option C for Cad",
+        "Option D for Cad"
+      ],
+      "correctAnswer": "Option B for Cad"
+    },
+    {
+      "id": "243",
+      "skill": "Cad",
+      "experienceLevel": "Junior",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 3 for Cad: What does Cad do?",
+      "options": [
+        "Option A for Cad",
+        "Option B for Cad",
+        "Option C for Cad",
+        "Option D for Cad"
+      ],
+      "correctAnswer": "Option B for Cad"
+    },
+    {
+      "id": "244",
+      "skill": "Cad",
+      "experienceLevel": "Junior",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 4 for Cad: What does Cad do?",
+      "options": [
+        "Option A for Cad",
+        "Option B for Cad",
+        "Option C for Cad",
+        "Option D for Cad"
+      ],
+      "correctAnswer": "Option B for Cad"
+    },
+    {
+      "id": "245",
+      "skill": "Cad",
+      "experienceLevel": "Junior",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 5 for Cad: What does Cad do?",
+      "options": [
+        "Option A for Cad",
+        "Option B for Cad",
+        "Option C for Cad",
+        "Option D for Cad"
+      ],
+      "correctAnswer": "Option B for Cad"
+    },
+    {
+      "id": "246",
+      "skill": "Cad",
+      "experienceLevel": "Junior",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 6 for Cad: What does Cad do?",
+      "options": [
+        "Option A for Cad",
+        "Option B for Cad",
+        "Option C for Cad",
+        "Option D for Cad"
+      ],
+      "correctAnswer": "Option B for Cad"
+    },
+    {
+      "id": "247",
+      "skill": "Cad",
+      "experienceLevel": "Junior",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 7 for Cad: What does Cad do?",
+      "options": [
+        "Option A for Cad",
+        "Option B for Cad",
+        "Option C for Cad",
+        "Option D for Cad"
+      ],
+      "correctAnswer": "Option B for Cad"
+    },
+    {
+      "id": "248",
+      "skill": "Cad",
+      "experienceLevel": "Junior",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 8 for Cad: What does Cad do?",
+      "options": [
+        "Option A for Cad",
+        "Option B for Cad",
+        "Option C for Cad",
+        "Option D for Cad"
+      ],
+      "correctAnswer": "Option B for Cad"
+    },
+    {
+      "id": "249",
+      "skill": "Cad",
+      "experienceLevel": "Junior",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 9 for Cad: What does Cad do?",
+      "options": [
+        "Option A for Cad",
+        "Option B for Cad",
+        "Option C for Cad",
+        "Option D for Cad"
+      ],
+      "correctAnswer": "Option B for Cad"
+    },
+    {
+      "id": "250",
+      "skill": "Cad",
+      "experienceLevel": "Junior",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 10 for Cad: What does Cad do?",
+      "options": [
+        "Option A for Cad",
+        "Option B for Cad",
+        "Option C for Cad",
+        "Option D for Cad"
+      ],
+      "correctAnswer": "Option B for Cad"
+    },
+    {
+      "id": "251",
+      "skill": "Cad",
+      "experienceLevel": "Junior",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 11 for Cad: What does Cad do?",
+      "options": [
+        "Option A for Cad",
+        "Option B for Cad",
+        "Option C for Cad",
+        "Option D for Cad"
+      ],
+      "correctAnswer": "Option B for Cad"
+    },
+    {
+      "id": "252",
+      "skill": "Cad",
+      "experienceLevel": "Junior",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 12 for Cad: What does Cad do?",
+      "options": [
+        "Option A for Cad",
+        "Option B for Cad",
+        "Option C for Cad",
+        "Option D for Cad"
+      ],
+      "correctAnswer": "Option B for Cad"
+    },
+    {
+      "id": "253",
+      "skill": "Cad",
+      "experienceLevel": "Junior",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 13 for Cad: What does Cad do?",
+      "options": [
+        "Option A for Cad",
+        "Option B for Cad",
+        "Option C for Cad",
+        "Option D for Cad"
+      ],
+      "correctAnswer": "Option B for Cad"
+    },
+    {
+      "id": "254",
+      "skill": "Cad",
+      "experienceLevel": "Junior",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 14 for Cad: What does Cad do?",
+      "options": [
+        "Option A for Cad",
+        "Option B for Cad",
+        "Option C for Cad",
+        "Option D for Cad"
+      ],
+      "correctAnswer": "Option B for Cad"
+    },
+    {
+      "id": "255",
+      "skill": "Cad",
+      "experienceLevel": "Junior",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 15 for Cad: What does Cad do?",
+      "options": [
+        "Option A for Cad",
+        "Option B for Cad",
+        "Option C for Cad",
+        "Option D for Cad"
+      ],
+      "correctAnswer": "Option B for Cad"
+    },
+    {
+      "id": "256",
+      "skill": "Cad",
+      "experienceLevel": "Junior",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 16 for Cad: What does Cad do?",
+      "options": [
+        "Option A for Cad",
+        "Option B for Cad",
+        "Option C for Cad",
+        "Option D for Cad"
+      ],
+      "correctAnswer": "Option B for Cad"
+    },
+    {
+      "id": "257",
+      "skill": "Cad",
+      "experienceLevel": "Junior",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 17 for Cad: What does Cad do?",
+      "options": [
+        "Option A for Cad",
+        "Option B for Cad",
+        "Option C for Cad",
+        "Option D for Cad"
+      ],
+      "correctAnswer": "Option B for Cad"
+    },
+    {
+      "id": "258",
+      "skill": "Cad",
+      "experienceLevel": "Junior",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 18 for Cad: What does Cad do?",
+      "options": [
+        "Option A for Cad",
+        "Option B for Cad",
+        "Option C for Cad",
+        "Option D for Cad"
+      ],
+      "correctAnswer": "Option B for Cad"
+    },
+    {
+      "id": "259",
+      "skill": "Cad",
+      "experienceLevel": "Junior",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 19 for Cad: What does Cad do?",
+      "options": [
+        "Option A for Cad",
+        "Option B for Cad",
+        "Option C for Cad",
+        "Option D for Cad"
+      ],
+      "correctAnswer": "Option B for Cad"
+    },
+    {
+      "id": "260",
+      "skill": "Cad",
+      "experienceLevel": "Junior",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 20 for Cad: What does Cad do?",
+      "options": [
+        "Option A for Cad",
+        "Option B for Cad",
+        "Option C for Cad",
+        "Option D for Cad"
+      ],
+      "correctAnswer": "Option B for Cad"
+    },
+    {
+      "id": "261",
+      "skill": "Auto cad",
+      "experienceLevel": "Junior",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 1 for Auto cad: What does Auto cad do?",
+      "options": [
+        "Option A for Auto cad",
+        "Option B for Auto cad",
+        "Option C for Auto cad",
+        "Option D for Auto cad"
+      ],
+      "correctAnswer": "Option B for Auto cad"
+    },
+    {
+      "id": "262",
+      "skill": "Auto cad",
+      "experienceLevel": "Junior",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 2 for Auto cad: What does Auto cad do?",
+      "options": [
+        "Option A for Auto cad",
+        "Option B for Auto cad",
+        "Option C for Auto cad",
+        "Option D for Auto cad"
+      ],
+      "correctAnswer": "Option B for Auto cad"
+    },
+    {
+      "id": "263",
+      "skill": "Auto cad",
+      "experienceLevel": "Junior",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 3 for Auto cad: What does Auto cad do?",
+      "options": [
+        "Option A for Auto cad",
+        "Option B for Auto cad",
+        "Option C for Auto cad",
+        "Option D for Auto cad"
+      ],
+      "correctAnswer": "Option B for Auto cad"
+    },
+    {
+      "id": "264",
+      "skill": "Auto cad",
+      "experienceLevel": "Junior",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 4 for Auto cad: What does Auto cad do?",
+      "options": [
+        "Option A for Auto cad",
+        "Option B for Auto cad",
+        "Option C for Auto cad",
+        "Option D for Auto cad"
+      ],
+      "correctAnswer": "Option B for Auto cad"
+    },
+    {
+      "id": "265",
+      "skill": "Auto cad",
+      "experienceLevel": "Junior",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 5 for Auto cad: What does Auto cad do?",
+      "options": [
+        "Option A for Auto cad",
+        "Option B for Auto cad",
+        "Option C for Auto cad",
+        "Option D for Auto cad"
+      ],
+      "correctAnswer": "Option B for Auto cad"
+    },
+    {
+      "id": "266",
+      "skill": "Auto cad",
+      "experienceLevel": "Junior",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 6 for Auto cad: What does Auto cad do?",
+      "options": [
+        "Option A for Auto cad",
+        "Option B for Auto cad",
+        "Option C for Auto cad",
+        "Option D for Auto cad"
+      ],
+      "correctAnswer": "Option B for Auto cad"
+    },
+    {
+      "id": "267",
+      "skill": "Auto cad",
+      "experienceLevel": "Junior",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 7 for Auto cad: What does Auto cad do?",
+      "options": [
+        "Option A for Auto cad",
+        "Option B for Auto cad",
+        "Option C for Auto cad",
+        "Option D for Auto cad"
+      ],
+      "correctAnswer": "Option B for Auto cad"
+    },
+    {
+      "id": "268",
+      "skill": "Auto cad",
+      "experienceLevel": "Junior",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 8 for Auto cad: What does Auto cad do?",
+      "options": [
+        "Option A for Auto cad",
+        "Option B for Auto cad",
+        "Option C for Auto cad",
+        "Option D for Auto cad"
+      ],
+      "correctAnswer": "Option B for Auto cad"
+    },
+    {
+      "id": "269",
+      "skill": "Auto cad",
+      "experienceLevel": "Junior",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 9 for Auto cad: What does Auto cad do?",
+      "options": [
+        "Option A for Auto cad",
+        "Option B for Auto cad",
+        "Option C for Auto cad",
+        "Option D for Auto cad"
+      ],
+      "correctAnswer": "Option B for Auto cad"
+    },
+    {
+      "id": "270",
+      "skill": "Auto cad",
+      "experienceLevel": "Junior",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 10 for Auto cad: What does Auto cad do?",
+      "options": [
+        "Option A for Auto cad",
+        "Option B for Auto cad",
+        "Option C for Auto cad",
+        "Option D for Auto cad"
+      ],
+      "correctAnswer": "Option B for Auto cad"
+    },
+    {
+      "id": "271",
+      "skill": "Auto cad",
+      "experienceLevel": "Junior",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 11 for Auto cad: What does Auto cad do?",
+      "options": [
+        "Option A for Auto cad",
+        "Option B for Auto cad",
+        "Option C for Auto cad",
+        "Option D for Auto cad"
+      ],
+      "correctAnswer": "Option B for Auto cad"
+    },
+    {
+      "id": "272",
+      "skill": "Auto cad",
+      "experienceLevel": "Junior",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 12 for Auto cad: What does Auto cad do?",
+      "options": [
+        "Option A for Auto cad",
+        "Option B for Auto cad",
+        "Option C for Auto cad",
+        "Option D for Auto cad"
+      ],
+      "correctAnswer": "Option B for Auto cad"
+    },
+    {
+      "id": "273",
+      "skill": "Auto cad",
+      "experienceLevel": "Junior",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 13 for Auto cad: What does Auto cad do?",
+      "options": [
+        "Option A for Auto cad",
+        "Option B for Auto cad",
+        "Option C for Auto cad",
+        "Option D for Auto cad"
+      ],
+      "correctAnswer": "Option B for Auto cad"
+    },
+    {
+      "id": "274",
+      "skill": "Auto cad",
+      "experienceLevel": "Junior",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 14 for Auto cad: What does Auto cad do?",
+      "options": [
+        "Option A for Auto cad",
+        "Option B for Auto cad",
+        "Option C for Auto cad",
+        "Option D for Auto cad"
+      ],
+      "correctAnswer": "Option B for Auto cad"
+    },
+    {
+      "id": "275",
+      "skill": "Auto cad",
+      "experienceLevel": "Junior",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 15 for Auto cad: What does Auto cad do?",
+      "options": [
+        "Option A for Auto cad",
+        "Option B for Auto cad",
+        "Option C for Auto cad",
+        "Option D for Auto cad"
+      ],
+      "correctAnswer": "Option B for Auto cad"
+    },
+    {
+      "id": "276",
+      "skill": "Auto cad",
+      "experienceLevel": "Junior",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 16 for Auto cad: What does Auto cad do?",
+      "options": [
+        "Option A for Auto cad",
+        "Option B for Auto cad",
+        "Option C for Auto cad",
+        "Option D for Auto cad"
+      ],
+      "correctAnswer": "Option B for Auto cad"
+    },
+    {
+      "id": "277",
+      "skill": "Auto cad",
+      "experienceLevel": "Junior",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 17 for Auto cad: What does Auto cad do?",
+      "options": [
+        "Option A for Auto cad",
+        "Option B for Auto cad",
+        "Option C for Auto cad",
+        "Option D for Auto cad"
+      ],
+      "correctAnswer": "Option B for Auto cad"
+    },
+    {
+      "id": "278",
+      "skill": "Auto cad",
+      "experienceLevel": "Junior",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 18 for Auto cad: What does Auto cad do?",
+      "options": [
+        "Option A for Auto cad",
+        "Option B for Auto cad",
+        "Option C for Auto cad",
+        "Option D for Auto cad"
+      ],
+      "correctAnswer": "Option B for Auto cad"
+    },
+    {
+      "id": "279",
+      "skill": "Auto cad",
+      "experienceLevel": "Junior",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 19 for Auto cad: What does Auto cad do?",
+      "options": [
+        "Option A for Auto cad",
+        "Option B for Auto cad",
+        "Option C for Auto cad",
+        "Option D for Auto cad"
+      ],
+      "correctAnswer": "Option B for Auto cad"
+    },
+    {
+      "id": "280",
+      "skill": "Auto cad",
+      "experienceLevel": "Junior",
+      "difficulty": "medium",
+      "questionType": "MCQ",
+      "questionText": "Sample question 20 for Auto cad: What does Auto cad do?",
+      "options": [
+        "Option A for Auto cad",
+        "Option B for Auto cad",
+        "Option C for Auto cad",
+        "Option D for Auto cad"
+      ],
+      "correctAnswer": "Option B for Auto cad"
+    }
+  ],
+  "jobManagement": {
+    "activeJobs": [],
+    "draftJobs": [],
+    "expiredJobs": [
+      {
+        "title": "React Developer",
+        "company": "gms",
+        "locations": [
+          "Pune"
+        ],
+        "description": "<p>We are seeking a highly skilled and experienced React Developer to join our dynamic team in Pune. The ideal candidate should have <span style=\"color: rgb(181, 206, 168);\">5-8</span> years of experience in developing scalable and high-performance web applications using React.js, Redux, TypeScript, and modern frontend technologies. You will work closely with UI/UX designers, backend developers, and product managers to build intuitive and engaging user experiences.</p><p><br></p>",
+        "responsibilities": "<p>Develop, test, and maintain scalable React.js applications.</p><p>Work with Redux or React Context API for state management.</p><p>Implement responsive and pixel-perfect UI components based on Figma/Adobe XD designs.</p><p>Optimize components for maximum performance and scalability.</p><p>Integrate RESTful APIs and work with backend teams for seamless data flow.</p><p>Write clean, modular, and reusable code following best practices.</p><p>Work with React Hooks, Functional Components, and Custom Hooks for efficient development.</p><p>Collaborate with the QA team to ensure proper testing and bug fixes.</p><p>Stay updated with the latest React and frontend technologies.</p><p>Participate in code reviews, mentoring junior developers, and knowledge sharing sessions.</p>",
+        "skills": [
+          "React"
+        ],
+        "status": "Expired",
+        "salary": "150000",
+        "industries": [
+          "software development"
+        ],
+        "employmentType": "Full-time",
+        "email": "vineet.shrivastava@getmysolutions.in",
+        "experience": "5-8",
+        "hotJob": "yes",
+        "expirationDate": "2025-03-07",
+        "expirationTime": "12:15",
+        "interviewRound": 1,
+        "interviewRounds": [],
+        "postedDate": "2025-03-06T06:41:04.511Z",
+        "id": 1
+      }
+    ]
+  },
+  "companyManagement": [
+    {
+      "id": "1",
+      "name": "Tech Solutions Inc.",
+      "locations": [
+        "San Francisco",
+        "New York"
+      ],
+      "industries": [
+        "Software",
+        "Technology"
+      ],
+      "website": "https://www.techsolutions.com",
+      "about": "A leading software development company specializing in AI and cloud computing.",
+      "size": "500",
+      "logo": "https://via.placeholder.com/100"
+    }
+  ],
+  "candidates": [
+    {
+      "id": "1",
+      "name": "Alice Johnson",
+      "email": "alice@example.com",
+      "openToWork": true,
+      "appliedJobs": [
+        1,
+        2
+      ],
+      "skills": [
+        "Python",
+        "Node",
+        "JavaScript"
+      ]
+    },
+    {
+      "id": "2",
+      "name": "Bob Smith",
+      "email": "bob@example.com",
+      "openToWork": false,
+      "appliedJobs": [
+        1
+      ],
+      "skills": [
+        "Angular",
+        "TypeScript"
+      ]
+    },
+    {
+      "id": "3",
+      "name": "Carolyn Davis",
+      "email": "carolyn@example.com",
+      "openToWork": true,
+      "appliedJobs": [],
+      "skills": [
+        "Vue",
+        "JavaScript",
+        "HTML",
+        "CSS"
+      ]
+    },
+    {
+      "id": "4",
+      "name": "David Miller",
+      "email": "david@example.com",
+      "openToWork": true,
+      "appliedJobs": [
+        1
+      ],
+      "skills": [
+        "React",
+        "Node",
+        "Express",
+        "MongoDB"
+      ]
+    },
+    {
+      "id": "5",
+      "name": "Emma Wilson",
+      "email": "emma@example.com",
+      "openToWork": false,
+      "skills": [
+        "Python",
+        "Django",
+        "React"
+      ],
+      "appliedJobs": [
+        1
+      ]
+    },
+    {
+      "id": "6",
+      "name": "Frank Thompson",
+      "email": "frank@example.com",
+      "openToWork": false,
+      "skills": [
+        "Python",
+        "Spring Boot"
+      ],
+      "experience": [
+        {
+          "role": "Design Engineer (Mechanical) - Deshmukh industries",
+          "from": "Feb 2020",
+          "to": "Present",
+          "location": "Pune, Maharashtra",
+          "description": "I am working as a design engineer."
+        }
+      ],
+      "appliedJobs": [
+        1,
+        2
+      ]
+    },
+    {
+      "id": "7",
+      "name": "KIRAN PRAKASH CHIM",
+      "title": "Design Engineer (Mechanical) at Deshmukh industries",
+      "location": "Chinchwad, Pune, Maharashtra",
+      "email": "kiranprakashchim93hn.nmi@indeedemail.com",
+      "about": "Information is what gets you started habit is what keeps you going.",
+      "experience": [
+        {
+          "role": "Design Engineer (Mechanical) - Deshmukh industries",
+          "from": "Feb 2020",
+          "to": "Present",
+          "location": "Pune, Maharashtra",
+          "description": "I am working as a design engineer."
+        }
+      ],
+      "education": [
+        {
+          "institution": "Pune University",
+          "degree": "Bachelor of Mechanical Engineering",
+          "year": "2024"
+        }
+      ],
+      "certifications": [
+        {
+          "title": "Certified SolidWorks Professional",
+          "issuer": "Dassault Systèmes",
+          "year": "2023"
+        }
+      ],
+      "appliedJobs": [
+        1
+      ],
+      "resumeUrl": "/dummy/Resume.pdf",
+      "skills": [
+        "React"
+      ],
+      "jobinvitation": 0,
+      "openToWork": true,
+      "roundsLeft": 0,
+      "interviewScore": 0
+    },
+    {
+      "id": "8",
+      "name": "John Doe",
+      "email": "john.doe@example.com",
+      "openToWork": true,
+      "appliedJobs": [],
+      "summary": "Experienced React Developer with over 5 years of experience building scalable web applications using React, Redux, and modern JavaScript frameworks. Proven track record of delivering high-performance user interfaces and collaborating effectively with cross-functional teams.",
+      "skills": [
+        "React",
+        "Redux",
+        "JavaScript",
+        "TypeScript",
+        "HTML5",
+        "CSS3",
+        "Node.js",
+        "RESTful APIs"
+      ],
+      "experience": [
+        {
+          "role": "Senior React Developer",
+          "company": "Tech Innovations Inc.",
+          "from": "January 2019",
+          "to": "Present",
+          "location": "San Francisco, CA",
+          "description": "Lead the development of a high-traffic web application using React and Redux. Collaborated with designers and backend teams to implement new features and optimize performance."
+        },
+        {
+          "role": "React Developer",
+          "company": "Creative Solutions",
+          "from": "June 2017",
+          "to": "December 2018",
+          "location": "New York, NY",
+          "description": "Built interactive user interfaces and maintained front-end code for multiple client projects. Improved load times by optimizing assets and using best practices in React."
+        }
+      ],
+      "education": [
+        {
+          "institution": "University of Technology",
+          "degree": "Bachelor of Science in Computer Science",
+          "year": "2017"
+        }
+      ],
+      "jobinvitation": 0,
+      "certifications": [
+        {
+          "title": "Certified React Developer",
+          "issuer": "React Certification Institute",
+          "year": "2019"
+        }
+      ],
+      "resumeUrl": "/dummydata/ReactDeveloperResume.pdf"
+    }
+  ],
+  "candidateTests": [
+    {
+      "id": "1",
+      "candidateId": "7",
+      "jobId": 1,
+      "interviewRounds": [
+        {
+          "round": 1,
+          "score": 80
+        },
+        {
+          "round": 2,
+          "score": 75
+        }
+      ],
+      "interviewScore": 77.5,
+      "roundsLeft": 0,
+      "status": "Completed"
+    }
+  ]
+}

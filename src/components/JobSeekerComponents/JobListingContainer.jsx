@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { FiChevronLeft } from "react-icons/fi";
 import { FiChevronRight } from "react-icons/fi";
@@ -6,6 +6,11 @@ import { FaAnglesRight } from "react-icons/fa6";
 import { LuFileUser } from "react-icons/lu";
 import { useNavigate } from 'react-router-dom';
 import JobCard from './JobCard';
+import CompleteProfileToast from './ReusableComponents/CompleteProfileToast';
+import { useDispatch, useSelector } from 'react-redux';
+import {checkProfileCompleteRequest} from './../../store/slices/jobSeeker/isProfileCompleted/isProfileCompleteSlice'
+import Loader from './ReusableComponents/Loader';
+
 
 const jobListings = [
   {
@@ -116,6 +121,16 @@ const SkeletonCard = () => (
 
 function JobListingContainer() {
 
+  const dispatch = useDispatch();
+
+  useEffect(()=>{
+    dispatch(checkProfileCompleteRequest());
+  },[dispatch]);
+
+  const isProfileCompleted = useSelector(state => state.isProfileComplete.isComplete);  
+
+  const {loading} = useSelector((state) => state.isProfileComplete);
+
   const navigate = useNavigate();
 
   const [isHidden, setIsHidden] = useState(false);
@@ -162,31 +177,16 @@ function JobListingContainer() {
       </div>
       <div className="relative">
         {/* Red Box (Centered & Above Job Cards) */}
-        <div
-          className="absolute top-[10%] md:top-1/4 left-1/2 transform -translate-x-1/2 -translate-y-1/2 
-              bg-white shadow-lg rounded-lg p-4 flex flex-col items-center w-80 z-20"
-        >
-          {/* Profile Icon */}
-          <div className="bg-blue-300 p-3 rounded-full text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700">
-            <LuFileUser className="h-10 w-10 text-white"/>
-          </div>
-
-          {/* Text */}
-          <p className="text-center text-black font-semibold mt-2">
-            Please Complete Your Profile To View and Apply For Jobs
-          </p>
-
-          {/* Button */}
-          <button className="bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg mt-3 flex items-center" onClick={()=> handleCompleteProfile()}>
-            Complete My Profile
-            <FaAnglesRight className="h-5 w-5 ml-2"/>
-          </button>
-        </div>
+        {!isProfileCompleted &&
+          
+          <CompleteProfileToast handleCompleteProfile={handleCompleteProfile}/>
+          
+        }
 
         {/* Job Cards (Behind Red Box) */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 relative z-10">
           {paginatedJobs.map((job, index) =>
-            !isHidden ? (
+            isProfileCompleted && !loading ?  (
               <JobCard key={index} job={job}  />
             ) : (
               <SkeletonCard key={index} />

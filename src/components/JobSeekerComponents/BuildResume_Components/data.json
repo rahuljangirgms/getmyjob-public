@@ -1,0 +1,327 @@
+ {
+    "personalInformation": {
+        "profilePicture": "Image URL Here",
+        "firstName": "Abhishek",
+        "middleName": "Uday",
+        "lastName": "Salokhe",
+        "email": "abhisaloke2424@gmail.com",
+        "phoneNumber": 8767977069,
+        "dateOfBirth": "2003-03-24",
+        "gender": "male",
+        "maritalStatus": "single",
+        "addressLine1": "Maharashtra Housing Board",
+        "addressLine2": "L 49 122",
+        "city": "Pune",
+        "state": "Maharashtra",
+        "country": "IN",
+        "zipCode": "411006",
+        "course": "Engineering ",
+        "specialization": "Computer Engineering ",
+        "bloodGroup": "A+",
+        "medicalHistory": "No History ",
+        "disability": "no",
+        "knownLanguages": [
+            "english",
+            "hindi",
+            "marathi"
+        ],
+        "totalExpYear": "0",
+        "totalExpMonth": "10"
+    },
+    "certificationDetails": [
+        {
+            "name": "Web Dev Bootcamp 2024",
+            "provider": "Amazon AWS",
+            "enrollmentNumber": "121221212121",
+            "validUpto": "2025-02-27",
+            "marksType": "percentage",
+            "aggregate": "45",
+            "max": "100",
+            "skills": [
+                "Java",
+                "C++"
+            ],
+            "description": "Learn Lots of things "
+        },
+        {
+            "name": "Product Dev ",
+            "provider": "udemy",
+            "enrollmentNumber": "1212121212",
+            "validUpto": "2025-05-12",
+            "marksType": "percentage",
+            "aggregate": "45",
+            "max": "100",
+            "skills": [
+                "Java",
+                "C++"
+            ],
+            "description": "Learn Lots of things "
+        }
+    ],
+    "contactDetails": {
+        "secondaryPhone": "8888888888",
+        "otherEmail": "abhisaloke2424@gmail.com",
+        "linkedInUrl": "https://in.linkedin.com/",
+        "githubUrl": "https://flowbite-react.com/docs/components/forms"
+    },
+    "professionalDetails": [
+        {
+            "designation": "Software Engineer - 1",
+            "organisation": "Google",
+            "industrySector": "Software Development ",
+            "department": "Software Research Team",
+            "ctc": "200000",
+            "from": "2025-02-28",
+            "to": "2025-03-01",
+            "currentlyWorking": false,
+            "country": "India",
+            "state": "Maharashtra",
+            "city": "Pune",
+            "skills": [
+                "Java",
+                "C++"
+            ],
+            "description": "Learn Lots of things "
+        },
+        {
+            "designation": "Software Engineer - 2",
+            "organisation": "Tata",
+            "industrySector": "SE",
+            "department": "SE",
+            "ctc": "850000",
+            "from": "2025-02-01",
+            "to": "2025-02-28",
+            "currentlyWorking": false,
+            "country": "India",
+            "state": "Maharashtra",
+            "city": "Pune",
+            "skills": [
+                "Java",
+                "C++"
+            ],
+            "description": "Learn Lots of things "
+        }
+    ],
+    "projectDetails": [
+        {
+            "name": "Resume Builder ",
+            "projectLink": "https://carconnexa.netlify.app/",
+            "from": "2025-02-28",
+            "to": "2025-03-01",
+            "mentor": "Mahesh Pinjarker ",
+            "teamSize": "10",
+            "skills": [
+                "Java",
+                "C++"
+            ],
+            "description": "Learn Lots of things "
+        },
+        {
+            "name": "Robot ",
+            "projectLink": "https://carconnexa.netlify.app/",
+            "from": "2020-02-12",
+            "to": "2021-05-15",
+            "mentor": "Mahesh Pinjarker ",
+            "teamSize": "5",
+            "skills": [
+                "Java",
+                "C++"
+            ],
+            "description": "Learn Lots of things "
+        },
+        {
+            "name": "Company Reviews",
+            "projectLink": "https://carconnexa.netlify.app/",
+            "from": "2025-02-21",
+            "to": "2025-03-07",
+            "mentor": "Mahesh Pinjarker ",
+            "teamSize": "5",
+            "skills": [
+                "Java",
+                "C++"
+            ],
+            "description": "Learn Lots of things "
+        }
+    ],
+    "researchPapers": [
+        {
+            "name": "Traffic Management Using AI ",
+            "publicationName": "JMD",
+            "publicationDate": "2025-02-22",
+            "mentor": "sdd",
+            "authorsCount": "2",
+            "type": "",
+            "skills": [
+                "Java",
+                "C++"
+            ],
+            "description": "Learn Lots of things ",
+            "status": "Published "
+        },
+        {
+            "name": "Traffic Management Using AI ",
+            "publicationName": "JMD",
+            "publicationDate": "2025-02-28",
+            "mentor": "Mahesh Pinjarker ",
+            "authorsCount": "5",
+            "type": "",
+            "skills": [
+                "Java",
+                "C++"
+            ],
+            "description": "Learn Lots of things ",
+            "status": "Published "
+        },
+        {
+            "name": "Skill Assessment ",
+            "publicationName": "JMD",
+            "publicationDate": "2025-03-01",
+            "mentor": "Mahesh Pinjarker ",
+            "authorsCount": "5",
+            "type": "",
+            "skills": [
+                "Java",
+                "HTML"
+            ],
+            "description": "Learn Lots of things ",
+            "status": "Published "
+        }
+    ],
+    "trainingDetails": [
+        {
+            "name": "Skill Assessment ",
+            "instituteName": "Udemy ",
+            "from": "2025-02-20",
+            "to": "2025-02-28",
+            "skills": [
+                "HTML",
+                "CSS"
+            ],
+            "description": "Learn Lots of things "
+        },
+        {
+            "name": "Web Craft ",
+            "instituteName": "JMD",
+            "from": "2022-02-12",
+            "to": "2023-05-12",
+            "skills": [
+                "Java",
+                "C++"
+            ],
+            "description": "Learn Lots of things "
+        },
+        {
+            "name": "HTML 0 to Hero ",
+            "instituteName": "Udemy ",
+            "from": "2022-05-12",
+            "to": "2023-02-12",
+            "skills": [
+                "Java",
+                "C++"
+            ],
+            "description": "Learn Lots of things "
+        }
+    ],
+    "otherDetails": {
+        "summary": "Full Stack Developer With JavaScript ",
+        "expertise": [
+            "HTML",
+            "C++",
+            "JS"
+        ],
+        "achievements": [
+            "Won First Prize "
+        ],
+        "extraCurricular": [
+            "Cricket, Dance, Drawing "
+        ]
+    },
+    "educationDetails": [
+        {
+            "type": "tenth",
+            "data": {
+                "qualification": "10th Standard / Secondary Education",
+                "stream": "State Board",
+                "college": "Genba Sopanrao Moze ",
+                "collegeCity": "Pune ",
+                "joiningYear": 2020,
+                "completionYear": 2024,
+                "graduationType": "fulltime",
+                "aggregateType": "percentage",
+                "aggregate": 45,
+                "max": 100,
+                "activeBacklogs": 0
+            }
+        },
+        {
+            "type": "twelfth",
+            "data": {
+                "qualification": "12th Standard / Higher Secondary Education",
+                "stream": "Science ",
+                "college": "Ajeenkya D Y Patil School of Engg..",
+                "collegeCity": "Pune ",
+                "joiningYear": 2020,
+                "completionYear": 2024,
+                "graduationType": "fulltime",
+                "aggregateType": "percentage",
+                "aggregate": 87,
+                "max": 100,
+                "activeBacklogs": 0
+            }
+        },
+        {
+            "type": "graduation",
+            "data": {
+                "qualification": "Graduation / Bachelor's Degree",
+                "stream": "Computer Engineering ",
+                "college": "Ajeenkya D Y Patil School of Engg..",
+                "collegeCity": "Pune ",
+                "joiningYear": 2020,
+                "completionYear": 2024,
+                "graduationType": "fulltime",
+                "aggregateType": "percentage",
+                "aggregate": 87,
+                "max": 100,
+                "activeBacklogs": 0
+            }
+        }
+    ],
+    "internshipDetails": [
+        {
+            "title": "SDE - 1",
+            "organisation": "GGG",
+            "industrySector": "SW",
+            "department": "SW",
+            "stipend": "40000",
+            "from": "2002-05-12",
+            "to": "2020-02-15",
+            "currentlyWorking": false,
+            "country": "India",
+            "state": "Maharashtra",
+            "city": "Pune",
+            "skills": [
+                "Java",
+                "C++"
+            ],
+            "description": "Learn Lots of things "
+        },
+        {
+            "title": "SDE intern ",
+            "organisation": "Google ",
+            "industrySector": "SE",
+            "department": "SE",
+            "stipend": "40000",
+            "from": "2020-02-12",
+            "to": "2021-05-12",
+            "currentlyWorking": false,
+            "country": "India",
+            "state": "Maharashtra",
+            "city": "Pune",
+            "skills": [
+                "C++",
+                "Java"
+            ],
+            "description": "Learn Lots of things "
+        }
+    ]
+}
