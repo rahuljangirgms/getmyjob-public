@@ -21,7 +21,7 @@ import { watchAuth } from "./recruiter/authSaga";
 import { watchCompany } from "./recruiter/companySaga";
 import { watchCandidates } from "./recruiter/candidateSaga";
 import { watchUserSagas } from "./recruiter/userSaga";
-import { watchRoleSagas } from './recruiter/userSaga';
+import { watchRoleSagas } from './recruiter/roleSaga';
 
 
 
@@ -46,6 +46,7 @@ export default function* rootSaga() {
     watchCompany(),
     watchCandidates(),
     watchUserSagas(),
+    watchRoleSagas(),
     // watchRoleSagas(),
   ]);
 }
