@@ -69,7 +69,42 @@ const RolesTable = ({ roles, searchTerm, statusFilter, setRoles }) => {
     });
 
     return (
-        <div>
+
+
+        <div className=" bg-gray-50  dark:bg-gray-900">
+            <div className="grid grid-cols-12 gap-6">
+                {/* Filters Sidebar */}
+                <div className="col-span-12 md:col-span-3 bg-white dark:bg-gray-800 p-6  ">
+                    <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4">Filters</h3>
+                    <div className="mb-4">
+                        <label className="block text-gray-700 dark:text-gray-300 mb-2">Search Roles</label>
+                        <div className="relative">
+                            <input
+                                type="text"
+                                className="w-full p-2.5 pr-10 pl-3 bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white rounded-full border border-gray-300 dark:border-gray-600"
+                                placeholder="Search by role name..."
+                                value={searchTerm}
+                                onChange={(e) => setRoles((prev) => [...prev])} // this will be updated outside this component
+                            />
+                        </div>
+                    </div>
+                    <div>
+                        <label className="block text-gray-700 dark:text-gray-300 mb-2">Status</label>
+                        <select
+                            className="w-full p-2.5 bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white rounded-lg border border-gray-300 dark:border-gray-600"
+                            value={statusFilter}
+                            onChange={(e) => setRoles((prev) => [...prev])} // this too should come from parent
+                        >
+                            <option value="All">All</option>
+                            <option value="Active">Active</option>
+                            <option value="Inactive">Inactive</option>
+                        </select>
+                    </div>
+                </div>
+
+                {/* Main Table */}
+                <div className="col-span-12 md:col-span-9">
+      
             <div className="w-full flex justify-between items-center mb-4">
                 <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-200">Roles List</h2>
                 <button
@@ -90,21 +125,21 @@ const RolesTable = ({ roles, searchTerm, statusFilter, setRoles }) => {
             ) : (
                 <div className="overflow-x-auto">
                     <table className="w-full border-collapse">
-                        <thead className="bg-gray-200 dark:bg-gray-700">
-                            <tr>
-                                <th className="p-3 text-left">ID</th>
-                                <th className="p-3 text-left">Role Name</th>
-                                <th className="p-3 text-left">Description</th>
-                                <th className="p-3 text-left">Status</th>
-                                <th className="p-3 text-left">Actions</th>
-                            </tr>
-                        </thead>
+                                    <thead className="bg-gray-200 dark:bg-gray-700">
+                                        <tr>
+                                            <th className="p-3 text-left text-gray-800 dark:text-gray-200">ID</th>
+                                            <th className="p-3 text-left text-gray-800 dark:text-gray-200">Role Name</th>
+                                            <th className="p-3 text-left text-gray-800 dark:text-gray-200">Description</th>
+                                            <th className="p-3 text-left text-gray-800 dark:text-gray-200">Status</th>
+                                            <th className="p-3 text-left text-gray-800 dark:text-gray-200">Actions</th>
+                                        </tr>
+                                    </thead>
                         <tbody className="divide-y dark:divide-gray-700">
                             {roles.map((role) => (
                                 <tr key={role.id} className="hover:bg-gray-100 dark:hover:bg-gray-700">
-                                    <td className="p-3">{role.id}</td>
-                                    <td className="p-3">{role.role_name}</td>
-                                    <td className="p-3">{role.role_description}</td>
+                                    <td className="p-3 text-gray-800 dark:text-gray-200">{role.id}</td>
+                                    <td className="p-3 text-gray-800 dark:text-gray-200">{role.role_name}</td>
+                                    <td className="p-3 text-gray-700 dark:text-gray-300">{role.role_description}</td>
                                     <td className="p-3">
                                         <StatusBadge status={role.status} />
                                     </td>
@@ -141,70 +176,71 @@ const RolesTable = ({ roles, searchTerm, statusFilter, setRoles }) => {
                 </div>
             )}
 
-            <Modal show={showModal} onClose={() => setShowModal(false)}>
-                <Modal.Header>Add New Role</Modal.Header>
-                <Modal.Body>
-                    <div className="space-y-4">
-                        <div>
-                            <label className="block text-sm font-medium text-gray-700">Role Name</label>
-                            <input
-                                type="text"
-                                value={newRoleName}
-                                onChange={(e) => setNewRoleName(e.target.value)}
-                                placeholder="Enter role name"
-                                className="mt-1 w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500"
-                            />
-                        </div>
-                        <div>
-                            <label className="block text-sm font-medium text-gray-700">Description</label>
-                            <textarea
-                                value={newRoleDesc}
-                                onChange={(e) => setNewRoleDesc(e.target.value)}
-                                placeholder="Enter description"
-                                className="mt-1 w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500"
-                            />
-                        </div>
-                    </div>
-                </Modal.Body>
-                <Modal.Footer>
-                    <button
-                        onClick={async () => {
-                            if (!newRoleName.trim()) {
-                                toast.error("Role name is required");
-                                return;
-                            }
+                    <Modal show={showModal} onClose={() => setShowModal(false)}>
+                        <Modal.Header className="text-gray-800 dark:text-gray-200">Add New Role</Modal.Header>
+                        <Modal.Body className="bg-white dark:bg-gray-800">
+                            <div className="space-y-4">
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Role Name</label>
+                                    <input
+                                        type="text"
+                                        value={newRoleName}
+                                        onChange={(e) => setNewRoleName(e.target.value)}
+                                        placeholder="Enter role name"
+                                        className="mt-1 w-full rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                                    />
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Description</label>
+                                    <textarea
+                                        value={newRoleDesc}
+                                        onChange={(e) => setNewRoleDesc(e.target.value)}
+                                        placeholder="Enter description"
+                                        className="mt-1 w-full rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                                    />
+                                </div>
+                            </div>
+                        </Modal.Body>
+                        <Modal.Footer className="bg-white dark:bg-gray-800">
+                            <button
+                                onClick={async () => {
+                                    if (!newRoleName.trim()) {
+                                        toast.error("Role name is required");
+                                        return;
+                                    }
 
-                            setIsSubmitting(true);
-                            try {
-                                const res = await createRole({ role_name: newRoleName, role_description: newRoleDesc });
-                                if (res.status) {
-                                    toast.success(res.message || "Role created");
-                                    setRoles((prev) => [...prev, res.data]);
-                                    setShowModal(false);
-                                    setNewRoleName("");
-                                    setNewRoleDesc("");
-                                } else {
-                                    toast.error(res.message || "Failed to add role");
-                                }
-                            } catch (err) {
-                                toast.error("Error adding role");
-                            } finally {
-                                setIsSubmitting(false);
-                            }
-                        }}
-                        disabled={isSubmitting}
-                        className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 disabled:opacity-50"
-                    >
-                        {isSubmitting ? "Adding..." : "Add Role"}
-                    </button>
-                    <button
-                        onClick={() => setShowModal(false)}
-                        className="text-gray-600 px-4 py-2 rounded hover:bg-gray-100"
-                    >
-                        Cancel
-                    </button>
-                </Modal.Footer>
-            </Modal>
+                                    setIsSubmitting(true);
+                                    try {
+                                        const res = await createRole({ role_name: newRoleName, role_description: newRoleDesc });
+                                        if (res.status) {
+                                            toast.success(res.message || "Role created");
+                                            setRoles((prev) => [...prev, res.data]);
+                                            setShowModal(false);
+                                            setNewRoleName("");
+                                            setNewRoleDesc("");
+                                        } else {
+                                            toast.error(res.message || "Failed to add role");
+                                        }
+                                    } catch (err) {
+                                        toast.error("Error adding role");
+                                    } finally {
+                                        setIsSubmitting(false);
+                                    }
+                                }}
+                                disabled={isSubmitting}
+                                className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 disabled:opacity-50"
+                            >
+                                {isSubmitting ? "Adding..." : "Add Role"}
+                            </button>
+                            <button
+                                onClick={() => setShowModal(false)}
+                                className="text-gray-600 dark:text-gray-300 px-4 py-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700"
+                            >
+                                Cancel
+                            </button>
+                        </Modal.Footer>
+                    </Modal>
+
 
             {confirmModal.open && (
                 <div id="popup-modal" className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
@@ -234,6 +270,9 @@ const RolesTable = ({ roles, searchTerm, statusFilter, setRoles }) => {
                     </div>
                 </div>
             )}
+
+        </div>
+        </div>
         </div>
     );
 };
