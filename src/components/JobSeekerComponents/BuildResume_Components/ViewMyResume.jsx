@@ -1,35 +1,57 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import ResumeEditor from "./ResumeEditor";
 import Template1 from "./ResumeTemplates/Template1";
 import { useDispatch, useSelector } from "react-redux";
 import { IoClose } from "react-icons/io5";
 import { GoChevronDown, GoChevronUp } from "react-icons/go";
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import SortableList, { SortableItem } from "react-easy-sort";
 import { arrayMoveImmutable } from "array-move";
 import { FaRegSave } from "react-icons/fa";
 import SaveResumeModal from "./SaveResumeModal";
 import { addResume } from "./../../../store/slices/resumeSlice";
-import {getMasterResumeRequest} from './../../../store/slices/jobSeeker/master_Resume_Data/masterResumeSlice';
-import ResumeSkeloton from './ResumeSkeloton';
-
+import { getMasterResumeRequest } from "./../../../store/slices/jobSeeker/master_Resume_Data/masterResumeSlice";
+import ResumeSkeloton from "./ResumeSkeloton";
+import {
+  uploadResumeRequest,
+  clearResumeMessages,
+} from "./../../../store/slices/jobSeeker/genrateResume/genrateResumeSlice";
+import html2pdf from "html2pdf.js";
 
 function ViewMyResume({ template, onSaveComplete }) {
-  
   // profileData === Master Resume Data
 
-  const {loading} = useSelector((state) => state.masterResumeJson);
-  
+  const { loading } = useSelector((state) => state.masterResumeJson);
+
+  // Save My Resume Loding State
+
+  const saveResumeLoading = useSelector((state) => state.genrateResume.loading);
+  const saveResumeMsg = useSelector((state) => state.genrateResume.message);
+  const saveResumeStatus = useSelector((state) => state.genrateResume.status);
+
+  useEffect(() => {
+    toast.success(saveResumeMsg, {
+      position: "top-right",
+      autoClose: 5000,
+      className: "bg-green-50 text-green-700",
+    });
+    dispatch(clearResumeMessages());
+
+  }, [saveResumeMsg]);
+
+  // Resume Ref for PDF of Resume
+
+  const resumeRef = useRef();
+
   const profileData = useSelector((state) => state.masterResumeJson.data);
 
-  console.log("PROFILE DATA: ", profileData);
+  //console.log("PROFILE DATA: ", profileData);
 
   const dispatch = useDispatch();
 
-  useEffect(()=>{
+  useEffect(() => {
     dispatch(getMasterResumeRequest());
-  },[dispatch]);
-
+  }, [dispatch]);
 
   const [style, setStyle] = useState({ color: "#000", fontFamily: "Arial" });
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -46,18 +68,53 @@ function ViewMyResume({ template, onSaveComplete }) {
   const [savedName, setSavedName] = useState("");
 
   // Callback when resume is saved (with a name)
-  const handleSave = (name) => {
+  const handleSave = async (name) => {
     setSavedName(name);
+
     setModalResOpen(false);
-    dispatch(
-      addResume({
-        name: name,
-        data: formattedData,
-      })
-    );
-    toast.success("Resume Stored Successfully");
-    if (typeof onSaveComplete === "function") {
-      onSaveComplete();
+
+    const resumeElement = document.getElementById("resume-to-save");
+    if (!resumeElement) {
+      toast.error("Resume not rendered correctly");
+      return;
+    }
+
+    try {
+      // Create html2pdf options
+      const opt = {
+        margin: 0,
+        filename: `${name}.pdf`,
+        image: { type: "jpeg", quality: 0.98 },
+        html2canvas: { scale: 2, useCORS: true },
+        jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
+      };
+
+      // Generate PDF and get Blob
+      const pdfBlob = await html2pdf()
+        .from(resumeElement)
+        .set(opt)
+        .outputPdf("blob");
+
+      // Optional: Debug download locally
+      // const resumePDF = await html2pdf().from(resumeElement).set(opt).save();
+
+      // ✅ Dispatch to Saga
+      dispatch(
+        uploadResumeRequest({
+          resumeName: name,
+          resumeData: formattedData,
+          pdfBlob,
+        })
+      );
+
+      setTimeout(()=>{
+        if (typeof onSaveComplete === "function" && !saveResumeLoading) {
+          onSaveComplete();
+        }
+      },5000);
+    } catch (error) {
+      console.error("PDF generation failed:", error);
+      toast.error("Failed to generate or upload resume.");
     }
   };
 
@@ -98,7 +155,7 @@ function ViewMyResume({ template, onSaveComplete }) {
         }
       });
       setSubSectionOrder(initialSubOrders);
-      console.log("Initial subSectionOrder:", initialSubOrders);
+     // console.log("Initial subSectionOrder:", initialSubOrders);
     }
   }, [profileData]);
 
@@ -197,7 +254,7 @@ function ViewMyResume({ template, onSaveComplete }) {
       }
     });
 
-    console.log("Formatted Resume Data:", orderedFilteredData);
+    //console.log("Formatted Resume Data:", orderedFilteredData);
     setFormattedData(orderedFilteredData);
     setModalIsOpen(false);
   };
@@ -260,13 +317,15 @@ function ViewMyResume({ template, onSaveComplete }) {
   const onInnerSortEnd = (section, oldIndex, newIndex) => {
     setSubSectionOrder((prev) => {
       const newOrder = arrayMoveImmutable(prev[section], oldIndex, newIndex);
-      console.log(`New subSection order for ${section}:`, newOrder);
+      //console.log(`New subSection order for ${section}:`, newOrder);
       return { ...prev, [section]: newOrder };
     });
   };
 
   return (
     <div className="flex flex-col lg:flex-row w-full px-4 md:px-6 lg:px-8 gap-6 justify-center">
+      <ToastContainer />
+
       {/* Editor Panel */}
       <div className="w-full lg:w-1/4">
         <ResumeEditor onUpdate={setStyle} />
@@ -293,8 +352,15 @@ function ViewMyResume({ template, onSaveComplete }) {
             </button>
           )}
         </div>
-        {template?.id === "template1" && (
-          <Template1 data={formattedData} style={style} />
+
+        {saveResumeLoading ? (
+          <ResumeSkeloton />
+        ) : (
+          <div id="resume-to-save">
+            {template?.id === "template1" && (
+              <Template1 data={formattedData} style={style} />
+            )}
+          </div>
         )}
       </div>
 
@@ -330,162 +396,155 @@ function ViewMyResume({ template, onSaveComplete }) {
             </div>
 
             {/* Modal Body */}
-            {loading ? <ResumeSkeloton/> :
-                          <div className="p-4 space-y-4">
-                          <SortableList
-                            onSortEnd={onOuterSortEnd}
-                            className="space-y-4"
-                            draggedItemClassName="dragged"
-                            lockAxis="y"
-                          >
-                            {sectionOrder.map((section) => {
-                              const sectionData = profileData[section];
-                              const allSelected =
-                                selectedFields[section] &&
-                                Object.values(selectedFields[section]).every(Boolean);
-            
-                              return (
-                                <SortableItem
-                                  key={section}
-                                  style={{ display: "block" }}
-                                >
-                                  <div className="border-b pb-2">
-                                    <div className="flex justify-between items-center cursor-move">
-                                      <label className="flex items-center space-x-2 cursor-move">
-                                        <input
-                                          type="checkbox"
-                                          checked={allSelected}
-                                          onChange={() => handleSectionSelect(section)}
-                                          className="w-5 h-5 accent-blue-500"
-                                        />
-                                        <h4 className="font-bold text-gray-900">
-                                          {formatLabel(section)}
-                                        </h4>
-                                      </label>
-                                      <button
-                                        type="button"
-                                        className="text-gray-500 cursor-pointer"
-                                        onClick={() => toggleSection(section)}
-                                      >
-                                        {expandedSections[section] ? (
-                                          <GoChevronUp
-                                            size={25}
-                                            className="text-gray-700"
-                                          />
-                                        ) : (
-                                          <GoChevronDown
-                                            size={25}
-                                            className="text-gray-700"
-                                          />
-                                        )}
-                                      </button>
-                                    </div>
-                                    {expandedSections[section] && (
-                                      <div className="mt-2 pl-6 space-y-1 cursor-move">
-                                        <SortableList
-                                          onSortEnd={(oldIndex, newIndex) =>
-                                            onInnerSortEnd(section, oldIndex, newIndex)
-                                          }
-                                          className="space-y-1 cursor-move"
-                                          draggedItemClassName="dragged"
-                                          lockAxis="y"
+            {loading ? (
+              <ResumeSkeloton />
+            ) : (
+              <div className="p-4 space-y-4">
+                <SortableList
+                  onSortEnd={onOuterSortEnd}
+                  className="space-y-4"
+                  draggedItemClassName="dragged"
+                  lockAxis="y"
+                >
+                  {sectionOrder.map((section) => {
+                    const sectionData = profileData[section];
+                    const allSelected =
+                      selectedFields[section] &&
+                      Object.values(selectedFields[section]).every(Boolean);
+
+                    return (
+                      <SortableItem key={section} style={{ display: "block" }}>
+                        <div className="border-b pb-2">
+                          <div className="flex justify-between items-center cursor-move">
+                            <label className="flex items-center space-x-2 cursor-move">
+                              <input
+                                type="checkbox"
+                                checked={allSelected}
+                                onChange={() => handleSectionSelect(section)}
+                                className="w-5 h-5 accent-blue-500"
+                              />
+                              <h4 className="font-bold text-gray-900">
+                                {formatLabel(section)}
+                              </h4>
+                            </label>
+                            <button
+                              type="button"
+                              className="text-gray-500 cursor-pointer"
+                              onClick={() => toggleSection(section)}
+                            >
+                              {expandedSections[section] ? (
+                                <GoChevronUp
+                                  size={25}
+                                  className="text-gray-700"
+                                />
+                              ) : (
+                                <GoChevronDown
+                                  size={25}
+                                  className="text-gray-700"
+                                />
+                              )}
+                            </button>
+                          </div>
+                          {expandedSections[section] && (
+                            <div className="mt-2 pl-6 space-y-1 cursor-move">
+                              <SortableList
+                                onSortEnd={(oldIndex, newIndex) =>
+                                  onInnerSortEnd(section, oldIndex, newIndex)
+                                }
+                                className="space-y-1 cursor-move"
+                                draggedItemClassName="dragged"
+                                lockAxis="y"
+                              >
+                                {Array.isArray(sectionData)
+                                  ? subSectionOrder[section]?.map(
+                                      (subIndex) => {
+                                        const item = sectionData[subIndex];
+                                        let itemLabel = `Item ${subIndex + 1}`;
+                                        if (section === "professionalDetails")
+                                          itemLabel =
+                                            item.organisation || itemLabel;
+                                        if (section === "educationDetails")
+                                          itemLabel =
+                                            item.data?.qualification ||
+                                            itemLabel;
+                                        if (section === "projectDetails")
+                                          itemLabel = item.name || itemLabel;
+                                        if (section === "certificationDetails")
+                                          itemLabel = item.name || itemLabel;
+                                        if (section === "researchPapers")
+                                          itemLabel = item.name || itemLabel;
+                                        if (section === "trainingDetails")
+                                          itemLabel = item.name || itemLabel;
+                                        return (
+                                          <SortableItem
+                                            key={subIndex}
+                                            style={{ display: "block" }}
+                                          >
+                                            <div className="ml-4">
+                                              <label className="flex items-center space-x-2 cursor-move">
+                                                <input
+                                                  type="checkbox"
+                                                  checked={
+                                                    selectedFields[section]?.[
+                                                      subIndex
+                                                    ] || false
+                                                  }
+                                                  onChange={() =>
+                                                    handleCheckboxChange(
+                                                      section,
+                                                      subIndex
+                                                    )
+                                                  }
+                                                  className="w-4 h-4"
+                                                />
+                                                <span className="text-gray-700 cursor-move">
+                                                  {formatLabel(itemLabel)}
+                                                </span>
+                                              </label>
+                                            </div>
+                                          </SortableItem>
+                                        );
+                                      }
+                                    )
+                                  : subSectionOrder[section]?.map(
+                                      (fieldKey) => (
+                                        <SortableItem
+                                          key={fieldKey}
+                                          style={{ display: "block" }}
                                         >
-                                          {Array.isArray(sectionData)
-                                            ? subSectionOrder[section]?.map(
-                                                (subIndex) => {
-                                                  const item = sectionData[subIndex];
-                                                  let itemLabel = `Item ${
-                                                    subIndex + 1
-                                                  }`;
-                                                  if (section === "professionalDetails")
-                                                    itemLabel =
-                                                      item.organisation || itemLabel;
-                                                  if (section === "educationDetails")
-                                                    itemLabel =
-                                                      item.data?.qualification ||
-                                                      itemLabel;
-                                                  if (section === "projectDetails")
-                                                    itemLabel =
-                                                      item.name || itemLabel;
-                                                  if (section === "certificationDetails")
-                                                    itemLabel =
-                                                      item.name || itemLabel;
-                                                  if (section === "researchPapers")
-                                                    itemLabel =
-                                                      item.name || itemLabel;
-                                                  if (section === "trainingDetails")
-                                                    itemLabel =
-                                                      item.name || itemLabel;
-                                                  return (
-                                                    <SortableItem
-                                                      key={subIndex}
-                                                      style={{ display: "block" }}
-                                                    >
-                                                      <div className="ml-4">
-                                                        <label className="flex items-center space-x-2 cursor-move">
-                                                          <input
-                                                            type="checkbox"
-                                                            checked={
-                                                              selectedFields[section]?.[
-                                                                subIndex
-                                                              ] || false
-                                                            }
-                                                            onChange={() =>
-                                                              handleCheckboxChange(
-                                                                section,
-                                                                subIndex
-                                                              )
-                                                            }
-                                                            className="w-4 h-4"
-                                                          />
-                                                          <span className="text-gray-700 cursor-move">
-                                                            {formatLabel(itemLabel)}
-                                                          </span>
-                                                        </label>
-                                                      </div>
-                                                    </SortableItem>
-                                                  );
-                                                }
-                                              )
-                                            : subSectionOrder[section]?.map(
-                                                (fieldKey) => (
-                                                  <SortableItem
-                                                    key={fieldKey}
-                                                    style={{ display: "block" }}
-                                                  >
-                                                    <label className="flex items-center space-x-2 ml-6 cursor-move">
-                                                      <input
-                                                        type="checkbox"
-                                                        checked={
-                                                          selectedFields[section]?.[
-                                                            fieldKey
-                                                          ] || false
-                                                        }
-                                                        onChange={() =>
-                                                          handleCheckboxChange(
-                                                            section,
-                                                            fieldKey
-                                                          )
-                                                        }
-                                                        className="w-4 h-4 cursor-move"
-                                                      />
-                                                      <span className="text-gray-700 cursor-move">
-                                                        {formatLabel(fieldKey)}
-                                                      </span>
-                                                    </label>
-                                                  </SortableItem>
+                                          <label className="flex items-center space-x-2 ml-6 cursor-move">
+                                            <input
+                                              type="checkbox"
+                                              checked={
+                                                selectedFields[section]?.[
+                                                  fieldKey
+                                                ] || false
+                                              }
+                                              onChange={() =>
+                                                handleCheckboxChange(
+                                                  section,
+                                                  fieldKey
                                                 )
-                                              )}
-                                        </SortableList>
-                                      </div>
+                                              }
+                                              className="w-4 h-4 cursor-move"
+                                            />
+                                            <span className="text-gray-700 cursor-move">
+                                              {formatLabel(fieldKey)}
+                                            </span>
+                                          </label>
+                                        </SortableItem>
+                                      )
                                     )}
-                                  </div>
-                                </SortableItem>
-                              );
-                            })}
-                          </SortableList>
+                              </SortableList>
+                            </div>
+                          )}
                         </div>
-            }
+                      </SortableItem>
+                    );
+                  })}
+                </SortableList>
+              </div>
+            )}
 
             {/* Modal Footer */}
             <div className="flex items-center p-4 border-t sticky bg-white bottom-0 justify-end">
@@ -510,4 +569,3 @@ function ViewMyResume({ template, onSaveComplete }) {
 }
 
 export default ViewMyResume;
-  

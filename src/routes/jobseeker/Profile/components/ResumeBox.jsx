@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { FiEye } from "react-icons/fi";
 import { LuDownload } from "react-icons/lu";
 import { IoClose } from "react-icons/io5";
@@ -6,9 +6,49 @@ import AIButton from "./../../../../components/JobSeekerComponents/Buttons/AIBut
 import Template1 from "./../../../../components/JobSeekerComponents/BuildResume_Components/ResumeTemplates/Template1";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
+import { BiTrash } from "react-icons/bi";
+import ConfirmDeleteModal from './../../../../components/JobSeekerComponents/ReusableComponents/ConfirmDeleteModal';
+import {deleteResumeRequest, clearResumeMessages, getResumeListRequest} from './../../../../store/slices/jobSeeker/genrateResume/genrateResumeSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 
-function ResumeBox({ title, imgSrc, resumeData }) {
+
+function ResumeBox({ id,title, imgSrc, resumeData, filePath }) {
+
+  const dispatch = useDispatch();
+
+  const [deleteId,setDeleteId] = useState(0);
+
+  const message = useSelector((state) => state.genrateResume.message);
+
+   useEffect(() => {
+      toast.success(message, {
+        position: "top-right",
+        autoClose: 5000,
+        className: "bg-green-50 text-green-700",
+      });
+      dispatch(clearResumeMessages());
+      dispatch(getResumeListRequest());
+      
+  
+    }, [message]);
+
   const [modalOpen, setModalOpen] = useState(false);
+
+  const[isConfirmModalOpen,setIsConfirmModalOpen] = useState(false);
+
+  const handleDeleteBtn = (id) =>{
+    setIsConfirmModalOpen(true);
+    setDeleteId(id);
+  }
+
+  const handleFinalDelete = () =>{
+     
+    dispatch(deleteResumeRequest(deleteId));
+    setIsConfirmModalOpen(false);
+  };
+
+
   const resumeRef = useRef(null); // Reference for the resume container
 
   // ✅ Function to generate PDF using jsPDF & html2canvas (Supports Multi-Page)
@@ -54,7 +94,12 @@ function ResumeBox({ title, imgSrc, resumeData }) {
       {/* Resume Box */}
       <div className="bg-white h-64 w-64 rounded-lg px-4 py-4 flex flex-col items-center justify-center border border-gray-300 shadow-lg">
         {/* Title */}
-        <h1 className="text-sm font-semibold mb-2">{title}</h1>
+       
+       <div className="flex flex-row justify-between items-center w-full">
+       <h1 className="text-sm font-semibold mb-2">{title}</h1>
+       <button type="button" className="text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm p-1 text-center me-2 mb-2" onClick={()=> handleDeleteBtn(id)}><BiTrash size={18}/></button>
+       </div>
+
 
         {/* Logo */}
         <div className="w-20 h-20 flex items-center justify-center">
@@ -71,13 +116,19 @@ function ResumeBox({ title, imgSrc, resumeData }) {
             <FiEye size={16} /> View
           </button>
 
-          <button
-            type="button"
-            onClick={generatePDF} // Generate PDF
+          <a
+           href={filePath}
+           target="_blank"
+           rel="noopener noreferrer"
             className="w-1/2 flex flex-row items-center justify-center gap-2 text-blue-700 border border-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-2 text-center"
           >
             <LuDownload size={16} /> Download
-          </button>
+          </a>
+
+          {/* href={doc.file}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-sm text-blue-600 underline" */}
         </div>
 
         <div className="w-full my-2 flex justify-center">
@@ -102,12 +153,12 @@ function ResumeBox({ title, imgSrc, resumeData }) {
 
             <div className="flex justify-between p-4">
             <h2 className="text-2xl font-bold text-center mb-4">{title}</h2>
-              <button
+              {/* <button
                 onClick={generatePDF}
                 className="px-5 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
               >
                 Download PDF
-              </button>
+              </button> */}
               </div>
            
               <div ref={resumeRef} className="bg-white p-4 shadow-md">
@@ -120,6 +171,13 @@ function ResumeBox({ title, imgSrc, resumeData }) {
           </div>
         </div>
       )}
+
+<ConfirmDeleteModal
+        isOpen={isConfirmModalOpen}
+        onClose={() => setIsConfirmModalOpen(false)}
+        onConfirm={handleFinalDelete}
+        message="Are you sure you want to delete this Resume?"
+      />
     </>
   );
 }
