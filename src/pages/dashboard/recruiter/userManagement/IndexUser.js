@@ -9,18 +9,20 @@
   import { useDispatch, useSelector } from "react-redux";
 
   import {
-    fetchRolesRequest,
+    // fetchRolesRequest,
     fetchUsersRequest,
     addUserRequest,
     updateUserRequest,
     deleteUserRequest,
-    updateRolePermissionRequest,
-    addRolePermissionRequest,
-    viewRolePermissionRequest,
-    deleteRolePermissionRequest, // make sure this action exists
+    // updateRolePermissionRequest,
+    // addRolePermissionRequest,
+    // viewRolePermissionRequest,
+    // deleteRolePermissionRequest, // make sure this action exists
   } from "../../../../store/slices/recruiter/userSlice";
 
+
   import { fetchCompanyRequest } from "../../../../store/slices/recruiter/companySlice";
+import { addRolePermissionRequest, deleteRolePermissionRequest, fetchRolesRequest, updateRolePermissionRequest, viewRolePermissionRequest } from "../../../../store/slices/recruiter/roleSlice";
 
   // (Optional) Remove this hardcoded permission function if you always want to use the logged-in user's permissions
 
@@ -31,8 +33,11 @@
     const [activeTab, setActiveTab] = useState("users");
 
     // Get data from Redux store
-    const { users, roles,selectedRolePermissions, loading } = useSelector((state) => state.users);
+    const { users,  loading } = useSelector((state) => state.users);
     const { company } = useSelector((state) => state.companies);
+    const {roles,selectedRolePermissions} = useSelector((state)=>state.roles)
+
+    console.log("roles",roles);
     // Get the logged-in user (including permissions) from auth slice
     const { user } = useSelector((state) => state.auth);
     // ---- Local modal states ----

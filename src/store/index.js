@@ -35,6 +35,7 @@ import authReducer from "./slices/recruiter/authSlice";
 import companyReducer from "./slices/recruiter/companySlice";
 import candidateReducer from "./slices/recruiter/candidateSlice";
 import userReducer from "./slices/recruiter/userSlice";
+import roleReducer from "./slices/recruiter/roleSlice";
 
 // Create Saga Middleware
 const sagaMiddleware = createSagaMiddleware();
@@ -87,6 +88,7 @@ const store = configureStore({
     companies: companyReducer, // ✅ Add company reducer
     candidates: candidateReducer, // Make sure this is added
     users: userReducer,
+    roles:roleReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({  serializableCheck: false,thunk: false }).concat(sagaMiddleware),
