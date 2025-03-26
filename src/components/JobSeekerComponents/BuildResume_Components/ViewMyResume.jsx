@@ -45,7 +45,7 @@ function ViewMyResume({ template, onSaveComplete }) {
 
   const profileData = useSelector((state) => state.masterResumeJson.data);
 
-  //console.log("PROFILE DATA: ", profileData);
+  console.log("PROFILE DATA: ", profileData);
 
   const dispatch = useDispatch();
 
@@ -475,6 +475,8 @@ function ViewMyResume({ template, onSaveComplete }) {
                                           itemLabel = item.name || itemLabel;
                                         if (section === "trainingDetails")
                                           itemLabel = item.name || itemLabel;
+                                        if(section === "internshipDetails")
+                                          itemLabel = item.organisation || itemLabel;   
                                         return (
                                           <SortableItem
                                             key={subIndex}
