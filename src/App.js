@@ -68,7 +68,7 @@ const App = () => {
         <Route path="/jobseeker" element={<ProtectedRoute />}>
           <Route element={<JobseekerLayout />}>
             <Route path="dashboard" element={<JobseekerDashboard />} />
-            <Route path="job-detail" element={<JobDetailsPage />} />
+            <Route path="job-detail/:id/:bash_id" element={<JobDetailsPage />} />
             <Route path="apply-job" element={<ApplyForJobPage />} />
             <Route path="profile" element={<JobSeekerProfile />} />
             <Route path="resume-builder" element={<ResumeBuilder />} />

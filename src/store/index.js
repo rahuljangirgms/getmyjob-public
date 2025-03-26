@@ -22,6 +22,7 @@ import masterResumeReducer from './slices/jobSeeker/master_Resume_Data/masterRes
 import isProfilCompleteReducer from './slices/jobSeeker/isProfileCompleted/isProfileCompleteSlice';
 import openToWorkReducer from './slices/jobSeeker/openToWork/openToWorkSlice';
 import genrateResumeReducer from './slices/jobSeeker/genrateResume/genrateResumeSlice';
+import jobSeekerJobListReducer from './slices/jobSeeker/job_List/jobListSlice';
 
 // Create Saga Middleware
 const sagaMiddleware = createSagaMiddleware();
@@ -64,6 +65,9 @@ const store = configureStore({
     openToWork: openToWorkReducer,
     // Genrate Resume Here 
     genrateResume: genrateResumeReducer,
+    //Job Seeker Job List Here
+    jobSeekerJobList: jobSeekerJobListReducer, 
+
 
 
 

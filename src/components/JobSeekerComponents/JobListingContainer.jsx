@@ -10,6 +10,7 @@ import CompleteProfileToast from './ReusableComponents/CompleteProfileToast';
 import { useDispatch, useSelector } from 'react-redux';
 import {checkProfileCompleteRequest} from './../../store/slices/jobSeeker/isProfileCompleted/isProfileCompleteSlice'
 import Loader from './ReusableComponents/Loader';
+import {getJobListRequest} from './../../store/slices/jobSeeker/job_List/jobListSlice';
 
 
 const jobListings = [
@@ -122,21 +123,35 @@ const SkeletonCard = () => (
 function JobListingContainer() {
 
   const dispatch = useDispatch();
+  
+  const navigate = useNavigate();
 
   useEffect(()=>{
     dispatch(checkProfileCompleteRequest());
+    dispatch(getJobListRequest());
   },[dispatch]);
+
+
 
   const isProfileCompleted = useSelector(state => state.isProfileComplete.isComplete);  
 
   const {loading} = useSelector((state) => state.isProfileComplete);
 
-  const navigate = useNavigate();
+  // Job List State
+
+  const JobListLoading = useSelector((state) => state.jobSeekerJobList.loading);
+
+  // Job List From API
+
+  const JobListFrmApi = useSelector((state) => state.jobSeekerJobList.jobList);
+
+  console.log("Job List frm API: ", JobListFrmApi);
+
 
   const [isHidden, setIsHidden] = useState(false);
 
   const [currentPage, setCurrentPage] = useState(1);
-  const totalPages = Math.ceil(jobListings.length / PAGE_SIZE);
+  const totalPages = Math.ceil(JobListFrmApi.length / PAGE_SIZE);
 
 
   const handleCompleteProfile = () =>{
@@ -144,7 +159,7 @@ function JobListingContainer() {
     navigate('/jobseeker/complete-profile-form/personal-info');  
   }
 
-  const paginatedJobs = jobListings.slice(
+  const paginatedJobs = JobListFrmApi.slice(
     (currentPage - 1) * PAGE_SIZE,
     currentPage * PAGE_SIZE
   );
@@ -153,7 +168,7 @@ function JobListingContainer() {
     <div className="py-6 px-1 md:px-6 mx-auto">
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-lg md:text-2xl font-bold">
-          {jobListings.length} job results
+          {JobListFrmApi.length} job results
         </h2>
         <div className="flex space-x-2 items-center">
           <FiChevronLeft size={16} className="text-blue-600 cursor-pointer" />
@@ -186,7 +201,7 @@ function JobListingContainer() {
         {/* Job Cards (Behind Red Box) */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 relative z-10">
           {paginatedJobs.map((job, index) =>
-            isProfileCompleted && !loading ?  (
+            isProfileCompleted && !loading && !JobListLoading ?  (
               <JobCard key={index} job={job}  />
             ) : (
               <SkeletonCard key={index} />
