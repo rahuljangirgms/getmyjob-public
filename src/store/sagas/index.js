@@ -18,6 +18,8 @@ import {watchCheckProfileComplete} from './../sagas/jobSeeker/handler/check_Prof
 import {watchOpenToWork} from './../sagas/jobSeeker/handler/Open_To_Work/openToWorkSaga';
 import {watchGenrateResume} from './../sagas/jobSeeker/handler/genrate_Resume/genrateResumeSaga';
 import {watchJobList} from './jobSeeker/handler/Job_List/JobListSaga'
+import {watchFilterJobs} from './jobSeeker/handler/Job_Filter/JobFilterSaga';
+import {watchJobApply} from './jobSeeker/handler/Job_Apply/JobApplySaga';
 
 export default function* rootSaga() {
   yield all([
@@ -39,6 +41,8 @@ export default function* rootSaga() {
     watchCheckProfileComplete(),
     watchOpenToWork(),
     watchGenrateResume(),
-    watchJobList()
+    watchJobList(),
+    watchFilterJobs(),
+    watchJobApply(),
   ]);
 }

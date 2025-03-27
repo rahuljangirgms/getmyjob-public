@@ -2,94 +2,16 @@ import React, { useEffect, useState } from "react";
 
 import { FiChevronLeft } from "react-icons/fi";
 import { FiChevronRight } from "react-icons/fi";
-import { FaAnglesRight } from "react-icons/fa6";
-import { LuFileUser } from "react-icons/lu";
 import { useNavigate } from 'react-router-dom';
 import JobCard from './JobCard';
 import CompleteProfileToast from './ReusableComponents/CompleteProfileToast';
 import { useDispatch, useSelector } from 'react-redux';
 import {checkProfileCompleteRequest} from './../../store/slices/jobSeeker/isProfileCompleted/isProfileCompleteSlice'
-import Loader from './ReusableComponents/Loader';
 import {getJobListRequest} from './../../store/slices/jobSeeker/job_List/jobListSlice';
 
 
-const jobListings = [
-  {
-    company: "Boxy",
-    title: "Graphic Designer",
-    location: "Jakarta",
-    type: "Full-time",
-    experience: "3+ years",
-    salary: "$300/ month",
-    logo: "https://res.cloudinary.com/ddpegoqtf/image/upload/v1739442195/whatsapp_bpdxoz.png",
-  },
-  {
-    company: "Comandor",
-    title: "Product Designer",
-    location: "Jakarta",
-    type: "Internship",
-    experience: "3+ years",
-    salary: "$300/ month",
-    logo: "https://res.cloudinary.com/ddpegoqtf/image/upload/v1739442195/netflix_a7n2bk.png",
-  },
-  {
-    company: "Exodus",
-    title: "UX Writer",
-    location: "Jakarta",
-    type: "Freelance",
-    experience: "3+ years",
-    salary: "$300/ month",
-    logo: "https://res.cloudinary.com/ddpegoqtf/image/upload/v1739442195/pinterest_tcoae0.png",
-  },
-  {
-    company: "Onion.co",
-    title: "Senior UI Designer",
-    location: "Jakarta",
-    type: "Volunteer",
-    experience: "3+ years",
-    salary: "$300/ month",
-    logo: "https://res.cloudinary.com/ddpegoqtf/image/upload/v1739442195/tiktok_pgocya.png",
-  },
-  {
-    company: "Alair",
-    title: "Researcher UX",
-    location: "Jakarta",
-    type: "Full-time",
-    experience: "5+ years",
-    salary: "$1100/ month",
-    logo: "https://res.cloudinary.com/ddpegoqtf/image/upload/v1739442195/linkedin_huhg13.png",
-  },
-  {
-    company: "ShinyStar",
-    title: "UX Designer",
-    location: "Jakarta",
-    type: "Full-time",
-    experience: "13+ years",
-    salary: "$1300/ month",
-    logo: "https://res.cloudinary.com/ddpegoqtf/image/upload/v1738650152/Meta_Logo_jvpupf.png",
-  },
-  {
-    company: "ShinyStar",
-    title: "UX Designer",
-    location: "Jakarta",
-    type: "Full-time",
-    experience: "13+ years",
-    salary: "$1300/ month",
-    logo: "https://res.cloudinary.com/ddpegoqtf/image/upload/v1738650152/Meta_Logo_jvpupf.png",
-  },
-  {
-    company: "ShinyStar",
-    title: "UX Designer",
-    location: "Jakarta",
-    type: "Full-time",
-    experience: "13+ years",
-    salary: "$1300/ month",
-    logo: "https://res.cloudinary.com/ddpegoqtf/image/upload/v1738650152/Meta_Logo_jvpupf.png",
-  },
-];
 
 const PAGE_SIZE = 6;
-
 
 
 // Skeleton Card Here
@@ -145,13 +67,23 @@ function JobListingContainer() {
 
   const JobListFrmApi = useSelector((state) => state.jobSeekerJobList.jobList);
 
+  // Filtered Jobs From API
+
+  const filteredJobs = useSelector((state) => state.jobSeekerJobFilter.jobs);
+
+  console.log("filteredJobs: ",filteredJobs);
+
+  // Filtered Jobs Loading state
+
+  const filteredJobsLoading = useSelector((state) => state.jobSeekerJobFilter.loading);
+
+
   console.log("Job List frm API: ", JobListFrmApi);
 
 
   const [isHidden, setIsHidden] = useState(false);
 
   const [currentPage, setCurrentPage] = useState(1);
-  const totalPages = Math.ceil(JobListFrmApi.length / PAGE_SIZE);
 
 
   const handleCompleteProfile = () =>{
@@ -159,10 +91,15 @@ function JobListingContainer() {
     navigate('/jobseeker/complete-profile-form/personal-info');  
   }
 
-  const paginatedJobs = JobListFrmApi.slice(
+  const jobsToDisplay = filteredJobs.length > 0 ? filteredJobs : JobListFrmApi;
+
+  const totalPages = Math.ceil(jobsToDisplay.length / PAGE_SIZE);
+  
+  const paginatedJobs = jobsToDisplay.slice(
     (currentPage - 1) * PAGE_SIZE,
     currentPage * PAGE_SIZE
   );
+  
 
   return (
     <div className="py-6 px-1 md:px-6 mx-auto">
@@ -201,7 +138,7 @@ function JobListingContainer() {
         {/* Job Cards (Behind Red Box) */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 relative z-10">
           {paginatedJobs.map((job, index) =>
-            isProfileCompleted && !loading && !JobListLoading ?  (
+            isProfileCompleted && !loading && !JobListLoading && !filteredJobsLoading ?  (
               <JobCard key={index} job={job}  />
             ) : (
               <SkeletonCard key={index} />

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 import AIButton from "./../../components/JobSeekerComponents/Buttons/AIButton";
 
@@ -15,6 +15,11 @@ import {
   Wallet,
 } from "lucide-react";
 import JobDetailSkeloton from "./../../components/JobSeekerComponents/ReusableComponents/JobDetailSkeloton";
+import { toast, ToastContainer } from 'react-toastify';
+import ApplyJobModal from './../../components/JobSeekerComponents/Job_Application/ApplyJobModal';
+import {clearJobApplyStatus} from './../../store/slices/jobSeeker/Job_Apply/jobApplySlice';
+import { CircleUser } from 'lucide-react';
+
 
 const JobDetailsPage = () => {
   const dispatch = useDispatch();
@@ -33,43 +38,41 @@ const JobDetailsPage = () => {
     (state) => state.jobSeekerJobList
   );
 
-  console.log("JOB Details frm API: ", jobDetails);
+  // console.log("JOB Details frm API: ", jobDetails);
 
-  const handleApplyBtn = () => {
-    navigate("/jobseeker/apply-job");
+  const[isModalOpen,setIsModalOpen] = useState(false);
+
+  // Handle Apply Button Below
+
+  const handleApplyBtn = () => {  
+    setIsModalOpen(!isModalOpen);
   };
 
-  const skills = ["Business", "Marketing", "Development"];
-  const latestJobs = [
-    {
-      title: "Crisis Intervention Specialist",
-      location: "London",
-      company: "Microsoft Inc.",
-    },
-    {
-      title: "Virtual Scheduler",
-      location: "New York",
-      company: "Microsoft Inc.",
-    },
-    {
-      title: "Patient Care Advocate",
-      location: "Washington",
-      company: "Microsoft Inc.",
-    },
-    {
-      title: "Medical Assistant Instructor",
-      location: "Atlanta",
-      company: "Microsoft Inc.",
-    },
-    {
-      title: "Crisis Intervention Specialist",
-      location: "London",
-      company: "Microsoft Inc.",
-    },
-  ];
+  // Job Applied State
+
+  const {message, success} = useSelector((state) => state.jobSeekerJobApply);
+
+  useEffect(()=>{
+    if(message){
+      toast.success(message, {
+        position: "top-right",
+        autoClose: 5000,
+        className: "bg-green-50 text-green-700",
+      });
+      dispatch(clearJobApplyStatus());
+    }
+    if(success){
+      setIsModalOpen(!isModalOpen);
+    }
+
+    
+  },[message])
+
+
 
   return (
     <div className="min-h-screen bg-gray-50 my-20">
+      <ToastContainer/>
       {/* Job Header Banner */}
       {loading ? (
         <JobDetailSkeloton />
@@ -223,7 +226,18 @@ const JobDetailsPage = () => {
                   <h2 className="text-xl font-semibold text-gray-900 mb-4">
                     Job Details
                   </h2>
+                  
                   <div className="space-y-4">
+                  <div className="flex items-center text-gray-800">
+                      <CircleUser className="w-5 h-5 mr-3 text-gray-400" />
+                      <div>
+                        <p className="text-sm font-medium text-gray-900">
+                          {jobDetails?.experience_required}
+                        </p>
+                        <p className="text-sm text-gray-800">Experience Required</p>
+                      </div>
+                    </div>
+
                     <div className="flex items-center text-gray-800">
                       <Briefcase className="w-5 h-5 mr-3 text-gray-400" />
                       <div>
@@ -261,15 +275,7 @@ const JobDetailsPage = () => {
                         <p className="text-sm text-gray-800">Industry</p>
                       </div>
                     </div>
-                    {/* <div className="flex items-center text-gray-800">
-                      <FileCode2 className="w-5 h-5 mr-3 text-gray-400" />
-                      <div>
-                        <p className="text-sm font-medium text-gray-900">
-                          Information technology
-                        </p>
-                        <p className="text-sm text-gray-800">Job Function</p>
-                      </div>
-                    </div> */}
+                    
                     <div className="flex items-center text-gray-800">
                       <Mail className="w-5 h-5 mr-3 text-gray-400" />
                       <div>
@@ -314,8 +320,15 @@ const JobDetailsPage = () => {
               </div>
             </div>
           </div>
-        </div>
+
+          {isModalOpen && <ApplyJobModal onClose={() => setIsModalOpen(false)} id={id} bash_id={bash_id} />}
+          </div>
+
+        
       )}
+
+   
+
     </div>
   );
 };
