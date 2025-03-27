@@ -168,30 +168,33 @@ const CompanyManagement = () => {
         <p className="text-center text-gray-500">No company profile found.</p>
       )}
 
-      {/* Modal for Editing Company Profile */}
+      {/* Responsive Modal for Editing Company Profile */}
       <AnimatePresence>
         {isModalOpen && selectedCompany && (
           <>
             <motion.div
-              className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center"
+              className="fixed inset-0 bg-black bg-opacity-50"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={closeModal}
             />
             <motion.div
-              className="fixed inset-0 flex items-center justify-center p-4"
+              className="fixed inset-0 flex items-center justify-center px-4 py-8"
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.8 }}
               transition={{ duration: 0.3, ease: "easeInOut" }}
             >
-              <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-2xl">
+              {/* Modal Container */}
+              <div
+                className="bg-white rounded-lg shadow-lg w-full max-w-md sm:max-w-lg md:max-w-2xl 
+                           p-4 sm:p-6 overflow-y-auto max-h-[90vh]"
+                onClick={(e) => e.stopPropagation()} // Prevent clicks inside modal from closing it
+              >
                 {/* Modal Header */}
                 <div className="flex justify-between items-center border-b pb-4">
-                  <h2 className="text-xl font-semibold">
-                    Edit Company Profile
-                  </h2>
+                  <h2 className="text-xl font-semibold">Edit Company Profile</h2>
                   <button
                     onClick={closeModal}
                     className="text-gray-600 hover:text-gray-800"
@@ -199,6 +202,7 @@ const CompanyManagement = () => {
                     <X size={20} />
                   </button>
                 </div>
+
                 {/* Edit Form */}
                 <div className="mt-4 space-y-4">
                   <div>
@@ -218,9 +222,7 @@ const CompanyManagement = () => {
                     />
                   </div>
                   <div>
-                    <label className="text-gray-700 font-medium">
-                      Website
-                    </label>
+                    <label className="text-gray-700 font-medium">Website</label>
                     <input
                       type="text"
                       value={selectedCompany.website}
@@ -255,9 +257,7 @@ const CompanyManagement = () => {
                   </div>
 
                   <div>
-                    <label className="text-gray-700 font-medium">
-                      Locations
-                    </label>
+                    <label className="text-gray-700 font-medium">Locations</label>
                     <input
                       type="text"
                       value={selectedCompany.locations.join(", ")}
@@ -273,9 +273,7 @@ const CompanyManagement = () => {
                     />
                   </div>
                   <div>
-                    <label className="text-gray-700 font-medium">
-                      Industries
-                    </label>
+                    <label className="text-gray-700 font-medium">Industries</label>
                     <input
                       type="text"
                       value={selectedCompany.industry.join(", ")}
@@ -328,9 +326,7 @@ const CompanyManagement = () => {
                     </label>
                     <input
                       type="text"
-                      value={
-                        (selectedCompany.social_profiles || []).join(", ")
-                      }
+                      value={(selectedCompany.social_profiles || []).join(", ")}
                       onChange={(e) =>
                         setSelectedCompany({
                           ...selectedCompany,
@@ -343,6 +339,7 @@ const CompanyManagement = () => {
                     />
                   </div>
                 </div>
+
                 {/* Modal Footer */}
                 <div className="flex justify-end gap-4 mt-6 border-t pt-4">
                   <button

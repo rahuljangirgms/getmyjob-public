@@ -111,14 +111,17 @@ function* updateRoleSaga(action) {
 // 8. Delete Role Permission -> POST /delete_role_permission
 function* deleteRoleSaga(action) {
   try {
-    console.log('[deleteRoleSaga] Invoked with role ID:', action.payload);
+    console.log('[deleteRoleSaga] Invoked with payload:', action.payload);
     const token = yield select((state) => state.auth.token);
     console.log('[deleteRoleSaga] Token:', token);
+
+    // Destructure role_id and company_id from the action payload
+    const { role_id, company_id } = action.payload;
 
     const response = yield call(
       axios.post,
       `${BASE_URL}/delete_role_permission`,
-      { role_id: action.payload },
+      { role_id, company_id },
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -127,49 +130,40 @@ function* deleteRoleSaga(action) {
     );
 
     console.log('[deleteRoleSaga] Response:', response.data);
-    yield put(deleteRolePermissionSuccess(action.payload));
+    yield put(deleteRolePermissionSuccess({ role_id, company_id }));
   } catch (error) {
     console.error('[deleteRoleSaga] Error:', error.message);
     yield put(deleteRolePermissionFailure(error.message));
   }
 }
-
-// 9. View Role Permission -> GET /view_role_permission?company_id=XX&role_id=YY
+// 9. View Role Permission -> GET /view_role_permission
 function* viewRoleSaga(action) {
   try {
     console.log('[viewRoleSaga] Invoked');
-    // Get the token from auth state
-    // const { role_id, company_id } = action.payload;
+   
     const token = yield select((state) => state.auth.token);
     console.log('[viewRoleSaga] Token:', token);
     
-    // Get the company from the companies slice
-    // const company = yield select((state) => state.companies.company);
-    // const company_id = company ? company.id : "";
-    
-    // Get roles from the users slice
-    // const roles = yield select((state) => state.users.roles);
-    // For example, if you have a selected role id in your state you can use that:
-    // const role_id = yield select((state) => state.users.selectedRoleId);
-    // Otherwise, as a fallback, use the first role's id (if any)
-    // const role_id = (roles && roles.length > 0) ? roles[0].id : "";
-    // 
-    // Log for debugging
-    // console.log('[viewRoleSaga] Using company_id:', company_id, 'and role_id:', role_id);
-    
-    // Make the GET request with the company_id and role_id as query parameters
     const response = yield call(
       axios.get,
       `${BASE_URL}/view_role_permission`,
       {
-      
         headers: {
           Authorization: `Bearer ${token}`,
         },
       }
     );
-    
-    console.log('[viewRoleSaga] Response:', response.data.data);
+
+    // Log the entire response object
+    console.log('[viewRoleSaga] Full response:', response);
+
+    // Log the `data` portion in a more readable way:
+    console.log('[viewRoleSaga] Response data:', JSON.stringify(response.data, null, 2));
+
+    // Then you can also specifically log the array of role-permission objects:
+    console.log('[viewRoleSaga] response.data.data:', response.data.data);
+
+    // Finally, dispatch success action with the data
     yield put(viewRolePermissionSuccess(response.data.data));
   } catch (error) {
     console.error('[viewRoleSaga] Error:', error.message);

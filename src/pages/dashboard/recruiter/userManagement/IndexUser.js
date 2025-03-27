@@ -37,7 +37,7 @@ import { addRolePermissionRequest, deleteRolePermissionRequest, fetchRolesReques
     const { company } = useSelector((state) => state.companies);
     const {roles,selectedRolePermissions} = useSelector((state)=>state.roles)
 
-    console.log("roles",roles);
+    console.log("roles======>",roles);
     // Get the logged-in user (including permissions) from auth slice
     const { user } = useSelector((state) => state.auth);
     // ---- Local modal states ----
@@ -50,6 +50,7 @@ import { addRolePermissionRequest, deleteRolePermissionRequest, fetchRolesReques
       dispatch(fetchCompanyRequest());
       dispatch(fetchUsersRequest());
       dispatch(fetchRolesRequest());
+      dispatch(viewRolePermissionRequest());
     }, [dispatch]);
 
     // When edit role modal opens, dispatch API to fetch detailed permissions
@@ -57,10 +58,7 @@ import { addRolePermissionRequest, deleteRolePermissionRequest, fetchRolesReques
       if (roleModalOpen && editingRole) {
         // Dispatch with payload containing the role's id and company id (modify your saga accordingly)
         dispatch(
-          viewRolePermissionRequest({
-            role_id: editingRole.role_id,
-            company_id: company?.id,
-          })
+          viewRolePermissionRequest()
         );
       }
     }, [roleModalOpen, editingRole, company, dispatch]);
@@ -137,7 +135,7 @@ import { addRolePermissionRequest, deleteRolePermissionRequest, fetchRolesReques
     const handleDeleteRole = (roleId) => {
       if (!window.confirm("Are you sure you want to delete this role?")) return;
       // Dispatch deletion if required:
-      dispatch(deleteRolePermissionRequest(roleId));
+      dispatch(deleteRolePermissionRequest({ role_id: roleId, company_id: company.id }));
     };
     const handleSubmitRole = (values, { resetForm }) => {
       // Ensure company_id is set correctly before dispatching
@@ -478,55 +476,54 @@ import { addRolePermissionRequest, deleteRolePermissionRequest, fetchRolesReques
                     </tr>
                   </thead>
                   <tbody>
-                    {loading ? (
-                      <tr>
-                        <td className="p-3" colSpan="4">
-                          <Skeleton height={30} />
-                        </td>
-                      </tr>
-                    ) : roles.length === 0 ? (
-                      <tr>
-                        <td className="p-3 text-center text-gray-500" colSpan="4">
-                          No roles found
-                        </td>
-                      </tr>
-                    ) : (
-                      roles.map((role, index) =>
-                        role ? (
-                          <tr key={index} className="border-b hover:bg-gray-100">
-                  <td className="p-3">{role.role || role.name}</td>
-                  <td className="p-3">{company?.name}</td>
-                  <td className="p-3">
-                              {role.permission && role.permission.length > 0 ? (
-                                role.permission.map((perm, idx) => (
-                                  <div key={idx}>
-                                     <strong>{(perm.menu || "N/A").toUpperCase()}:</strong> V:{perm.view} A:{perm.add} E:{perm.edit} D:{perm.delete}
-                                   
-                                  </div>
-                                ))
-                              ) : (
-                                <div>No permissions assigned</div>
-                              )}
-                            </td>
-                  <td className="p-3 flex gap-2">
-                    <button
-                      onClick={() => handleOpenEditRoleModal(role)}
-                      className="bg-yellow-500 text-white px-3 py-1 rounded-md hover:bg-yellow-600 flex items-center gap-1"
-                    >
-                      <Edit size={16} /> Edit
-                    </button>
-                    <button
-                      onClick={() => handleDeleteRole(role.id || role.role_id)}
-                      className="bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600 flex items-center gap-1"
-                    >
-                      <Trash2 size={16} /> Delete
-                    </button>
-                  </td>
-                </tr>
-                        ) : null
-                      )
-                    )}
-                  </tbody>
+        {loading ? (
+          <tr>
+            <td colSpan="4">Loading...</td>
+          </tr>
+        ) : selectedRolePermissions.length === 0 ? (
+          <tr>
+            <td colSpan="4">No roles found</td>
+          </tr>
+        ) : (
+          selectedRolePermissions.map((roleItem, index) => (
+            <tr key={roleItem.role_id} className="border-b hover:bg-gray-100">
+              {/* 1) Display basic role info */}
+              <td className="p-3">{roleItem.role}</td>
+              <td className="p-3">{roleItem.company_id}</td>
+
+              {/* 2) Display each permission */}
+              <td className="p-3">
+                {roleItem.permissions && roleItem.permissions.length > 0 ? (
+                  roleItem.permissions.map((perm, i) => (
+                    <div key={perm.id}>
+                      <strong>{perm.menu.toUpperCase()}:</strong>{" "}
+                      V:{perm.view} A:{perm.add} E:{perm.edit} D:{perm.delete}
+                    </div>
+                  ))
+                ) : (
+                  <div>No permissions assigned</div>
+                )}
+              </td>
+
+              {/* 3) Actions (Edit/Delete) */}
+              <td className="p-3">
+                <button
+                  className="bg-yellow-500 text-white px-3 py-1 rounded-md hover:bg-yellow-600 mr-2"
+                  onClick={() => handleOpenEditRoleModal(roleItem)}
+                >
+                  Edit
+                </button>
+                <button
+                  className="bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600"
+                  onClick={() => handleDeleteRole(roleItem.role_id)}
+                >
+                  Delete
+                </button>
+              </td>
+            </tr>
+          ))
+        )}
+      </tbody>
                 </table>
               </div>
             </div>

@@ -64,7 +64,7 @@ const roleSlice = createSlice({
       state.loading = true;
     },
     viewRolePermissionSuccess(state, action) {
-      state.selectedRolePermissions = action.payload;
+      state.selectedRolePermissions = action.payload; // entire array
       state.loading = false;
     },
     viewRolePermissionFailure(state, action) {

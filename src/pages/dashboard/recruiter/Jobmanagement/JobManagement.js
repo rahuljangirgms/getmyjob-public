@@ -94,9 +94,14 @@ const JobManagement = () => {
   const [step, setStep] = useState(1);
   const [editingJob, setEditingJob] = useState(null);
 
-  // Update filters
+  // **Pagination State**
+  const [currentPage, setCurrentPage] = useState(1);
+  const jobsPerPage = 6;
+
+  // Update filters (optionally, you could reset pagination on filter change)
   const handleSearchChange = (field, value) => {
     dispatch(setJobFilters({ [field]: value }));
+    setCurrentPage(1); // Reset to first page when filter changes
   };
 
   // Filter jobs
@@ -111,9 +116,14 @@ const JobManagement = () => {
     return true;
   });
 
+  // **Pagination Calculation**
+  const indexOfLastJob = currentPage * jobsPerPage;
+  const indexOfFirstJob = indexOfLastJob - jobsPerPage;
+  const currentJobs = filteredJobs.slice(indexOfFirstJob, indexOfLastJob);
+  const totalPages = Math.ceil(filteredJobs.length / jobsPerPage);
+
   // CRUD Handlers
   const handleDelete = (job) => {
-    // job: { id: 15, bash_id: "abc123" } from your job data
     dispatch(deleteJobRequest({ id: job.id, bash_id: job.bash_id }));
   };
 
@@ -297,112 +307,147 @@ const JobManagement = () => {
             {loading ? (
               <Skeleton width="100%" height={40} className="mt-4" />
             ) : (
-              <div className="overflow-x-auto">
-                <table className="w-full border-collapse border rounded-lg overflow-hidden">
-                  <thead>
-                    <tr className="bg-gray-100 text-gray-700">
-                      <th className="p-4 text-left">Job Title</th>
-                      <th className="p-4 text-left">Candidates</th>
-                      <th className="p-4 text-left">Sponsorship status</th>
-                      <th className="p-4 text-left">Date posted</th>
-                      <th className="p-4 text-left">Email</th>
-                      <th className="p-4 text-left">Job status</th>
-                      <th className="p-4 text-left">Hot Job</th>
-                      <th className="p-4 text-left">Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {filteredJobs.map((job, index) => {
-                      const displayStatus = getDisplayStatus(job);
-                      return (
-                        <tr
-                          key={job.id}
-                          className={`border-b ${
-                            index % 2 === 0 ? "bg-gray-50" : "bg-white"
-                          } hover:bg-gray-100 transition`}
-                        >
-                          <td className="p-4">
-                            <div className="font-medium">
-                              <Link
-                                to={`/recruiter/dashboard/jobs/detail/${job.id}`}
-                                className="font-medium text-blue-600 hover:underline"
-                              >
-                                {job.job_title}
-                              </Link>
-                            </div>
-                            <div className="text-sm text-gray-600">
-                              {Array.isArray(job.location)
-                                ? job.location.join(", ")
-                                : job.location || "N/A"}
-                            </div>
-                            <div className="text-xs text-gray-400">
+              <>
+                <div className="overflow-x-auto">
+                  <table className="w-full border-collapse border rounded-lg overflow-hidden">
+                    <thead>
+                      <tr className="bg-gray-100 text-gray-700">
+                        <th className="p-4 text-left">Job Title</th>
+                        <th className="p-4 text-left">Candidates</th>
+                        <th className="p-4 text-left">Sponsorship status</th>
+                        <th className="p-4 text-left">Date posted</th>
+                        <th className="p-4 text-left">Email</th>
+                        <th className="p-4 text-left">Job status</th>
+                        <th className="p-4 text-left">Hot Job</th>
+                        <th className="p-4 text-left">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {currentJobs.map((job, index) => {
+                        const displayStatus = getDisplayStatus(job);
+                        return (
+                          <tr
+                            key={job.id}
+                            className={`border-b ${index % 2 === 0 ? "bg-gray-50" : "bg-white"} hover:bg-gray-100 transition`}
+                          >
+                            <td className="p-4">
+                              <div className="font-medium">
+                                <Link
+                                  to={`/recruiter/dashboard/jobs/detail/${job.id}`}
+                                  className="font-medium text-blue-600 hover:underline"
+                                >
+                                  {job.job_title}
+                                </Link>
+                              </div>
+                              <div className="text-sm text-gray-600">
+                                {Array.isArray(job.location)
+                                  ? job.location.join(", ")
+                                  : job.location || "N/A"}
+                              </div>
+                              <div className="text-xs text-gray-400">
+                                Posted{" "}
+                                {job.created_at
+                                  ? new Date(job.created_at).toLocaleDateString()
+                                  : "N/A"}
+                              </div>
+                            </td>
+                            <td className="p-4">
+                              <div className="flex items-center gap-4">
+                                <div className="flex items-center gap-2">
+                                  <Link to={`/recruiter/dashboard/candidates?jobId=${job.id}&bash_id=${job.bash_id}`}>
+                                    <button className="text-blue-600 hover:underline text-sm">
+                                      Applicants
+                                    </button>
+                                  </Link>
+                                </div>
+                                <div className="flex items-center gap-2">
+                                  <Link to={`/recruiter/dashboard/candidates/open-to-work?jobId=${job.id}&bash_id=${job.bash_id}&openToWork=true`}>
+                                    <button className="text-blue-600 hover:underline text-sm">
+                                      Open to Work
+                                    </button>
+                                  </Link>
+                                </div>
+                              </div>
+                            </td>
+                            <td className="p-4 text-sm">
+                              <span className="text-gray-500">Free post</span>
+                            </td>
+                            <td className="p-4 text-sm text-gray-600">
                               Posted{" "}
                               {job.created_at
                                 ? new Date(job.created_at).toLocaleDateString()
                                 : "N/A"}
-                            </div>
-                          </td>
-                          <td className="p-4">
-                            <div className="flex items-center gap-2">
-                              <Link to={`/recruiter/dashboard/candidates?jobId=${job.id}`}>
-                                <button className="text-blue-600 hover:underline text-sm">
-                                  Applicants
+                            </td>
+                            <td className="p-4 text-sm text-gray-700">
+                              {job.contact_email || "N/A"}
+                            </td>
+                            <td className="p-4 text-sm">
+                              <span
+                                className={`px-2 py-1 rounded ${
+                                  displayStatus === "Expired"
+                                    ? "bg-red-100 text-red-700"
+                                    : "bg-green-100 text-green-700"
+                                }`}
+                              >
+                                {displayStatus}
+                              </span>
+                            </td>
+                            <td className="p-4 text-sm">{job.is_hot_job}</td>
+                            <td className="p-4 text-sm">
+                              <div className="flex gap-2">
+                                <button
+                                  onClick={() => handleEdit(job)}
+                                  className="text-blue-600 hover:text-blue-800"
+                                >
+                                  <Edit size={16} />
                                 </button>
-                              </Link>
-                            </div>
-                          </td>
-                          <td className="p-4 text-sm">
-                            <span className="text-gray-500">Free post</span>
-                          </td>
-                          <td className="p-4 text-sm text-gray-600">
-                            Posted{" "}
-                            {job.created_at
-                              ? new Date(job.created_at).toLocaleDateString()
-                              : "N/A"}
-                          </td>
-                          <td className="p-4 text-sm text-gray-700">
-                            {job.contact_email || "N/A"}
-                          </td>
-                          <td className="p-4 text-sm">
-                            <span
-                              className={`px-2 py-1 rounded ${
-                                displayStatus === "Expired"
-                                  ? "bg-red-100 text-red-700"
-                                  : "bg-green-100 text-green-700"
-                              }`}
-                            >
-                              {displayStatus}
-                            </span>
-                          </td>
-                          <td className="p-4 text-sm">{job.is_hot_job}</td>
-                          <td className="p-4 text-sm">
-                            <div className="flex gap-2">
-                              <button
-                                onClick={() => handleEdit(job)}
-                                className="text-blue-600 hover:text-blue-800"
-                              >
-                                <Edit size={16} />
-                              </button>
-                              <button
-                                onClick={() => handleDuplicate(job)}
-                                className="text-green-600 hover:text-green-800"
-                              >
-                                <Copy size={16} />
-                              </button>
-                              <button
-                                onClick={() => handleDelete(job)}
-                                className="text-red-600 hover:text-red-800"
-                              >
-                                <Trash2 size={16} />
-                              </button>
-                            </div>
-                          </td>
-                        </tr>
-                      );
-                    })}
-                  </tbody>
-                </table>
-              </div>
+                                <button
+                                  onClick={() => handleDuplicate(job)}
+                                  className="text-green-600 hover:text-green-800"
+                                >
+                                  <Copy size={16} />
+                                </button>
+                                <button
+                                  onClick={() => handleDelete(job)}
+                                  className="text-red-600 hover:text-red-800"
+                                >
+                                  <Trash2 size={16} />
+                                </button>
+                              </div>
+                            </td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                </div>
+                {/* Pagination Controls */}
+                <div className="flex justify-center mt-4">
+                  <button
+                    className="mx-1 px-3 py-1 border rounded"
+                    onClick={() => setCurrentPage(currentPage - 1)}
+                    disabled={currentPage === 1}
+                  >
+                    Prev
+                  </button>
+                  {Array.from({ length: totalPages }, (_, index) => (
+                    <button
+                      key={index}
+                      className={`mx-1 px-3 py-1 border rounded ${currentPage === index + 1 ? "bg-blue-600 text-white" : ""}`}
+                      onClick={() => setCurrentPage(index + 1)}
+                    >
+                      {index + 1}
+                    </button>
+                  ))}
+                  <button
+                    className="mx-1 px-3 py-1 border rounded"
+                    onClick={() => setCurrentPage(currentPage + 1)}
+                    disabled={currentPage === totalPages}
+                  >
+                    Next
+                  </button>
+                </div>
+              </>
             )}
           </div>
 
