@@ -243,7 +243,7 @@ export default function Permissions() {
           </div>
 
           {/* Right side: only show if a role is selected */}
-          {selectedRole && (
+          {selectedRole ? (
             <div className="col-span-12 md:col-span-9 bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md">
               <h3 className="text-lg font-semibold mb-4">
                 Set Permissions for Selected Role
@@ -345,7 +345,13 @@ export default function Permissions() {
                 </table>
               </div>
             </div>
-          )}
+          ) : (
+          <div className="col-span-12 md:col-span-9 bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md flex items-center justify-center">
+            <p className="text-xl text-gray-600 dark:text-gray-300">
+              Please select a role to set permissions.
+            </p>
+          </div>
+)}
         </div>
       </div>
     </div>

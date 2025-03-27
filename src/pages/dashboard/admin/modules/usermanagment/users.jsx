@@ -6,6 +6,8 @@ import { MRT_Localization_EN } from "material-react-table/locales/en";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Modal, TextInput, Label } from "flowbite-react";
+import StatusBadge from "../../components/statusbadge";
+
 
 import {
     getUsers,
@@ -91,11 +93,17 @@ const Users = () => {
     // ------------------------------
     // Fetch Users and Roles
     // ------------------------------
+    // Option 1: Convert when fetching data
     const fetchUsers = async () => {
         setLoading(true);
         const res = await getUsers();
         if (res.status && Array.isArray(res.data)) {
-            setUsers(res.data);
+            // Convert "active" to "Enable" and "inactive" to "Disable"
+            const enriched = res.data.map((user) => ({
+                ...user,
+                status: user.status.toLowerCase() === "active" ? "Enable" : "Disable",
+            }));
+            setUsers(enriched);
         } else {
             toast.error(res.message || "Failed to fetch users");
             setUsers([]);
@@ -127,7 +135,11 @@ const Users = () => {
         { accessorKey: "email", header: "Email" },
         { accessorKey: "role", header: "Role" },
         { accessorKey: "mobile", header: "Mobile" },
-        { accessorKey: "status", header: "Status" },
+        {
+            accessorKey: "status",
+            header: "Status", // "Enable"/"Disable"
+            Cell: ({ cell }) => <StatusBadge status={cell.getValue()} />,
+        },
         {
             accessorKey: "created_at",
             header: "Created At",
@@ -164,85 +176,86 @@ const Users = () => {
                 };
 
                 return (
-                    <div className="flex gap-2">
-                        {/* View Button */}
-                        <button
-                            onClick={() => {
-                                setViewUserData(user);
-                                setShowViewModal(true);
-                            }}
-                            className="p-1 border border-gray-300 rounded hover:bg-gray-100 dark:hover:bg-gray-700"
-                        >
-                            <svg
-                                className="w-5 h-5"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                                xmlns="http://www.w3.org/2000/svg"
+                    
+                        <div className="flex gap-2">
+                            {/* View Button */}
+                            <button
+                                onClick={() => {
+                                    setViewUserData(user);
+                                    setShowViewModal(true);
+                                }}
+                                className="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-2 py-2"
                             >
-                                <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={2}
-                                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                                />
-                                <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={2}
-                                    d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7-1.274 4.057-5.065 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
-                                />
-                            </svg>
-                        </button>
+                                <svg
+                                    className="w-5 h-5"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
+                                    <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        strokeWidth={2}
+                                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                                    />
+                                    <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        strokeWidth={2}
+                                        d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7-1.274 4.057-5.065 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+                                    />
+                                </svg>
+                            </button>
 
-                        {/* Edit Button */}
-                        <button
-                            onClick={() => {
-                                setEditUserData(user);
-                                setShowEditModal(true);
-                            }}
-                            className="p-1 border border-gray-300 rounded hover:bg-gray-100 dark:hover:bg-gray-700"
-                        >
-                            <svg
-                                className="w-5 h-5"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                                xmlns="http://www.w3.org/2000/svg"
+                            {/* Edit Button */}
+                            <button
+                                onClick={() => {
+                                    setEditUserData(user);
+                                    setShowEditModal(true);
+                                }}
+                                className="text-white bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded-full text-sm px-2 py-2"
                             >
-                                <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={2}
-                                    d="M11 5H6a2 2 0 00-2 2v12a2 2 0 002 2h12a2 2 0 002-2v-5M18.5 2.5a2.121 2.121 0 113 3L12 15l-4 1 1-4 9.5-9.5z"
-                                />
-                            </svg>
-                        </button>
+                                <svg
+                                    className="w-5 h-5"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
+                                    <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        strokeWidth={2}
+                                        d="M11 5H6a2 2 0 00-2 2v12a2 2 0 002 2h12a2 2 0 002-2v-5M18.5 2.5a2.121 2.121 0 113 3L12 15l-4 1 1-4 9.5-9.5z"
+                                    />
+                                </svg>
+                            </button>
 
-                        {/* Delete Button */}
-                        <button
-                            onClick={() => {
-                                setSelectedUser(user);
-                                setShowDeleteModal(true);
-                            }}
-                            className="p-1 border border-gray-300 rounded hover:bg-gray-100 dark:hover:bg-gray-700"
-                        >
-                            <svg
-                                className="w-5 h-5"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                                xmlns="http://www.w3.org/2000/svg"
+                            {/* Delete Button */}
+                            <button
+                                onClick={() => {
+                                    setSelectedUser(user);
+                                    setShowDeleteModal(true);
+                                }}
+                                className="text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-2 py-2"
                             >
-                                <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={2}
-                                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6M9 7V4a1 1 0 011-1h4a1 1 0 011 1v3"
-                                />
-                            </svg>
-                        </button>
-                    </div>
+                                <svg
+                                    className="w-5 h-5"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
+                                    <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        strokeWidth={2}
+                                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6M9 7V4a1 1 0 011-1h4a1 1 0 011 1v3"
+                                    />
+                                </svg>
+                            </button>
+                        </div>
 
                 );
             },
@@ -649,8 +662,9 @@ const Users = () => {
                                 <strong>Role:</strong> {viewUserData.role}
                             </p>
                             <p>
-                                <strong>Status:</strong> {viewUserData.status}
+                                <strong>Status:</strong> <StatusBadge status={viewUserData.status} />
                             </p>
+
                             <p>
                                 <strong>Created:</strong> {formatDate(viewUserData.created_at)}
                             </p>
