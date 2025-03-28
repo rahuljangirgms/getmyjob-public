@@ -43,7 +43,7 @@ node_modules/
 jspm_packages/
 
 #api Urls
-apiUrls/
+#apiUrls/
 
 
 # Snowpack dependency directory (https://snowpack.dev/)
