@@ -43,6 +43,8 @@ import JobSeekerProfile from "./routes/jobseeker/Profile/JobSeekerProfile";
 import ProtectedRoute from "./routes/jobseeker_Protected_Route/ProtectedRoute";
 import RedirectIfAuthenticated from "./routes/jobseeker_Protected_Route/RedirectIfAuthenticated";
 import ApplyForJobPage from './pages/jobseekerpages/ApplyForJobPage';
+import ResumeAnalyzer from './routes/jobseeker/ResumeAnalyzer/ResumeAnalyzer';
+import ChangePassword from './routes/jobseeker/Profile/components/ChangePassword';
 
 
 const App = () => {
@@ -71,6 +73,7 @@ const App = () => {
             <Route path="job-detail/:id/:bash_id" element={<JobDetailsPage />} />
             <Route path="apply-job" element={<ApplyForJobPage />} />
             <Route path="profile" element={<JobSeekerProfile />} />
+            <Route path='change-password' element={<ChangePassword/>}/>
             <Route path="resume-builder" element={<ResumeBuilder />} />
             <Route
               path="complete-profile-form"
@@ -93,6 +96,7 @@ const App = () => {
               <Route path="quiz-topic" element={<QuizTopics />} />
               <Route path="quiz-page" element={<QuizPage />} />
             </Route>
+            <Route path="resume-analyzer/:id/:bash_id" element={<ResumeAnalyzer/>}/>
           </Route>
         </Route>
 

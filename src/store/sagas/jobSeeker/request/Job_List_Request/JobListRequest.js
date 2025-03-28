@@ -32,3 +32,20 @@ export const getJobDetailsApi = async (id,bash_id,token) => {
 
   return response.data;
 };
+
+
+// POST request for Get Job Rounds
+
+export const getJobRoundsApi = async (id,bash_id,token) => {
+  const response = await axios.post(
+    `${JobSeeker_API_URL}/get_job_round`,
+    {id: id, bash_id: bash_id},
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+
+  return response.data;
+};

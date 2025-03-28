@@ -11,11 +11,20 @@ import ConfirmDeleteModal from './../../../../components/JobSeekerComponents/Reu
 import {deleteResumeRequest, clearResumeMessages, getResumeListRequest} from './../../../../store/slices/jobSeeker/genrateResume/genrateResumeSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 
-function ResumeBox({ id,title, imgSrc, resumeData, filePath }) {
+function ResumeBox({ id,title, imgSrc, resumeData, filePath, bash_id }) {
 
   const dispatch = useDispatch();
+
+  const navigate = useNavigate();
+
+  // handle AI button click 
+
+  const aiButtonClick = () =>{
+    navigate(`/jobseeker/resume-analyzer/${id}/${bash_id}`)
+  }
 
   const [deleteId,setDeleteId] = useState(0);
 
@@ -132,7 +141,7 @@ function ResumeBox({ id,title, imgSrc, resumeData, filePath }) {
         </div>
 
         <div className="w-full my-2 flex justify-center">
-          <AIButton btnTxt={"Analyze With AI"} />
+          <AIButton btnTxt={"Analyze With AI"} onClick={()=> aiButtonClick()} />
         </div>
       </div>
 

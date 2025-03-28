@@ -20,6 +20,8 @@ import {watchGenrateResume} from './../sagas/jobSeeker/handler/genrate_Resume/ge
 import {watchJobList} from './jobSeeker/handler/Job_List/JobListSaga'
 import {watchFilterJobs} from './jobSeeker/handler/Job_Filter/JobFilterSaga';
 import {watchJobApply} from './jobSeeker/handler/Job_Apply/JobApplySaga';
+import {watchResumeAnalyzer} from './jobSeeker/handler/Resume_Analyze/ResumeAnalyzeSaga';
+import {watchChangePassword} from './jobSeeker/handler/change_Password/changePasswordSaga';
 
 export default function* rootSaga() {
   yield all([
@@ -44,5 +46,7 @@ export default function* rootSaga() {
     watchJobList(),
     watchFilterJobs(),
     watchJobApply(),
+    watchResumeAnalyzer(),
+    watchChangePassword(),
   ]);
 }

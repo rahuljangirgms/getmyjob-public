@@ -127,6 +127,7 @@ function Sidebar() {
         <h2 className="text-xl font-semibold text-blue-700 border-b-2 pb-2">
           Your Test Scores
         </h2>
+        
         <TestScore Skill={"Aptitude"} Score={98} />
 
         <TestScore Skill={"JavaScript"} Score={78} />

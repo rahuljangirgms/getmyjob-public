@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   jobList: [],
+  interViewRounds:[],
   jobDetails:null,
   loading: false,
   error: null,
@@ -34,7 +35,20 @@ const jobListSlice = createSlice({
     getJobDetailsFailure: (state,action) =>{
       state.error = action.payload;
       state.loading = false;
+    },
+    getJobRoundsRequest: (state,action) =>{
+      state.loading = true;
+      state.error = null;
+    },
+    getJobRoundsSuccsess: (state,action) =>{
+      state.interViewRounds = action.payload?.data;
+      state.loading = false;
+    },
+    getJobRoundFailure: (state,action) =>{
+      state.error = action.payload;
+      state.loading = false;
     }
+
   },
 });
 
@@ -44,7 +58,10 @@ export const {
   getJobListFailure,
   getJobDetailsRequest,
   getJobDetailsSuccess,
-  getJobDetailsFailure
+  getJobDetailsFailure,
+  getJobRoundFailure,
+  getJobRoundsRequest,
+  getJobRoundsSuccsess
 } = jobListSlice.actions;
 
 export default jobListSlice.reducer;

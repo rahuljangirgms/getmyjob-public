@@ -4,7 +4,10 @@ import AIButton from "./../../components/JobSeekerComponents/Buttons/AIButton";
 
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
-import { getJobDetailsRequest } from "./../../store/slices/jobSeeker/job_List/jobListSlice";
+import {
+  getJobDetailsRequest,
+  getJobRoundsRequest,
+} from "./../../store/slices/jobSeeker/job_List/jobListSlice";
 import { useDispatch, useSelector } from "react-redux";
 import {
   Briefcase,
@@ -15,11 +18,10 @@ import {
   Wallet,
 } from "lucide-react";
 import JobDetailSkeloton from "./../../components/JobSeekerComponents/ReusableComponents/JobDetailSkeloton";
-import { toast, ToastContainer } from 'react-toastify';
-import ApplyJobModal from './../../components/JobSeekerComponents/Job_Application/ApplyJobModal';
-import {clearJobApplyStatus} from './../../store/slices/jobSeeker/Job_Apply/jobApplySlice';
-import { CircleUser } from 'lucide-react';
-
+import { toast, ToastContainer } from "react-toastify";
+import ApplyJobModal from "./../../components/JobSeekerComponents/Job_Application/ApplyJobModal";
+import { clearJobApplyStatus } from "./../../store/slices/jobSeeker/Job_Apply/jobApplySlice";
+import { CircleUser } from "lucide-react";
 
 const JobDetailsPage = () => {
   const dispatch = useDispatch();
@@ -30,30 +32,31 @@ const JobDetailsPage = () => {
 
   useEffect(() => {
     dispatch(getJobDetailsRequest({ id, bash_id }));
+    dispatch(getJobRoundsRequest({ id, bash_id }));
   }, [dispatch]);
 
   // Job Details State
 
-  const { loading, jobDetails } = useSelector(
+  const { loading, jobDetails, interViewRounds } = useSelector(
     (state) => state.jobSeekerJobList
   );
 
   // console.log("JOB Details frm API: ", jobDetails);
 
-  const[isModalOpen,setIsModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   // Handle Apply Button Below
 
-  const handleApplyBtn = () => {  
+  const handleApplyBtn = () => {
     setIsModalOpen(!isModalOpen);
   };
 
   // Job Applied State
 
-  const {message, success} = useSelector((state) => state.jobSeekerJobApply);
+  const { message, success } = useSelector((state) => state.jobSeekerJobApply);
 
-  useEffect(()=>{
-    if(message){
+  useEffect(() => {
+    if (message) {
       toast.success(message, {
         position: "top-right",
         autoClose: 5000,
@@ -61,18 +64,14 @@ const JobDetailsPage = () => {
       });
       dispatch(clearJobApplyStatus());
     }
-    if(success){
+    if (success) {
       setIsModalOpen(!isModalOpen);
     }
-
-    
-  },[message])
-
-
+  }, [message]);
 
   return (
     <div className="min-h-screen bg-gray-50 my-20">
-      <ToastContainer/>
+      <ToastContainer />
       {/* Job Header Banner */}
       {loading ? (
         <JobDetailSkeloton />
@@ -204,7 +203,7 @@ const JobDetailsPage = () => {
                     <div className="flex items-center mt-3">
                       <div className="ml-3">
                         <h4 className="text-sm font-medium text-gray-900">
-                         {jobDetails?.company_name}
+                          {jobDetails?.company_name}
                         </h4>
                         <p className="text-sm text-gray-600">
                           How do I cancel my reservation for a stay?
@@ -226,15 +225,17 @@ const JobDetailsPage = () => {
                   <h2 className="text-xl font-semibold text-gray-900 mb-4">
                     Job Details
                   </h2>
-                  
+
                   <div className="space-y-4">
-                  <div className="flex items-center text-gray-800">
+                    <div className="flex items-center text-gray-800">
                       <CircleUser className="w-5 h-5 mr-3 text-gray-400" />
                       <div>
                         <p className="text-sm font-medium text-gray-900">
                           {jobDetails?.experience_required}
                         </p>
-                        <p className="text-sm text-gray-800">Experience Required</p>
+                        <p className="text-sm text-gray-800">
+                          Experience Required
+                        </p>
                       </div>
                     </div>
 
@@ -275,7 +276,7 @@ const JobDetailsPage = () => {
                         <p className="text-sm text-gray-800">Industry</p>
                       </div>
                     </div>
-                    
+
                     <div className="flex items-center text-gray-800">
                       <Mail className="w-5 h-5 mr-3 text-gray-400" />
                       <div>
@@ -289,46 +290,35 @@ const JobDetailsPage = () => {
                 </div>
 
                 {/* Latest Jobs */}
-                {/* <div className="bg-white rounded-xl shadow-sm p-6">
-        <h2 className="text-xl font-semibold text-gray-900 mb-4">
-          Latest jobs
-        </h2>
-        <div className="space-y-4">
-          {latestJobs.map((job, index) => (
-            <div key={index} className="group">
-              <a
-                href="#"
-                className="block bg-gray-100  hover:bg-gray-50 p-3 rounded-lg transition-colors"
-              >
-                <h3 className="text-sm font-medium text-gray-900 group-hover:text-blue-600 transition-colors">
-                  {job.title}
-                </h3>
-                <p className="text-sm text-gray-800 mt-1">
-                  {job.company} • {job.location}
-                </p>
-              </a>
-            </div>
-          ))}
-          <a
-            href="#"
-            className="block text-sm font-medium text-blue-600 hover:text-blue-700 mt-4"
-          >
-            See all jobs from Microsoft
-          </a>
-        </div>
-      </div> */}
+                <div className="bg-white rounded-xl shadow-sm p-6">
+                  <h2 className="text-xl font-semibold text-gray-900 mb-4">
+                    Interview Rounds
+                  </h2>
+                  <div className="space-y-4">
+                    {interViewRounds.map((job, index) => (
+                      <div key={job.interview_round_id} className="group">
+                        <div className="block bg-gray-100  hover:bg-gray-50 p-3 rounded-lg transition-colors">
+                          <h3 className="text-sm font-medium text-gray-900">
+                            {job.round_name}
+                          </h3>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </div>
             </div>
           </div>
 
-          {isModalOpen && <ApplyJobModal onClose={() => setIsModalOpen(false)} id={id} bash_id={bash_id} />}
-          </div>
-
-        
+          {isModalOpen && (
+            <ApplyJobModal
+              onClose={() => setIsModalOpen(false)}
+              id={id}
+              bash_id={bash_id}
+            />
+          )}
+        </div>
       )}
-
-   
-
     </div>
   );
 };

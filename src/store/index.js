@@ -25,6 +25,10 @@ import genrateResumeReducer from './slices/jobSeeker/genrateResume/genrateResume
 import jobSeekerJobListReducer from './slices/jobSeeker/job_List/jobListSlice';
 import jobSeekerJobFilterReducer from './slices/jobSeeker/job_Filter/jobFilterSlice';
 import jobSeekerJobApplyReducer from './slices/jobSeeker/Job_Apply/jobApplySlice';
+import jobSeekerResAnalyzerReducer from './slices/jobSeeker/resume_Analyze/resumeAnalyzeSlice';
+import jobSeekerChangePassReducer from './slices/jobSeeker/changePassword/changePassowordSlice';
+
+
 
 // Create Saga Middleware
 const sagaMiddleware = createSagaMiddleware();
@@ -73,7 +77,10 @@ const store = configureStore({
     jobSeekerJobFilter: jobSeekerJobFilterReducer,
     // Job Seeker Job Application
     jobSeekerJobApply: jobSeekerJobApplyReducer,
-
+    // Job Seeker Resume Analyzer
+    resumeAnalyzer: jobSeekerResAnalyzerReducer,  
+    // Job Seeker Change Password
+    jobSeekerChangePass: jobSeekerChangePassReducer,
 
 
   },

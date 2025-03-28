@@ -95,7 +95,9 @@ function ProfileDropdown() {
 
         <div className="py-1">
           <MenuItem>
-            <button className="group flex w-full items-center gap-2 rounded-lg py-1.5 px-3 text-sm text-gray-700 font-semibold hover:bg-gray-100">
+            <button className="group flex w-full items-center gap-2 rounded-lg py-1.5 px-3 text-sm text-gray-700 font-semibold hover:bg-gray-100"
+              onClick={()=> navigate('/jobseeker/change-password')}
+            >
               <MdOutlinePassword className="size-4 text-gray-700" />
               Change Password
             </button>

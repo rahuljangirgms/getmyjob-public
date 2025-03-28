@@ -55,6 +55,7 @@ function ResumeSection() {
                     imgSrc={ResumeLogo}
                     resumeData={res.resume_json}
                     filePath={res.resume}
+                    bash_id={res.bash_id}
                   />
                 ))}
               </div>
