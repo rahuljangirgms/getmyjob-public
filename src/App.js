@@ -126,6 +126,7 @@ import PermissionRoute from './routes/PermissionRoute'
 import AdminSignIn from './pages/authentication/admin/admin-signin'
 import AdminSignUp from './pages/authentication/admin/admin-signup'
 import ForgotPassword from './pages/authentication/admin/admin-forgot-password'
+import AccessDenied from './pages/authentication/admin/access-denied'
 import Dashboard from './pages/dashboard/admin/Dashboard'
 import Recruiters from './pages/dashboard/admin/modules/recruiters/recruiters'
 import Jobseekers from './pages/dashboard/admin/modules/jobseekers/jobseekers'
@@ -144,16 +145,17 @@ import "./index.css";
 import AdminProtectedRoute from './services/Guards/ProtectedRoute'
 import PermissionGuard from './services/Guards/PermissionGuard'
 
+
 const App = () => {
   return (
     <>
       <Routes>
         {/* Public (unprotected) jobseeker routes */}
-        <Route path="/jobseeker/" element={<JobSeekerHomePage />} />
+        {/* <Route path="/jobseeker/" element={<JobSeekerHomePage />} />
         <Route path="/jobseeker/login" element={<JobseekerLogin />} />
         <Route path="/jobseeker/signup" element={<JobSeekerSignUp />} />
         <Route path="/jobseeker/forgetpassword" element={<JobseekerForgetPass />} />
-        <Route path="/jobseeker/resetpassword" element={<JobseekerResetPass />} />
+        <Route path="/jobseeker/resetpassword" element={<JobseekerResetPass />} /> */}
 
         {/* Prevent logged-in users from accessing these routes */}
         <Route element={<RedirectIfAuthenticated />}>
@@ -165,15 +167,20 @@ const App = () => {
         </Route>
 
         {/* Protected jobseeker routes */}
+        
+        {/* Protected Routes (Only Accessible When Logged In) */}
         <Route path="/jobseeker" element={<ProtectedRoute />}>
           <Route element={<JobseekerLayout />}>
             <Route path="dashboard" element={<JobseekerDashboard />} />
-            <Route path="job-detail" element={<JobDetailsPage />} />
+            <Route path="job-detail/:id/:bash_id" element={<JobDetailsPage />} />
             <Route path="apply-job" element={<ApplyForJobPage />} />
             <Route path="profile" element={<JobSeekerProfile />} />
+            <Route path='change-password' element={<ChangePassword />} />
             <Route path="resume-builder" element={<ResumeBuilder />} />
-
-            <Route path="complete-profile-form" element={<CompleteProfileFormSection />}>
+            <Route
+              path="complete-profile-form"
+              element={<CompleteProfileFormSection />}
+            >
               <Route path="personal-info" element={<PersonalInfoForm />} />
               <Route path="contact-info" element={<ContactDetailsForm />} />
               <Route path="education" element={<EducationalDetailsFrom />} />
@@ -186,53 +193,20 @@ const App = () => {
               <Route path="certifications" element={<CertificationForm />} />
               <Route path="other-details" element={<OtherDetailsForm />} />
             </Route>
-
-      <Route path="trail-quiz" element={<QuizHomePage />}>
-        <Route index element={<QuizPlanPage />} />
-        <Route path="quiz-topic" element={<QuizTopics />} />
-        <Route path="quiz-page" element={<QuizPage />} />
-      </Route>
-    </Route>
-  </Route>
-        {/* Protected Routes (Only Accessible When Logged In) */}
-        <Route path="/jobseeker" element={<ProtectedRoute />}>
-          <Route element={<JobseekerLayout />}>
-            <Route path="dashboard" element={<JobseekerDashboard />} />
-            <Route path="job-detail/:id/:bash_id" element={<JobDetailsPage />} />
-            <Route path="apply-job" element={<ApplyForJobPage />} />
-            <Route path="profile" element={<JobSeekerProfile />} />
-            <Route path='change-password' element={<ChangePassword/>}/>
-            <Route path="resume-builder" element={<ResumeBuilder />} />
-            <Route
-              path="complete-profile-form"
-              element={<CompleteProfileFormSection />}
-            >
-              <Route path="personal-info" element={<PersonalInfoForm />} />
-              <Route path="contact-info" element={<ContactDetailsForm />} />
-              <Route path="education" element={<EducationalDetailsFrom />} />
-              <Route path="attachments" element={<AttachementsFrom />} />
-              <Route path="professional" element={<ProfessionalDetailForm />} />
-              <Route path="internship" element={<InternshipForm />} />
-              <Route path="projects" element={<ProjectsForm />} />  
-              <Route path="publications" element={<ResearchPaperForm />} />
-              <Route path="trainings" element={<TraningForm />} />
-              <Route path="certifications" element={<CertificationForm />} />
-              <Route path="other-details" element={<OtherDetailsForm />} />
-            </Route>
             <Route path="trail-quiz" element={<QuizHomePage />}>
               <Route path="" element={<QuizPlanPage />} />
               <Route path="quiz-topic" element={<QuizTopics />} />
               <Route path="quiz-page" element={<QuizPage />} />
             </Route>
-            <Route path="resume-analyzer/:id/:bash_id" element={<ResumeAnalyzer/>}/>
+            <Route path="resume-analyzer/:id/:bash_id" element={<ResumeAnalyzer />} />
           </Route>
         </Route>
-            <Route path="trail-quiz" element={<QuizHomePage />}>
-              <Route index element={<QuizPlanPage />} />
-              <Route path="quiz-topic" element={<QuizTopics />} />
-              <Route path="quiz-page" element={<QuizPage />} />
-            </Route>
-          {/* </Route> */}
+        <Route path="trail-quiz" element={<QuizHomePage />}>
+          <Route index element={<QuizPlanPage />} />
+          <Route path="quiz-topic" element={<QuizTopics />} />
+          <Route path="quiz-page" element={<QuizPage />} />
+        </Route>
+        {/* </Route> */}
         {/* </Route> */}
 
         {/* Recruiter Routes (public) */}
@@ -402,7 +376,7 @@ const App = () => {
         <Route path="/admin/signin" element={<AdminSignIn />} />
         <Route path="/admin/signup" element={<AdminSignUp />} />
         <Route path="/admin/forgot-password" element={<ForgotPassword />} />
-
+        <Route path="/admin/access-denied" element={<AccessDenied />} />
         {/* Admin Routes */}
 
       </Routes>
