@@ -164,6 +164,19 @@ const authSlice = createSlice({
         state.loading = false;
         state.error = action.payload;
       },
+      changePasswordRequest: (state) => {
+        state.loading = true;
+        state.error = null;
+        state.message = null;
+      },
+      changePasswordSuccess: (state, action) => {
+        state.loading = false;
+        state.message = action.payload;
+      },
+      changePasswordFailure: (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      },
   },
 });
 
@@ -181,5 +194,8 @@ export const {
   resetPasswordRequest,
   resetPasswordSuccess,
   resetPasswordFailure,
+  changePasswordRequest,
+  changePasswordSuccess,
+  changePasswordFailure,
 } = authSlice.actions;
 export default authSlice.reducer;

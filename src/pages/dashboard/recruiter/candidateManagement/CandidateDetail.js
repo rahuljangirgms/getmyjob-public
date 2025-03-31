@@ -145,7 +145,7 @@ const CandidateDetail = () => {
     skills,
     appliedJobs,
     jobinvitation,
-    resumeUrl,
+    resume,
     // interviewRounds, interviewScore, roundsLeft might or might not be part of your API response.
   } = candidate;
 
@@ -314,9 +314,9 @@ const CandidateDetail = () => {
 
       {/* Resume Section */}
       <AccordionSection title="Resume" isOpen={showResume} onClick={() => setShowResume(!showResume)}>
-        {resumeUrl ? (
+        {resume ? (
           <div style={{ height: "800px" }}>
-            <iframe src={resumeUrl} title="Candidate Resume" width="100%" height="100%" />
+            <iframe src={resume} title="Candidate Resume" width="100%" height="100%" />
           </div>
         ) : (
           <p>No resume uploaded.</p>

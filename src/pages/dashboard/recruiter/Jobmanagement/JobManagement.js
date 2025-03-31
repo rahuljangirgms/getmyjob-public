@@ -19,6 +19,8 @@ import * as Yup from "yup";
 import withChipInput from "../../../../components/textinput/withChipInput";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 // Stepper for multi-step forms
 const Stepper = ({ currentStep, steps }) => (
@@ -80,11 +82,13 @@ const JobManagement = () => {
     dispatch(fetchInterviewRoundsRequest());
   }, [dispatch]);
 
-  const { jobs = [], loading, filters = {} } = useSelector((state) => state.jobs);
-  const { company, loading: companyLoading } = useSelector((state) => state.companies);
+  const { jobs = [], loading, filters = {}, error, message } = useSelector(
+    (state) => state.jobs
+  );
+  const { company, loading: companyLoading } = useSelector(
+    (state) => state.companies
+  );
   const { interviewRoundsOptions } = useSelector((state) => state.jobs);
-
-  console.log("jobs data from Redux:", jobs);
 
   // Local state for modal and form
   const ChipInput = withChipInput();
@@ -98,7 +102,7 @@ const JobManagement = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const jobsPerPage = 6;
 
-  // Update filters (optionally, you could reset pagination on filter change)
+  // Update filters
   const handleSearchChange = (field, value) => {
     dispatch(setJobFilters({ [field]: value }));
     setCurrentPage(1); // Reset to first page when filter changes
@@ -106,11 +110,21 @@ const JobManagement = () => {
 
   // Filter jobs
   const filteredJobs = jobs.filter((job) => {
-    if (filters.title && !job.job_title.toLowerCase().includes(filters.title.toLowerCase())) return false;
+    if (
+      filters.title &&
+      !job.job_title.toLowerCase().includes(filters.title.toLowerCase())
+    )
+      return false;
     if (filters.status && job.status !== filters.status) return false;
-    if (filters.hotJob && (job.is_hot_job || "").toLowerCase() !== filters.hotJob.toLowerCase()) return false;
+    if (
+      filters.hotJob &&
+      (job.is_hot_job || "").toLowerCase() !== filters.hotJob.toLowerCase()
+    )
+      return false;
     if (filters.date) {
-      const jobDate = job.created_at ? new Date(job.created_at).toISOString().split("T")[0] : "";
+      const jobDate = job.created_at
+        ? new Date(job.created_at).toISOString().split("T")[0]
+        : "";
       if (jobDate !== filters.date) return false;
     }
     return true;
@@ -145,7 +159,7 @@ const JobManagement = () => {
     hotJob: (job.is_hot_job || "").toLowerCase() === "yes" ? "yes" : "no",
     expirationDate: job.expiration_date || "",
     expirationTime: job.expiration_time || "",
-    selectedInterviewRounds: job.round || []
+    selectedInterviewRounds: job.round || [],
   });
 
   const handleEdit = (job) => {
@@ -196,10 +210,14 @@ const JobManagement = () => {
       .min(1, "Please select at least one interview round")
       .required("Interview Round selection is required"),
     expirationDate: Yup.string().when("hotJob", (hotJob, schema) =>
-      hotJob === "yes" ? schema.required("Expiration date is required for hot jobs") : schema
+      hotJob === "yes"
+        ? schema.required("Expiration date is required for hot jobs")
+        : schema
     ),
     expirationTime: Yup.string().when("hotJob", (hotJob, schema) =>
-      hotJob === "yes" ? schema.required("Expiration time is required for hot jobs") : schema
+      hotJob === "yes"
+        ? schema.required("Expiration time is required for hot jobs")
+        : schema
     ),
     interviewRounds: Yup.array().of(RoundSchema),
   });
@@ -229,8 +247,22 @@ const JobManagement = () => {
       ? prepopulatedValues || defaultInitialValues
       : editingJob || defaultInitialValues;
 
+  // Optional: Remove these useEffects if you want toast notifications only in onSubmit
+  useEffect(() => {
+    if (error) {
+      toast.error(error);
+    }
+  }, [error]);
+
+  useEffect(() => {
+    if (message) {
+      toast.success(message);
+    }
+  }, [message]);
+
   return (
     <div className="p-6 max-w-full mx-auto">
+      <ToastContainer />
       {companyLoading || !company ? (
         <p>Loading company information...</p>
       ) : (
@@ -328,7 +360,9 @@ const JobManagement = () => {
                         return (
                           <tr
                             key={job.id}
-                            className={`border-b ${index % 2 === 0 ? "bg-gray-50" : "bg-white"} hover:bg-gray-100 transition`}
+                            className={`border-b ${
+                              index % 2 === 0 ? "bg-gray-50" : "bg-white"
+                            } hover:bg-gray-100 transition`}
                           >
                             <td className="p-4">
                               <div className="font-medium">
@@ -354,14 +388,18 @@ const JobManagement = () => {
                             <td className="p-4">
                               <div className="flex items-center gap-4">
                                 <div className="flex items-center gap-2">
-                                  <Link to={`/recruiter/dashboard/candidates?jobId=${job.id}&bash_id=${job.bash_id}`}>
+                                  <Link
+                                    to={`/recruiter/dashboard/candidates?jobId=${job.id}&bash_id=${job.bash_id}`}
+                                  >
                                     <button className="text-blue-600 hover:underline text-sm">
                                       Applicants
                                     </button>
                                   </Link>
                                 </div>
                                 <div className="flex items-center gap-2">
-                                  <Link to={`/recruiter/dashboard/candidates/open-to-work?jobId=${job.id}&bash_id=${job.bash_id}&openToWork=true`}>
+                                  <Link
+                                    to={`/recruiter/dashboard/candidates/open-to-work?jobId=${job.id}&bash_id=${job.bash_id}&openToWork=true`}
+                                  >
                                     <button className="text-blue-600 hover:underline text-sm">
                                       Open to Work
                                     </button>
@@ -407,12 +445,13 @@ const JobManagement = () => {
                                 >
                                   <Copy size={16} />
                                 </button>
-                                <button
+                                {/* Uncomment if delete functionality is needed */}
+                                {/* <button
                                   onClick={() => handleDelete(job)}
                                   className="text-red-600 hover:text-red-800"
                                 >
                                   <Trash2 size={16} />
-                                </button>
+                                </button> */}
                               </div>
                             </td>
                           </tr>
@@ -433,7 +472,9 @@ const JobManagement = () => {
                   {Array.from({ length: totalPages }, (_, index) => (
                     <button
                       key={index}
-                      className={`mx-1 px-3 py-1 border rounded ${currentPage === index + 1 ? "bg-blue-600 text-white" : ""}`}
+                      className={`mx-1 px-3 py-1 border rounded ${
+                        currentPage === index + 1 ? "bg-blue-600 text-white" : ""
+                      }`}
                       onClick={() => setCurrentPage(index + 1)}
                     >
                       {index + 1}
@@ -510,8 +551,11 @@ const JobManagement = () => {
                         ? StepTwoSchema
                         : CombinedSchema
                     }
-                    onSubmit={(values, actions) => {
-                      console.log("Job Form Submission Data:", JSON.stringify(values, null, 2));
+                    onSubmit={async (values, actions) => {
+                      console.log(
+                        "Job Form Submission Data:",
+                        JSON.stringify(values, null, 2)
+                      );
                       if (step === 1) {
                         setStep(2);
                         actions.setTouched({});
@@ -521,11 +565,25 @@ const JobManagement = () => {
                         actions.setTouched({});
                         actions.setSubmitting(false);
                       } else {
-                        if (formMode === "edit") {
-                          dispatch(updateJobRequest(values));
-                        } else {
-                          values.postedDate = new Date().toISOString();
-                          dispatch(createJobRequest(values));
+                        try {
+                          if (formMode === "edit") {
+                            const response = await dispatch(updateJobRequest(values));
+                            toast.success(
+                              response.message || "Job updated successfully",
+                              { position: "top-right" }
+                            );
+                          } else {
+                            values.postedDate = new Date().toISOString();
+                            const response = await dispatch(createJobRequest(values));
+                            toast.success(
+                              response.message || "Job created successfully",
+                              { position: "top-right" }
+                            );
+                          }
+                        } catch (err) {
+                          toast.error(err.message || "An error occurred", {
+                            position: "top-right",
+                          });
                         }
                         setModalOpen(false);
                         setStep(1);
@@ -535,287 +593,509 @@ const JobManagement = () => {
                       }
                     }}
                   >
-                    {({ values, handleChange, setFieldValue, errors, touched, isSubmitting }) => (
-                      <Form className="mt-4">
-                        {step === 1 && (
-                          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div>
-                              <label className="block text-gray-700 font-medium">Job Title</label>
-                              <input
-                                type="text"
-                                name="title"
-                                value={values.title}
-                                onChange={handleChange}
-                                placeholder="Enter job title"
-                                className="w-full border rounded-md p-2 mt-1 focus:ring focus:ring-blue-300"
-                              />
-                              {touched.title && errors.title && <p className="text-red-500 text-sm">{errors.title}</p>}
-                            </div>
-                            <div>
-                              <label className="block text-gray-700 font-medium">Company</label>
-                              <input
-                                type="text"
-                                name="company"
-                                value={values.company}
-                                readOnly
-                                className="w-full border rounded-md p-2 mt-1 bg-gray-100"
-                              />
-                              {touched.company && errors.company && <p className="text-red-500 text-sm">{errors.company}</p>}
-                            </div>
-                            <div>
-                              <ChipInput
-                                values={values}
-                                setFieldValue={setFieldValue}
-                                fieldName="locations"
-                                label="Locations"
-                                placeholder="Enter a location and press Enter"
-                                type="location"
-                              />
-                              {touched.locations && errors.locations && <p className="text-red-500 text-sm">{errors.locations}</p>}
-                            </div>
-                            <div>
-                              <label className="block text-gray-700 font-medium">Contact Email</label>
-                              <input
-                                type="email"
-                                name="email"
-                                value={values.email}
-                                onChange={handleChange}
-                                placeholder="Enter contact email"
-                                className="w-full border rounded-md p-2 mt-1 focus:ring focus:ring-blue-300"
-                              />
-                              {touched.email && errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
-                            </div>
-                            <div className="md:col-span-2">
-                              <label className="block text-gray-700 font-medium">Job Description</label>
-                              <ReactQuill
-                                value={values.description}
-                                onChange={(content) => setFieldValue("description", content)}
-                                placeholder="Enter job description"
-                                className="bg-white border border-gray-300 rounded-md"
-                              />
-                              {touched.description && errors.description && <p className="text-red-500 text-sm">{errors.description}</p>}
-                            </div>
-                          </div>
-                        )}
+                    {(formik) => {
+                      // A custom onSubmit handler to ensure no page reload:
+                      const customSubmit = (e) => {
+                        e.preventDefault(); // explicitly prevent any default form action
+                        formik.handleSubmit(e); // then call Formik's submit
+                      };
 
-                        {step === 2 && (
-                          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div>
-                              <ChipInput
-                                values={values}
-                                setFieldValue={setFieldValue}
-                                fieldName="skills"
-                                label="Skills"
-                                placeholder="Enter a Skill"
-                                type="skills"
-                              />
-                              {touched.skills && errors.skills && <p className="text-red-500 text-sm">{errors.skills}</p>}
-                            </div>
-                            <div>
-                              <ChipInput
-                                values={values}
-                                setFieldValue={setFieldValue}
-                                fieldName="industries"
-                                label="Industries"
-                                placeholder="Enter an industry and press Enter"
-                                type="industry"
-                              />
-                              {touched.industries && errors.industries && <p className="text-red-500 text-sm">{errors.industries}</p>}
-                            </div>
-                            <div>
-                              <label className="block text-gray-700 font-medium">Job Status</label>
-                              <select
-                                name="status"
-                                value={values.status}
-                                onChange={handleChange}
-                                className="w-full border rounded-md p-2 mt-1 focus:ring focus:ring-blue-300"
-                              >
-                                <option value="Active">Active</option>
-                                <option value="Draft">Draft</option>
-                                <option value="Expired">Expired</option>
-                              </select>
-                              {touched.status && errors.status && <p className="text-red-500 text-sm">{errors.status}</p>}
-                            </div>
-                            <div>
-                              <label className="block text-gray-700 font-medium">Salary</label>
-                              <input
-                                type="text"
-                                name="salary"
-                                value={values.salary}
-                                onChange={handleChange}
-                                placeholder="Enter salary"
-                                className="w-full border rounded-md p-2 mt-1 focus:ring focus:ring-blue-300"
-                              />
-                              {touched.salary && errors.salary && <p className="text-red-500 text-sm">{errors.salary}</p>}
-                            </div>
-                            <div>
-                              <label className="block text-gray-700 font-medium">Hot Job</label>
-                              <select
-                                name="hotJob"
-                                value={values.hotJob}
-                                onChange={handleChange}
-                                className="w-full border rounded-md p-2 mt-1 focus:ring focus:ring-blue-300"
-                              >
-                                <option value="no">No</option>
-                                <option value="yes">Yes</option>
-                              </select>
-                            </div>
-                            <div>
-                              <label className="block text-gray-700 font-medium">Expiration Date</label>
-                              <input
-                                type="date"
-                                name="expirationDate"
-                                value={values.expirationDate}
-                                onChange={handleChange}
-                                className="w-full border rounded-md p-2 mt-1 focus:ring focus:ring-blue-300"
-                              />
-                              {touched.expirationDate && errors.expirationDate && <p className="text-red-500 text-sm">{errors.expirationDate}</p>}
-                            </div>
-                            <div>
-                              <label className="block text-gray-700 font-medium">Expiration Time</label>
-                              <input
-                                type="time"
-                                name="expirationTime"
-                                value={values.expirationTime}
-                                onChange={handleChange}
-                                className="w-full border rounded-md p-2 mt-1 focus:ring focus:ring-blue-300"
-                              />
-                              {touched.expirationTime && errors.expirationTime && <p className="text-red-500 text-sm">{errors.expirationTime}</p>}
-                            </div>
-                            <div>
-                              <label className="block text-gray-700 font-medium">Job Type</label>
-                              <select
-                                name="employmentType"
-                                value={values.employmentType}
-                                onChange={handleChange}
-                                className="w-full border rounded-md p-2 mt-1 focus:ring focus:ring-blue-300"
-                              >
-                                <option value="">Select Job Type</option>
-                                <option value="Full-time">Full-time</option>
-                                <option value="Part-time">Part-time</option>
-                                <option value="Contract">Contract</option>
-                                <option value="Internship">Internship</option>
-                              </select>
-                              {touched.employmentType && errors.employmentType && <p className="text-red-500 text-sm">{errors.employmentType}</p>}
-                            </div>
-                            <div>
-                              <label className="block text-gray-700 font-medium">Interview Rounds</label>
-                              {interviewRoundsOptions && Array.isArray(interviewRoundsOptions) ? (
-                                interviewRoundsOptions.map((option, index) => {
-                                  const value = String(option.interview_round_id);
-                                  const label = option.round_name;
-                                  return (
-                                    <label key={value || index} className="inline-flex items-center mr-4">
-                                      <Field type="checkbox" name="selectedInterviewRounds" value={value} />
-                                      <span className="ml-2">{label}</span>
-                                    </label>
-                                  );
-                                })
-                              ) : (
-                                <p className="text-gray-500 text-sm">Loading interview rounds...</p>
-                              )}
-                              {touched.selectedInterviewRounds && errors.selectedInterviewRounds && <p className="text-red-500 text-sm">{errors.selectedInterviewRounds}</p>}
-                            </div>
-                            <div className="md:col-span-2">
-                              <label className="block text-gray-700 font-medium">Interview Round Details</label>
-                              <FieldArray
-                                name="interviewRounds"
-                                render={(arrayHelpers) => (
-                                  <div>
-                                    {values.interviewRounds && values.interviewRounds.length > 0 ? (
-                                      values.interviewRounds.map((round, index) => (
-                                        <div key={index} className="mb-4 p-4 border rounded">
-                                          <label className="block text-gray-600 font-medium">Round {index + 1} Question</label>
-                                          <Field name={`interviewRounds.${index}.question`} placeholder="Enter interview question" className="w-full border rounded p-2 mt-1" />
-                                          <label className="block text-gray-600 font-medium mt-2">Round {index + 1} Weight (optional)</label>
-                                          <Field type="number" name={`interviewRounds.${index}.weight`} placeholder="Enter weight" className="w-full border rounded p-2 mt-1" />
-                                          <button type="button" onClick={() => arrayHelpers.remove(index)} className="mt-2 text-red-600 hover:underline">
-                                            Remove Round
-                                          </button>
-                                        </div>
-                                      ))
-                                    ) : (
-                                      <div className="text-gray-500">No interview rounds added</div>
-                                    )}
-                                    <button type="button" onClick={() => arrayHelpers.push({ question: "", weight: 100 })} className="mt-2 text-blue-600 hover:underline">
-                                      Add Interview Round Detail
-                                    </button>
-                                  </div>
+                      const {
+                        values,
+                        handleChange,
+                        setFieldValue,
+                        errors,
+                        touched,
+                        isSubmitting,
+                      } = formik;
+
+                      return (
+                        <Form onSubmit={customSubmit} className="mt-4">
+                          {step === 1 && (
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                              <div>
+                                <label className="block text-gray-700 font-medium">
+                                  Job Title
+                                </label>
+                                <input
+                                  type="text"
+                                  name="title"
+                                  value={values.title}
+                                  onChange={handleChange}
+                                  placeholder="Enter job title"
+                                  className="w-full border rounded-md p-2 mt-1 focus:ring focus:ring-blue-300"
+                                />
+                                {touched.title && errors.title && (
+                                  <p className="text-red-500 text-sm">
+                                    {errors.title}
+                                  </p>
                                 )}
-                              />
+                              </div>
+                              <div>
+                                <label className="block text-gray-700 font-medium">
+                                  Company
+                                </label>
+                                <input
+                                  type="text"
+                                  name="company"
+                                  value={values.company}
+                                  readOnly
+                                  className="w-full border rounded-md p-2 mt-1 bg-gray-100"
+                                />
+                                {touched.company && errors.company && (
+                                  <p className="text-red-500 text-sm">
+                                    {errors.company}
+                                  </p>
+                                )}
+                              </div>
+                              <div>
+                                <ChipInput
+                                  values={values}
+                                  setFieldValue={setFieldValue}
+                                  fieldName="locations"
+                                  label="Locations"
+                                  placeholder="Enter a location and press Enter"
+                                  type="location"
+                                />
+                                {touched.locations && errors.locations && (
+                                  <p className="text-red-500 text-sm">
+                                    {errors.locations}
+                                  </p>
+                                )}
+                              </div>
+                              <div>
+                                <label className="block text-gray-700 font-medium">
+                                  Contact Email
+                                </label>
+                                <input
+                                  type="email"
+                                  name="email"
+                                  value={values.email}
+                                  onChange={handleChange}
+                                  placeholder="Enter contact email"
+                                  className="w-full border rounded-md p-2 mt-1 focus:ring focus:ring-blue-300"
+                                />
+                                {touched.email && errors.email && (
+                                  <p className="text-red-500 text-sm">
+                                    {errors.email}
+                                  </p>
+                                )}
+                              </div>
+                              <div className="md:col-span-2">
+                                <label className="block text-gray-700 font-medium">
+                                  Job Description
+                                </label>
+                                <ReactQuill
+                                  value={values.description}
+                                  onChange={(content) =>
+                                    setFieldValue("description", content)
+                                  }
+                                  placeholder="Enter job description"
+                                  className="bg-white border border-gray-300 rounded-md"
+                                />
+                                {touched.description && errors.description && (
+                                  <p className="text-red-500 text-sm">
+                                    {errors.description}
+                                  </p>
+                                )}
+                              </div>
                             </div>
-                            <div>
-                              <label className="block text-gray-700 font-medium">Total Job Experience</label>
-                              <select name="experience" value={values.experience} onChange={handleChange} className="w-full border rounded-md p-2 mt-1 focus:ring focus:ring-blue-300">
-                                <option value="">Select Job Experience</option>
-                                <option value="0-1 years">0-1 years</option>
-                                <option value="1-3 years">1-3 years</option>
-                                <option value="5-8 years">5-8 years</option>
-                                <option value="10-above years">10-above years</option>
-                              </select>
-                              {touched.experience && errors.experience && <p className="text-red-500 text-sm">{errors.experience}</p>}
-                            </div>
-                            <div className="md:col-span-2">
-                              <label className="block text-gray-700 font-medium">Job Responsibilities</label>
-                              <ReactQuill
-                                value={values.responsibilities}
-                                onChange={(content) => setFieldValue("responsibilities", content)}
-                                placeholder="Enter job responsibilities"
-                                className="bg-white border border-gray-300 rounded-md"
-                              />
-                              {touched.responsibilities && errors.responsibilities && <p className="text-red-500 text-sm">{errors.responsibilities}</p>}
-                            </div>
-                          </div>
-                        )}
+                          )}
 
-                        {step === 3 && (
-                          <div className="flex flex-col items-center">
-                            <h3 className="text-xl font-bold mb-2">
-                              {formMode === "edit" ? "Edit Job Preview" : "Job Post Preview"}
-                            </h3>
-                            <p className="text-gray-500 text-sm mb-4">Your job may appear slightly differently to candidates.</p>
-                            <div className="border border-gray-200 rounded-lg p-4 shadow-md w-full max-w-md">
-                              <div className="flex items-center justify-between mb-3">
-                                <div>
-                                  <h2 className="font-semibold text-base">{values.company || "Your Company"}</h2>
-                                  <p className="text-sm text-gray-500">{values.title || "Job Title"}</p>
+                          {step === 2 && (
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                              <div>
+                                <ChipInput
+                                  values={values}
+                                  setFieldValue={setFieldValue}
+                                  fieldName="skills"
+                                  label="Skills"
+                                  placeholder="Enter a Skill"
+                                  type="skills"
+                                />
+                                {touched.skills && errors.skills && (
+                                  <p className="text-red-500 text-sm">
+                                    {errors.skills}
+                                  </p>
+                                )}
+                              </div>
+                              <div>
+                                <ChipInput
+                                  values={values}
+                                  setFieldValue={setFieldValue}
+                                  fieldName="industries"
+                                  label="Industries"
+                                  placeholder="Enter an industry and press Enter"
+                                  type="industry"
+                                />
+                                {touched.industries && errors.industries && (
+                                  <p className="text-red-500 text-sm">
+                                    {errors.industries}
+                                  </p>
+                                )}
+                              </div>
+                              <div>
+                                <label className="block text-gray-700 font-medium">
+                                  Job Status
+                                </label>
+                                <select
+                                  name="status"
+                                  value={values.status}
+                                  onChange={handleChange}
+                                  className="w-full border rounded-md p-2 mt-1 focus:ring focus:ring-blue-300"
+                                >
+                                  <option value="Active">Active</option>
+                                  <option value="Draft">Draft</option>
+                                  <option value="Expired">Expired</option>
+                                </select>
+                                {touched.status && errors.status && (
+                                  <p className="text-red-500 text-sm">
+                                    {errors.status}
+                                  </p>
+                                )}
+                              </div>
+                              <div>
+                                <label className="block text-gray-700 font-medium">
+                                  Salary
+                                </label>
+                                <input
+                                  type="text"
+                                  name="salary"
+                                  value={values.salary}
+                                  onChange={handleChange}
+                                  placeholder="Enter salary"
+                                  className="w-full border rounded-md p-2 mt-1 focus:ring focus:ring-blue-300"
+                                />
+                                {touched.salary && errors.salary && (
+                                  <p className="text-red-500 text-sm">
+                                    {errors.salary}
+                                  </p>
+                                )}
+                              </div>
+                              <div>
+                                <label className="block text-gray-700 font-medium">
+                                  Hot Job
+                                </label>
+                                <select
+                                  name="hotJob"
+                                  value={values.hotJob}
+                                  onChange={handleChange}
+                                  className="w-full border rounded-md p-2 mt-1 focus:ring focus:ring-blue-300"
+                                >
+                                  <option value="no">No</option>
+                                  <option value="yes">Yes</option>
+                                </select>
+                              </div>
+                              <div>
+                                <label className="block text-gray-700 font-medium">
+                                  Expiration Date
+                                </label>
+                                <input
+                                  type="date"
+                                  name="expirationDate"
+                                  value={values.expirationDate}
+                                  onChange={handleChange}
+                                  className="w-full border rounded-md p-2 mt-1 focus:ring focus:ring-blue-300"
+                                />
+                                {touched.expirationDate &&
+                                  errors.expirationDate && (
+                                    <p className="text-red-500 text-sm">
+                                      {errors.expirationDate}
+                                    </p>
+                                  )}
+                              </div>
+                              <div>
+                                <label className="block text-gray-700 font-medium">
+                                  Expiration Time
+                                </label>
+                                <input
+                                  type="time"
+                                  name="expirationTime"
+                                  value={values.expirationTime}
+                                  onChange={handleChange}
+                                  className="w-full border rounded-md p-2 mt-1 focus:ring focus:ring-blue-300"
+                                />
+                                {touched.expirationTime &&
+                                  errors.expirationTime && (
+                                    <p className="text-red-500 text-sm">
+                                      {errors.expirationTime}
+                                    </p>
+                                  )}
+                              </div>
+                              <div>
+                                <label className="block text-gray-700 font-medium">
+                                  Job Type
+                                </label>
+                                <select
+                                  name="employmentType"
+                                  value={values.employmentType}
+                                  onChange={handleChange}
+                                  className="w-full border rounded-md p-2 mt-1 focus:ring focus:ring-blue-300"
+                                >
+                                  <option value="">Select Job Type</option>
+                                  <option value="Full-time">Full-time</option>
+                                  <option value="Part-time">Part-time</option>
+                                  <option value="Contract">Contract</option>
+                                  <option value="Internship">Internship</option>
+                                </select>
+                                {touched.employmentType &&
+                                  errors.employmentType && (
+                                    <p className="text-red-500 text-sm">
+                                      {errors.employmentType}
+                                    </p>
+                                  )}
+                              </div>
+                              <div>
+                                <label className="block text-gray-700 font-medium">
+                                  Interview Rounds
+                                </label>
+                                {interviewRoundsOptions &&
+                                Array.isArray(interviewRoundsOptions) ? (
+                                  interviewRoundsOptions.map((option, index) => {
+                                    const value = String(
+                                      option.interview_round_id
+                                    );
+                                    const label = option.round_name;
+                                    return (
+                                      <label
+                                        key={value || index}
+                                        className="inline-flex items-center mr-4"
+                                      >
+                                        <Field
+                                          type="checkbox"
+                                          name="selectedInterviewRounds"
+                                          value={value}
+                                        />
+                                        <span className="ml-2">{label}</span>
+                                      </label>
+                                    );
+                                  })
+                                ) : (
+                                  <p className="text-gray-500 text-sm">
+                                    Loading interview rounds...
+                                  </p>
+                                )}
+                                {touched.selectedInterviewRounds &&
+                                  errors.selectedInterviewRounds && (
+                                    <p className="text-red-500 text-sm">
+                                      {errors.selectedInterviewRounds}
+                                    </p>
+                                  )}
+                              </div>
+                              <div className="md:col-span-2">
+                                <label className="block text-gray-700 font-medium">
+                                  Interview Round Details
+                                </label>
+                                <FieldArray
+                                  name="interviewRounds"
+                                  render={(arrayHelpers) => (
+                                    <div>
+                                      {values.interviewRounds &&
+                                      values.interviewRounds.length > 0 ? (
+                                        values.interviewRounds.map(
+                                          (round, index) => (
+                                            <div
+                                              key={index}
+                                              className="mb-4 p-4 border rounded"
+                                            >
+                                              <label className="block text-gray-600 font-medium">
+                                                Round {index + 1} Question
+                                              </label>
+                                              <Field
+                                                name={`interviewRounds.${index}.question`}
+                                                placeholder="Enter interview question"
+                                                className="w-full border rounded p-2 mt-1"
+                                              />
+                                              <label className="block text-gray-600 font-medium mt-2">
+                                                Round {index + 1} Weight
+                                                (optional)
+                                              </label>
+                                              <Field
+                                                type="number"
+                                                name={`interviewRounds.${index}.weight`}
+                                                placeholder="Enter weight"
+                                                className="w-full border rounded p-2 mt-1"
+                                              />
+                                              <button
+                                                type="button"
+                                                onClick={() =>
+                                                  arrayHelpers.remove(index)
+                                                }
+                                                className="mt-2 text-red-600 hover:underline"
+                                              >
+                                                Remove Round
+                                              </button>
+                                            </div>
+                                          )
+                                        )
+                                      ) : (
+                                        <div className="text-gray-500">
+                                          No interview rounds added
+                                        </div>
+                                      )}
+                                      <button
+                                        type="button"
+                                        onClick={() =>
+                                          arrayHelpers.push({
+                                            question: "",
+                                            weight: 100,
+                                          })
+                                        }
+                                        className="mt-2 text-blue-600 hover:underline"
+                                      >
+                                        Add Interview Round Detail
+                                      </button>
+                                    </div>
+                                  )}
+                                />
+                              </div>
+                              <div>
+                                <label className="block text-gray-700 font-medium">
+                                  Total Job Experience
+                                </label>
+                                <select
+                                  name="experience"
+                                  value={values.experience}
+                                  onChange={handleChange}
+                                  className="w-full border rounded-md p-2 mt-1 focus:ring focus:ring-blue-300"
+                                >
+                                  <option value="">Select Job Experience</option>
+                                  {[...Array(30)].map((_, index) => {
+                                    const year = index + 1;
+                                    return (
+                                      <option
+                                        key={year}
+                                        value={`${year} ${
+                                          year === 1 ? "Year" : "Years"
+                                        }`}
+                                      >
+                                        {year} {year === 1 ? "Year" : "Years"}
+                                      </option>
+                                    );
+                                  })}
+                                  <option value="30+ years">30+ Years</option>
+                                </select>
+                                {touched.experience && errors.experience && (
+                                  <p className="text-red-500 text-sm">
+                                    {errors.experience}
+                                  </p>
+                                )}
+                              </div>
+                              <div className="md:col-span-2">
+                                <label className="block text-gray-700 font-medium">
+                                  Job Responsibilities
+                                </label>
+                                <ReactQuill
+                                  value={values.responsibilities}
+                                  onChange={(content) =>
+                                    setFieldValue("responsibilities", content)
+                                  }
+                                  placeholder="Enter job responsibilities"
+                                  className="bg-white border border-gray-300 rounded-md"
+                                />
+                                {touched.responsibilities &&
+                                  errors.responsibilities && (
+                                    <p className="text-red-500 text-sm">
+                                      {errors.responsibilities}
+                                    </p>
+                                  )}
+                              </div>
+                            </div>
+                          )}
+
+                          {step === 3 && (
+                            <div className="flex flex-col items-center">
+                              <h3 className="text-xl font-bold mb-2">
+                                {formMode === "edit"
+                                  ? "Edit Job Preview"
+                                  : "Job Post Preview"}
+                              </h3>
+                              <p className="text-gray-500 text-sm mb-4">
+                                Your job may appear slightly differently to
+                                candidates.
+                              </p>
+                              <div className="border border-gray-200 rounded-lg p-4 shadow-md w-full max-w-md">
+                                <div className="flex items-center justify-between mb-3">
+                                  <div>
+                                    <h2 className="font-semibold text-base">
+                                      {values.company || "Your Company"}
+                                    </h2>
+                                    <p className="text-sm text-gray-500">
+                                      {values.title || "Job Title"}
+                                    </p>
+                                  </div>
+                                  <button className="text-gray-400 hover:text-gray-600">
+                                    <Edit size={16} />
+                                  </button>
                                 </div>
-                                <button className="text-gray-400 hover:text-gray-600">
-                                  <Edit size={16} />
+                                <p className="text-sm text-gray-600 mb-3">
+                                  {Array.isArray(values.locations)
+                                    ? values.locations.join(", ")
+                                    : values.locations || "N/A"}
+                                </p>
+                                <div className="flex flex-wrap items-center gap-2 text-sm mb-3">
+                                  <span className="bg-gray-100 px-2 py-1 rounded">
+                                    {values.employmentType || "Full-time"}
+                                  </span>
+                                  <span className="bg-gray-100 px-2 py-1 rounded">
+                                    {values.salary
+                                      ? `₹${values.salary}/ P.A`
+                                      : "₹10000/ P.A"}
+                                  </span>
+                                </div>
+                                {values.description && (
+                                  <div
+                                    className="text-sm text-gray-700 leading-relaxed"
+                                    dangerouslySetInnerHTML={{
+                                      __html: values.description,
+                                    }}
+                                  />
+                                )}
+                              </div>
+                              <div className="flex justify-center gap-4 mt-4">
+                                <button
+                                  type="button"
+                                  onClick={() => setStep(1)}
+                                  className="text-blue-600 hover:underline text-sm"
+                                >
+                                  Edit Basic Info
+                                </button>
+                                <button
+                                  type="button"
+                                  onClick={() => setStep(2)}
+                                  className="text-blue-600 hover:underline text-sm"
+                                >
+                                  Edit Additional Details
                                 </button>
                               </div>
-                              <p className="text-sm text-gray-600 mb-3">
-                                {Array.isArray(values.locations) ? values.locations.join(", ") : values.locations || "N/A"}
-                              </p>
-                              <div className="flex flex-wrap items-center gap-2 text-sm mb-3">
-                                <span className="bg-gray-100 px-2 py-1 rounded">{values.employmentType || "Full-time"}</span>
-                                <span className="bg-gray-100 px-2 py-1 rounded">
-                                  {values.salary ? `₹${values.salary}/ P.A` : "₹10000/ P.A"}
-                                </span>
-                              </div>
-                              {values.description && (
-                                <div className="text-sm text-gray-700 leading-relaxed" dangerouslySetInnerHTML={{ __html: values.description }} />
-                              )}
                             </div>
-                            <div className="flex justify-center gap-4 mt-4">
-                              <button type="button" onClick={() => setStep(1)} className="text-blue-600 hover:underline text-sm">Edit Basic Info</button>
-                              <button type="button" onClick={() => setStep(2)} className="text-blue-600 hover:underline text-sm">Edit Additional Details</button>
-                            </div>
-                          </div>
-                        )}
-
-                        <div className="flex justify-end gap-4 mt-6">
-                          {step > 1 && (
-                            <button type="button" onClick={() => setStep(step - 1)} className="bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-gray-600 transition">
-                              Back
-                            </button>
                           )}
-                          <button type="submit" disabled={isSubmitting} className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition">
-                            {step === 3 ? (formMode === "edit" ? "Update Job" : "Post Job") : "Next"}
-                          </button>
-                        </div>
-                      </Form>
-                    )}
+
+                          <div className="flex justify-end gap-4 mt-6">
+                            {step > 1 && (
+                              <button
+                                type="button"
+                                onClick={() => setStep(step - 1)}
+                                className="bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-gray-600 transition"
+                              >
+                                Back
+                              </button>
+                            )}
+                            <button
+                              type="submit"
+                              disabled={isSubmitting}
+                              className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition"
+                            >
+                              {step === 3
+                                ? formMode === "edit"
+                                  ? "Update Job"
+                                  : "Post Job"
+                                : "Next"}
+                            </button>
+                          </div>
+                        </Form>
+                      );
+                    }}
                   </Formik>
                 </motion.div>
               </>

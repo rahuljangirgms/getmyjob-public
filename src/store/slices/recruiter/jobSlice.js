@@ -18,6 +18,7 @@ const initialState = {
   interviewRoundsOptions: [],
   loading: false,
   error: null,
+  message: null,
 };
 
 const jobSlice = createSlice({
@@ -59,18 +60,20 @@ const jobSlice = createSlice({
     createJobSuccess: (state, action) => {
       state.loading = false;
       // state.jobs.push(action.payload);
-      const newJob = action.payload;
-      if (newJob.status === "Active") {
-        state.jobs.activeJobs.push(newJob);
-      } else if (newJob.status === "Draft") {
-        state.jobs.draftJobs.push(newJob);
-      } else if (newJob.status === "Expired") {
-        state.jobs.expiredJobs.push(newJob);
-      }
-    },
+      const { job, message } = action.payload;
+          // Store the message
+          state.message = message;
+          if (job.status === "Active") {
+            state.jobs.activeJobs.push(job);
+          } else if (job.status === "Draft") {
+            state.jobs.draftJobs.push(job);
+          } else if (job.status === "Expired") {
+            state.jobs.expiredJobs.push(job);
+          }
+        },
     createJobFailure: (state, action) => {
       state.loading = false;
-      state.error = action.payload;
+      state.error = action.payload.message ;
     },
     // deleteJobRequest: (state, action) => {
     //   const jobId = action.payload;
@@ -84,21 +87,26 @@ const jobSlice = createSlice({
     },
     updateJobSuccess: (state, action) => {
       state.loading = false;
-      const updatedJob = action.payload;
-      state.jobs.activeJobs = state.jobs.activeJobs.filter((job) => job.id !== updatedJob.id);
-      state.jobs.draftJobs = state.jobs.draftJobs.filter((job) => job.id !== updatedJob.id);
-      state.jobs.expiredJobs = state.jobs.expiredJobs.filter((job) => job.id !== updatedJob.id);
-      if (updatedJob.status === "Active") {
-        state.jobs.activeJobs.push(updatedJob);
-      } else if (updatedJob.status === "Draft") {
-        state.jobs.draftJobs.push(updatedJob);
-      } else if (updatedJob.status === "Expired") {
-        state.jobs.expiredJobs.push(updatedJob);
+      const { job, message } = action.payload;
+
+      state.message = message;
+
+      // Remove old job from arrays, then add updated
+      state.jobs.activeJobs = state.jobs.activeJobs.filter((j) => j.id !== job.id);
+      state.jobs.draftJobs = state.jobs.draftJobs.filter((j) => j.id !== job.id);
+      state.jobs.expiredJobs = state.jobs.expiredJobs.filter((j) => j.id !== job.id);
+
+      if (job.status === "Active") {
+        state.jobs.activeJobs.push(job);
+      } else if (job.status === "Draft") {
+        state.jobs.draftJobs.push(job);
+      } else if (job.status === "Expired") {
+        state.jobs.expiredJobs.push(job);
       }
     },
     updateJobFailure: (state, action) => {
       state.loading = false;
-      state.error = action.payload;
+      state.error = action.payload.message;
     },
     deleteJobRequest: (state, action) => {
       console.log("🚀 Deleting job...", action.payload);
