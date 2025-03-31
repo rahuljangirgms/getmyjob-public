@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   FiCalendar,
   FiMail,
@@ -16,14 +16,36 @@ import JobSearchComponent from "./../../../components/JobSeekerComponents/JobSea
 import JobFilterComponent from './../../../components/JobSeekerComponents/JobFilterComponent';
 import JobListingContainer from './../../../components/JobSeekerComponents/JobListingContainer';
 import VerticalProfileCard from './../../../components/JobSeekerComponents/VerticalProfileCard';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import ProfileSkeleton from './../../../components/JobSeekerComponents/ReusableComponents/ProfileSkeleton';
-
-
+import { checkProfileCompleteRequest } from "./../../../store/slices/jobSeeker/isProfileCompleted/isProfileCompleteSlice";
+import {getMasterResumeRequest} from './../../../store/slices/jobSeeker/master_Resume_Data/masterResumeSlice';
+import {getpersonalInfoRequest} from './../../../store/slices/jobSeeker/Profile_Form/personalInfoSlice';
+import {getOpenToWorkRequest} from './../../../store/slices/jobSeeker/openToWork/openToWorkSlice';
+ 
 const JobseekerDashboard = () => {
 
-  const profileData = useSelector(state => state.profileForms.personalInformation);
-  const isProfileCompleted = useSelector(state => state.profileForms.isProfileCompleted);
+  const dispatch = useDispatch();
+
+  const personalInfo = useSelector((state) => state.personalInfoForm.data);
+  const personalInfoLoading = useSelector((state) => state.personalInfoForm.loading);
+  const openToWorkLoading = useSelector((state) => state.openToWork.loading);
+  const openToWorkStatus = useSelector((state) => state.openToWork.openToWork);
+
+  useEffect(()=>{
+    dispatch(checkProfileCompleteRequest());
+    dispatch(getpersonalInfoRequest());
+    dispatch(getOpenToWorkRequest());
+  },[dispatch]);
+
+
+  console.log("API Profile Data: ",personalInfo);
+
+    const isProfileCompleted = useSelector(
+      (state) => state.isProfileComplete.isComplete
+    );
+
+  const isProfileCompleteLoading = useSelector((state) => state.isProfileComplete.loading);
 
   const {user} = useSelector((state) => state.jobSeekerAuth);
 
@@ -51,7 +73,8 @@ const JobseekerDashboard = () => {
     <div className="w-full md:w-1/5 py-6">
     {/* <JobFilterComponent /> */}
     {
-      isProfileCompleted ? <VerticalProfileCard profileData={profileData}/> : <ProfileSkeleton/>
+      isProfileCompleted && !isProfileCompleteLoading && !personalInfoLoading && !openToWorkLoading && personalInfo ?
+       <VerticalProfileCard profileData={personalInfo} isOpenToWork={openToWorkStatus}/> : <ProfileSkeleton/>
     }
     </div>
   </div>

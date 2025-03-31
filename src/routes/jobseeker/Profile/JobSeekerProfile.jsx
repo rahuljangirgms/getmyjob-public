@@ -5,6 +5,7 @@ import { FiChevronDown } from "react-icons/fi";
 import ProfilePanel from "./components/ProfilePanel";
 import Sidebar from "./components/Sidebar";
 import ResumeSection from './components/ResumeSection';
+import { ToastContainer } from 'react-toastify';
 
 
 
@@ -39,14 +40,15 @@ function JobSeekerProfile() {
 
   return (
        <div className=" bg-gray-50 mt-20 p-8 flex flex-col md:flex-col lg:flex-row gap-4">
+        <ToastContainer/>
       {/* Left Section (60% Width) */}
       <div className="w-full md:w-full lg:w-4/5 flex flex-col gap-4 order-last lg:order-1">
         {/* First Box inside Left Section */}
-        <div className="flex-1 bg-white flex p-6 rounded-lg shadow-md order-2 lg:order-1">
+      
 
           <ResumeSection/>
 
-        </div>
+      
         {/* Second Box inside Left Section */}
         <div className="flex-1 flex items-center justify-center rounded-lg shadow-md order-1 lg:order-2">
           <ProfilePanel/>

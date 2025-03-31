@@ -99,7 +99,7 @@
 // }
 
 
-import { call, put, takeLatest } from "redux-saga/effects";
+import { call, put, select, takeLatest } from "redux-saga/effects";
 import axios from "axios";
 import {
   authRequest,
@@ -114,6 +114,9 @@ import {
   resetPasswordRequest,
   resetPasswordSuccess,
   resetPasswordFailure,
+  changePasswordSuccess,
+  changePasswordFailure,
+  changePasswordRequest,
 } from "../../slices/recruiter/authSlice";
 
 // Use the JSON Server base URL
@@ -178,6 +181,13 @@ const Recruiterforgetpassword = async (payload) =>{
 const RecruiterresetPasswordApi = async (payload) => {
   return await axios.post(`${BASE_URL}/recruiter/reset_password`, payload);
 };
+function RecruiterchangePasswordApi(token, payload) {
+  return axios.post(`${BASE_URL}/recruiter/change_password`, payload, {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  });
+}
 // LOGIN SAGA
 function* loginSaga(action) {
   try {
@@ -254,10 +264,30 @@ function* RecruiterresetPasswordSaga(action) {
   }
 }
 
+function* RecruiterchangePasswordSaga(action) {
+  try {
+    // Grab the token from Redux
+    const token = yield select((state) => state.auth.token);
+
+    // Call the API with token in headers
+    const response = yield call(RecruiterchangePasswordApi, token, action.payload);
+
+    const message = response.data.message || "Password changed successfully";
+    yield put(changePasswordSuccess(message));
+  } catch (error) {
+    yield put(
+      changePasswordFailure(
+        error.response?.data?.message || error.message || "Password change failed"
+      )
+    );
+  }
+}
+
 // Watcher Saga for Authentication
 export function* watchAuth() {
   yield takeLatest(authRequest.type, authSaga);
   yield takeLatest(loginRequest.type, loginSaga);
   yield takeLatest(forgotPasswordRequest.type, RecruiterforgotPasswordSaga);
   yield takeLatest(resetPasswordRequest.type, RecruiterresetPasswordSaga);
+  yield takeLatest(changePasswordRequest.type,RecruiterchangePasswordSaga)
 }

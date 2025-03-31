@@ -3,6 +3,10 @@ import { motion } from "framer-motion";
 import { FaEye, FaEyeSlash } from "react-icons/fa"; // Password visibility toggle icons
 
 
+import { forgotPassword, resetPassword } from "../../../services/admin/authService";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 import { Link } from "react-router-dom";
 import breifcaseLogo from "./../../../assets/images/brief-case.png";
 import avtarGroupImg from "./../../../assets/images/avtar-group.png";
@@ -18,6 +22,9 @@ const ForgotPassword = () => {
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
+  const [resetToken, setResetToken] = useState("");
+
+
   const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
 
   // Handle email input
@@ -30,30 +37,75 @@ const ForgotPassword = () => {
   const handleConfirmPasswordChange = (e) => setConfirmPassword(e.target.value);
 
   // Simulate email verification (for demonstration purposes)
-  const handleEmailVerification = () => {
-    if (email) {
-      setStep(2); // Move to the next step if email is provided
+  const handleEmailVerification = async () => {
+    if (!email) {
+      toast.error("Please enter your email");
+      return;
+    }
+
+    try {
+      const res = await forgotPassword(email);
+
+      if (res.status === true) {
+        toast.success( "Email verified!");
+        setResetToken(res.data.reset_pass_token); // ✅ only access if status is true
+        setStep(2);
+      } else {
+        toast.error( "Something went wrong.");
+      }
+
+    } catch (error) {
+      // Handle actual API or network errors
+      toast.error( "Failed to verify email. Please try again later.");
     }
   };
 
+
+
+
+
+
   // Handle form submission for new password
-  const handleSubmitNewPassword = (e) => {
+  const handleSubmitNewPassword = async (e) => {
     e.preventDefault();
-    if (newPassword === confirmPassword) {
-      // Simulate successful password change
-      alert("Password successfully changed!");
-    } else {
-      alert("Passwords do not match!");
+
+    if (newPassword !== confirmPassword) {
+      toast.error("Passwords do not match!");
+      return;
+    }
+
+    try {
+      const res = await resetPassword({
+        reset_pass_token: resetToken,
+        email,
+        password: newPassword,
+      });
+      toast.success(res.message || "Password successfully changed!");
+
+      setTimeout(() => {
+        window.location.href = "/admin/signin";
+      }, 2000);
+    } catch (error) {
+      toast.error(error.message || "Failed to reset password.");
     }
   };
+
 
   return (
     <div className="min-h-screen flex flex-col lg:grid lg:grid-cols-2 w-screen">
 
 
+     
+
 
       {/* Sign Up Form Section */}
       <div className="flex flex-col justify-center items-center p-6  w-full h-screen bg-white shadow-lg rounded-lg">
+
+
+        <motion.div>
+          <ToastContainer position="top-right" autoClose={3000} />
+
+        </motion.div>
         {step === 1 ? (
           // Step 1: Email Verification
           <motion.div

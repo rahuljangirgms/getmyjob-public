@@ -24,6 +24,18 @@ const candidateSlice = createSlice({
       state.loading = false;
       state.error = action.payload;
     },
+    fetchOpentoworkCandidatesRequest: (state) => {
+      state.loading = true;
+      state.error = null;
+    },
+    fetchOpentoworkCandidatesSuccess: (state, action) => {
+      state.loading = false;
+      state.candidates = action.payload;
+    },
+    fetchOpentoworkCandidatesFailure: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    },
     updateCandidateInvitationRequest: (state) => {
       state.loading = true;
     },
@@ -69,6 +81,9 @@ export const {
   fetchCandidatesRequest,
   fetchCandidatesSuccess,
   fetchCandidatesFailure,
+  fetchOpentoworkCandidatesRequest,
+  fetchOpentoworkCandidatesSuccess,
+  fetchOpentoworkCandidatesFailure,
   updateCandidateInvitationRequest,
   updateCandidateInvitationSuccess,
   updateCandidateInvitationFailure,

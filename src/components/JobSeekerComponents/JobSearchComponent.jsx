@@ -1,11 +1,25 @@
-"use client"
-
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Dropdown from "react-dropdown"
 import "react-dropdown/style.css"
 import { FiSearch, FiMapPin, FiBriefcase, FiChevronRight } from "react-icons/fi"
+import {filterJobsRequest} from './../../store/slices/jobSeeker/job_Filter/jobFilterSlice';
+import { useDispatch } from 'react-redux';
+
 
 export default function JobSearchComponent() {
+
+  const dispatch = useDispatch();
+
+  const [jobTitle, setJobTitle] = useState('');
+
+  const [workLocation, setWorkLocation] = useState('');
+
+  const handleSearch = () =>{
+    dispatch(filterJobsRequest({
+      jobTitle,
+      workLocation
+    }));
+  };
 
   const experienceOptions = ["Entry Level", "Mid Level", "Senior Level"]
 
@@ -25,6 +39,7 @@ export default function JobSearchComponent() {
               type="text"
               placeholder="Find job title"
               className="w-full pl-10 pr-4 py-3 rounded-full bg-blue-50 bg-opacity-20 text-white placeholder-white  focus:outline-none focus:ring-2 focus:ring-white"
+              onChange={(e) => setJobTitle(e.target.value)}
             />
           </div>
 
@@ -35,6 +50,7 @@ export default function JobSearchComponent() {
               type="text"
               placeholder="Country/City"
               className="w-full pl-10 pr-4 py-3 rounded-full bg-blue-50 bg-opacity-20 text-white placeholder-white focus:outline-none focus:ring-2 focus:ring-white"
+              onChange={(e) => setWorkLocation(e.target.value)}
             />
           </div>
 
@@ -53,7 +69,9 @@ export default function JobSearchComponent() {
           </div>
 
           {/* Search Button */}
-          <button className="bg-white text-[#1a52e8] px-8 py-3 rounded-full font-semibold hover:bg-opacity-90 transition-colors flex items-center gap-2 justify-end md:justify-start">
+          <button className="bg-white text-[#1a52e8] px-8 py-3 rounded-full font-semibold hover:bg-opacity-90 transition-colors flex items-center gap-2 justify-end md:justify-start"
+            onClick={() => handleSearch()}
+          >
             Search
             <FiChevronRight className="w-5 h-5" />
           </button>

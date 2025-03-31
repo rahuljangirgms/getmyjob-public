@@ -4,5 +4,6 @@
     "files.autoSaveDelay": 0,
     "javascript.updateImportsOnFileMove.enabled": "always",
     "typescript.updateImportsOnFileMove.enabled": "always",
-    "markdown.updateLinksOnFileMove.enabled": "always"
+    "markdown.updateLinksOnFileMove.enabled": "always",
+    "files.autoSave": "afterDelay"
 }

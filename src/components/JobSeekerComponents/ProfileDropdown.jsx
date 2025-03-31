@@ -10,6 +10,9 @@ import { useNavigate } from "react-router-dom";
 import { logout } from "./../../store/slices/jobSeeker/authentication/jobSeekerAuthSlice";
 import dummyUserLogo from "./../../assets/images/dummyuser.png";
 import { getMasterResumeRequest } from "./../../store/slices/jobSeeker/master_Resume_Data/masterResumeSlice";
+import { IoDocumentTextOutline } from "react-icons/io5";
+import { getOpenToWorkRequest } from "./../../store/slices/jobSeeker/openToWork/openToWorkSlice";
+import { BriefcaseBusiness } from "lucide-react";
 
 function ProfileDropdown() {
   const profileData = useSelector(
@@ -17,13 +20,17 @@ function ProfileDropdown() {
   );
 
   const masterResumeJson = useSelector((state) => state.masterResumeJson.data);
+  const openToWorkStatus = useSelector((state) => state.openToWork.openToWork);
   const { loading } = useSelector((state) => state.masterResumeJson);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getMasterResumeRequest());
+    dispatch(getOpenToWorkRequest());
   }, [dispatch]);
+
+
 
   const { user } = JSON.parse(localStorage.getItem("auth"));
 
@@ -41,14 +48,19 @@ function ProfileDropdown() {
           {loading ? (
             <div className="w-10 h-10 rounded-full bg-gray-200 animate-pulse" />
           ) : (
-            <img
-              src={
-                masterResumeJson?.personalInformation?.profilePicture ||
-                dummyUserLogo
-              }
-              alt="Profile"
-              className="w-10 h-10 rounded-full"
-            />
+            <div className="relative w-10 h-10">
+              <img
+                src={
+                  masterResumeJson?.personalInformation?.profilePicture ||
+                  dummyUserLogo
+                }
+                alt="Profile"
+                className="w-10 h-10 rounded-full"
+              />
+            {openToWorkStatus &&  <div className="absolute bottom-0 right-0 bg-green-600 text-white rounded-full shadow-md p-[2px]">
+                <BriefcaseBusiness size={12}/>
+              </div>}
+            </div>
           )}
 
           {/* Hide Name & Job Title on Mobile */}
@@ -73,13 +85,25 @@ function ProfileDropdown() {
           </MenuItem>
         </div>
         <div className="py-1">
-          <MenuItem>
+          <MenuItem onClick={() => navigate("/jobseeker/resume-builder")}>
             <button className="group flex w-full items-center gap-2 rounded-lg py-1.5 px-3 text-sm text-gray-700 font-semibold hover:bg-gray-100">
+              <IoDocumentTextOutline className="size-4 text-gray-700" />
+              Resume Builder
+            </button>
+          </MenuItem>
+        </div>
+
+        <div className="py-1">
+          <MenuItem>
+            <button className="group flex w-full items-center gap-2 rounded-lg py-1.5 px-3 text-sm text-gray-700 font-semibold hover:bg-gray-100"
+              onClick={()=> navigate('/jobseeker/change-password')}
+            >
               <MdOutlinePassword className="size-4 text-gray-700" />
               Change Password
             </button>
           </MenuItem>
         </div>
+
         <div className="py-1">
           <MenuItem onClick={handleLogout}>
             <button className="group flex w-full items-center gap-2 rounded-lg py-1.5 px-3 text-sm text-gray-700 font-semibold hover:bg-gray-100">

@@ -10,6 +10,7 @@ import TestScore from "./TestScore";
 
 import dummyPrfileImg from './../../../../assets/images/dummyuser.png'
 import {getMasterResumeRequest} from './../../../../store/slices/jobSeeker/master_Resume_Data/masterResumeSlice'
+import { BriefcaseBusiness } from 'lucide-react';
 
 function Sidebar() {
 
@@ -21,6 +22,8 @@ function Sidebar() {
 
   const masterResumeJson = useSelector((state) => state.masterResumeJson.data); 
   const { loading } = useSelector((state) => state.masterResumeJson);
+  const openToWorkStatus = useSelector((state) => state.openToWork.openToWork);
+  
 
   const personalInformation = useSelector(
     (state) => state.profileForms.personalInformation
@@ -43,11 +46,22 @@ function Sidebar() {
   return (
     <div className="w-full row-span-3 col-start-5 bg-white rounded-2xl p-6 border-2 border-gray-200 shadow-lg">
       <div className="flex flex-col items-center text-center border-b-2 border-gray-200 pb-4">
-        <img
+       <div className="relative h-20 w-20 group">
+       <img
           src={masterResumeJson?.personalInformation?.profilePicture || dummyPrfileImg}
           alt="user-image"
           className="w-20 h-20 rounded-full bg-indigo-100"
         />
+          {openToWorkStatus &&  
+              <button  type="button"
+                className="absolute  bottom-0 right-0 bg-green-600 text-white text-[10px] p-1 cursor-pointer rounded-full shadow-md border-2 border-white">
+                <BriefcaseBusiness size={18}/>
+              </button>}
+
+              <div className="absolute bottom-5 right-0 opacity-0 group-hover:opacity-100 transition-opacity bg-gray-800 text-white text-xs rounded py-1 px-2 z-10 whitespace-nowrap">
+              Open to Work
+            </div>
+       </div>
         <h2 className="mt-4 text-xl font-semibold text-gray-900">
           {user?.name || ""} 
         </h2>
@@ -113,6 +127,7 @@ function Sidebar() {
         <h2 className="text-xl font-semibold text-blue-700 border-b-2 pb-2">
           Your Test Scores
         </h2>
+        
         <TestScore Skill={"Aptitude"} Score={98} />
 
         <TestScore Skill={"JavaScript"} Score={78} />

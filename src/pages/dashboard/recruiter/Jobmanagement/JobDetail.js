@@ -11,24 +11,23 @@ import { Folder, House, IndianRupee, Mail, Notebook, PersonStanding, User } from
 const JobDetail = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
-  const { jobs, loading } = useSelector((state) => state.jobs);
+   const { jobs = [], loading, filters = {} } = useSelector((state) => state.jobs);
+console.log("jobs in detal",jobs)
 
   // Ensure jobs are loaded (if necessary)
   useEffect(() => {
-    if (
-      !jobs ||
-      (!jobs.activeJobs.length && !jobs.draftJobs.length && !jobs.expiredJobs.length)
-    ) {
-      dispatch(fetchJobsRequest());
-    }
-  }, [dispatch, jobs]);
+    // Always fetch jobs on mount (no active/draft/expired check)
+    dispatch(fetchJobsRequest());
+  }, [dispatch]);
 
   // Combine all jobs into one array
-  const allJobs = [
-    ...(jobs?.activeJobs || []),
-    ...(jobs?.draftJobs || []),
-    ...(jobs?.expiredJobs || []),
-  ];
+  const allJobs = Array.isArray(jobs)
+  ? jobs
+  : [
+      ...(jobs?.activeJobs || []),
+      ...(jobs?.draftJobs || []),
+      ...(jobs?.expiredJobs || []),
+    ];
 
   // Find the job with matching id
   const job = allJobs.find((item) => String(item.id) === id);
@@ -41,7 +40,7 @@ const JobDetail = () => {
     );
   }
 
-  if (!job) {
+  if (!jobs) {
     return (
       <div className="p-6 max-w-5xl mx-auto">
         <h2 className="text-xl font-semibold mb-2">Job not found</h2>
@@ -62,17 +61,17 @@ const JobDetail = () => {
       {/* Header Row: Title + Buttons */}
       <div className="flex flex-col  sm:flex-row sm:items-center sm:justify-between mb-6">
         <h1 className="text-2xl sm:text-3xl font-bold mb-2 sm:mb-0">
-          {job.title || "Associate Project Manager"}
+          {job.job_title || "Associate Project Manager"}
         </h1>
       
       </div>
 
       {/* Sub-header: Company, Location, Time posted */}
       <div className="text-gray-500 text-sm mb-6">
-        {job.company} &mdash; {job.locations } &mdash;{" "}
+        {job.company_name} &mdash; {job.location } &mdash;{" "}
         <span>  Posted on{" "}
-  {job.postedDate
-    ? new Date(job.postedDate).toLocaleDateString()
+  {job.created_at
+    ? new Date(job.created_at).toLocaleDateString()
     : "N/A"}</span>
       </div>
 
@@ -87,7 +86,7 @@ const JobDetail = () => {
               {/* Sample text. Replace with your own. */}
               <div
               className="text-sm text-gray-700 leading-relaxed"
-              dangerouslySetInnerHTML={{ __html: job.description }}
+              dangerouslySetInnerHTML={{ __html: job.job_description }}
             />
             </p>
           </div>
@@ -107,7 +106,7 @@ const JobDetail = () => {
   <h2 className="text-lg font-semibold mb-2">Skills</h2>
   {/* If job.skills is an array, map over it */}
   <div className="flex flex-wrap gap-2">
-    {Array.isArray(job.skills) && job.skills.map((skill, index) => (
+    {Array.isArray(job.skills_required) && job.skills_required.map((skill, index) => (
       <span 
         key={index} 
         className="bg-slate-300 rounded-full px-3 py-1 text-sm text-gray-700"
@@ -125,17 +124,17 @@ const JobDetail = () => {
           {/* Salary & Info */}
           <div className="bg-gray-50 p-4 rounded-md shadow-sm">
             <h3 className="text-xl font-bold mb-2 flex justify-start my-2">
-            <span className="rounded-full p-2 border-gray-300 border-2 my-auto"><IndianRupee size={18}/></span>  <span className=" my-auto mx-2 font-medium text-start"> {job.salary || "₹ 0"}  <span className="text-sm text-gray-500 ml-2">Avg. salary</span></span> 
+            <span className="rounded-full p-2 border-gray-300 border-2 my-auto"><IndianRupee size={18}/></span>  <span className=" my-auto mx-2 font-medium text-start"> {job.salary_range || "₹ 0"}  <span className="text-sm text-gray-500 ml-2">Avg. salary</span></span> 
              
             </h3>
             <p className="text-sm text-gray-600 flex justify-start my-2 ">
-            <span className="rounded-full p-2 border-gray-300 border-2 my-auto"><Folder size={18}/></span> <span className=" my-auto mx-2 font-medium text-start">{job.industries}</span> 
+            <span className="rounded-full p-2 border-gray-300 border-2 my-auto"><Folder size={18}/></span> <span className=" my-auto mx-2 font-medium text-start">{job.industry}</span> 
             </p>
             <p className="text-sm text-gray-600 flex justify-start my-2 ">
-            <span className="rounded-full p-2 border-gray-300 border-2 my-auto"><House size={18}/></span> <span className=" my-auto mx-2 font-medium text-start"> {job.employmentType || "Full-time"}</span>
+            <span className="rounded-full p-2 border-gray-300 border-2 my-auto"><House size={18}/></span> <span className=" my-auto mx-2 font-medium text-start"> {job.job_type || "Full-time"}</span>
             </p>
             <p className="text-sm text-gray-600 flex justify-start my-2 ">
-            <span className="rounded-full p-2 border-gray-300 border-2 my-auto"><Notebook size={18}/></span> <span className=" my-auto mx-2 font-medium text-start"> {job.experience || "Experience"} Experience</span>
+            <span className="rounded-full p-2 border-gray-300 border-2 my-auto"><Notebook size={18}/></span> <span className=" my-auto mx-2 font-medium text-start"> {job.experience_required || "Experience"} Experience</span>
             </p>
             {/* <p className="text-sm text-gray-600 mb-1">
               {job.industries?.join(", ") || "Information technology"}
@@ -143,7 +142,7 @@ const JobDetail = () => {
             <p className="text-sm text-gray-600 flex justify-start my-2">
 
             <span className="rounded-full p-2 border-gray-300 border-2 my-auto"><Mail size={18}/></span> <span className=" my-auto mx-2 text-start font-medium">
-              {job.email || "jobs@microsoft.com"} </span>
+              {job.contact_email || "jobs@microsoft.com"} </span>
             </p>
 <br className="divide-solid divide-x divide-gray-700 "/>
             <div className="bg-gray-50  rounded-md my-10 ">

@@ -1,27 +1,32 @@
 import React from "react";
 import stringSimilarity from "string-similarity";
 
-// ------------------
-// 1) Convert a required experience range string (e.g., "0-1", "5-8", "10-above")
-// ------------------
+// Helper function for experience range parsing
 function parseExperienceRange(requiredExperience) {
   if (typeof requiredExperience !== "string") return null;
-  if (requiredExperience === "10-above") {
-    return { lowerMonths: 120, upperMonths: Infinity };
+  
+  if (requiredExperience === "30+ years") {
+    return { lowerMonths: 360, upperMonths: Infinity }; // 30+ years treated as 360 months
   }
+
+  const yearsMatch = requiredExperience.match(/^(\d+)\s*year[s]?$/i);
+  if (yearsMatch) {
+    const years = parseInt(yearsMatch[1], 10);
+    return { lowerMonths: years * 12, upperMonths: years * 12 }; // Convert years to months
+  }
+
   const parts = requiredExperience.split("-");
-  if (parts.length !== 2) return null;
-  const lowerYears = parseFloat(parts[0]) || 0;
-  const upperYears = parseFloat(parts[1]) || 0;
-  return {
-    lowerMonths: lowerYears * 12,
-    upperMonths: upperYears * 12,
-  };
+  if (parts.length === 2) {
+    const lowerYears = parseFloat(parts[0]) || 0;
+    const upperYears = parseFloat(parts[1]) || 0;
+    return { lowerMonths: lowerYears * 12, upperMonths: upperYears * 12 };
+  }
+
+  return null;
 }
 
-// ------------------
-// 2) Partial scoring logic for experience match
-// ------------------
+
+// Calculate experience match score
 function partialExperienceScore(totalMonths, lowerMonths, upperMonths) {
   if (totalMonths >= lowerMonths && totalMonths <= upperMonths) {
     return 100;
@@ -37,33 +42,9 @@ function partialExperienceScore(totalMonths, lowerMonths, upperMonths) {
   return 100;
 }
 
-// ------------------
-// 3) Calculate total experience from an array of experiences
-// ------------------
-function calculateTotalExperience(experienceArray) {
-  if (!Array.isArray(experienceArray) || experienceArray.length === 0) {
-    return { totalMonths: 0, totalYearsFloat: 0 };
-  }
-  let totalMonths = 0;
-  experienceArray.forEach((exp) => {
-    const startDate = new Date(exp.from);
-    const endDate =
-      typeof exp.to === "string" && exp.to.toLowerCase() === "present"
-        ? new Date()
-        : new Date(exp.to);
-    totalMonths += (endDate.getFullYear() - startDate.getFullYear()) * 12 +
-                   (endDate.getMonth() - startDate.getMonth());
-  });
-  return { totalMonths, totalYearsFloat: totalMonths / 12 };
-}
-
-// ------------------
-// 4) Calculate a simple job description match percentage
-// ------------------
+// Calculate job description match score
 function calculateJobDescriptionMatch(jobDescription, candidateAbout) {
-  // If either string is missing, assume no match
   if (!jobDescription || !candidateAbout) return 0;
-  // Use string-similarity to get a similarity score between 0 and 1
   const similarity = stringSimilarity.compareTwoStrings(
     jobDescription.toLowerCase(),
     candidateAbout.toLowerCase()
@@ -71,18 +52,12 @@ function calculateJobDescriptionMatch(jobDescription, candidateAbout) {
   return Math.round(similarity * 100);
 }
 
-// ------------------
-// 5) Overall candidate performance score
-// ------------------
+// Calculate overall match score
 function calculateOverallScore(skillScore, experienceScore, jobDescScore) {
-  // You could take a simple average or weight the scores differently.
-  // Here, we'll take a simple average of all three.
   return Math.round((skillScore + experienceScore + jobDescScore) / 3);
 }
 
-// ------------------
-// 6) Calculate the skill match score
-// Each matching skill contributes 20% score, capped at 100%
+// Calculate skill match score
 function calculateSkillScore(requiredSkills, candidateSkills) {
   if (!requiredSkills.length) return 100;
   const matchingSkills = candidateSkills.filter((skill) =>
@@ -92,14 +67,53 @@ function calculateSkillScore(requiredSkills, candidateSkills) {
   return Math.min(score, 100);
 }
 
+// Updated calculateTotalExperience function to handle new format
+function calculateTotalExperience(experienceArray) {
+  if (!experienceArray || experienceArray.length === 0) return { totalMonths: 0, totalDuration: "", overallRange: "" };
+
+  let totalMonths = 0;
+  let earliestStart = null;
+  let latestEnd = null;
+
+  experienceArray.forEach((exp) => {
+    const startDate = new Date(exp.from);
+    const endDate =
+      exp.to && typeof exp.to === "string"
+        ? (exp.to.toLowerCase() === "present" ? new Date() : new Date(exp.to))
+        : new Date();
+
+    if (!earliestStart || startDate < earliestStart) {
+      earliestStart = startDate;
+    }
+    if (!latestEnd || endDate > latestEnd) {
+      latestEnd = endDate;
+    }
+
+    const months =
+      (endDate.getFullYear() - startDate.getFullYear()) * 12 +
+      (endDate.getMonth() - startDate.getMonth());
+    totalMonths += months;
+  });
+
+  const years = Math.floor(totalMonths / 12);
+  const leftoverMonths = totalMonths % 12;
+
+  return {
+    totalMonths,
+    totalDuration: `${years} years${leftoverMonths ? ` ${leftoverMonths} months` : ""}`,
+    overallRange: `From ${earliestStart.toLocaleDateString()} to ${latestEnd.toLocaleDateString()}`,
+  };
+}
+
+// Updated CandidatePerformanceCard to use new experience logic
 const CandidatePerformanceCard = ({
   requiredSkills = [],
   requiredExperience = "",
   candidateSkills = [],
   candidateExperience = "",
-  candidateExpObj = null, // { totalMonths, totalDuration, overallRange }
-  jobDescription = "",  // New prop: job description text from the job
-  candidateAbout = "",  // New prop: candidate's about text to compare against job description
+  candidateExpObj = null,
+  jobDescription = "",
+  candidateAbout = "",
 }) => {
   // Skill match
   const skillScore = calculateSkillScore(requiredSkills, candidateSkills);
@@ -115,10 +129,10 @@ const CandidatePerformanceCard = ({
     );
   }
 
-  // Job description match (using candidateAbout and jobDescription)
+  // Job description match
   const jobDescScore = calculateJobDescriptionMatch(jobDescription, candidateAbout);
 
-  // Overall score is an average of skillScore, experienceScore, and jobDescScore
+  // Overall score
   const overallScore = calculateOverallScore(skillScore, experienceScore, jobDescScore);
 
   return (
@@ -145,5 +159,7 @@ const CandidatePerformanceCard = ({
     </div>
   );
 };
+
+// export default CandidatePerformanceCard;
 
 export default CandidatePerformanceCard;

@@ -1,5 +1,5 @@
 // candidateSaga.js
-import { call, put, takeLatest } from "redux-saga/effects";
+import { call, put, select, takeLatest } from "redux-saga/effects";
 import axios from "axios";
 import {
   fetchCandidatesRequest,
@@ -13,45 +13,118 @@ import {
   applyForJobFailure,
   fetchCandidateTestsRequest,   // NEW
   fetchCandidateTestsSuccess,   // NEW
-  fetchCandidateTestsFailure,   // NEW
+  fetchCandidateTestsFailure,
+  fetchOpentoworkCandidatesRequest,   // NEW
 } from "../../slices/recruiter/candidateSlice";
 
-const BASE_URL = "http://192.168.0.113:5000";
+const BASE_URL = "https://recruitment.getmysolutions.in/api/v1";
 
 // ----------------------------
 // Worker Saga: Fetch Candidates
 // ----------------------------
 function* fetchCandidatesSaga(action) {
   try {
-    const { openToWork, jobId } = action.payload || {};
-    let url = `${BASE_URL}/candidates`;
-    // Append query parameter if openToWork is true
-    if (openToWork) {
-      url += "?openToWork=true";
+    const token = yield select((state) => state.auth.token);
+    // Destructure values from the action payload
+    let { job_id, bash_id } = action.payload || {};
+
+    // If job_id or bash_id are missing in the payload, try getting them from the jobs slice
+    if (!job_id || !bash_id) {
+      const jobState = yield select((state) => state.jobs);
+      // Adjust these property names as per your Redux jobs state structure.
+      job_id = job_id || jobState.selectedJobId;
+      bash_id = bash_id || jobState.selectedBashId;
     }
-    console.log("Fetching candidates from URL:", url);
-    const response = yield call(axios.get, url);
-    let candidateData = response.data;
-    
-    // Additional client-side filtering for openToWork (if needed)
-    if (openToWork) {
-      candidateData = candidateData.filter(candidate => candidate.openToWork === true);
-    }
-    
-    // Filter candidates by job skills if jobId is provided
-    if (jobId) {
-      const jobResponse = yield call(axios.get, `${BASE_URL}/jobManagement`);
-      const jobManagement = jobResponse.data;
-      const job = jobManagement.activeJobs.find(
-        (jobItem) => jobItem.id === parseInt(jobId)
-      );
-      if (job && job.skills && job.skills.length > 0) {
-        candidateData = candidateData.filter((candidate) =>
-          candidate.skills?.some((skill) => job.skills.includes(skill))
-        );
+
+    const url = `${BASE_URL}/job_applicant`;
+    console.log("Fetching candidates from URL:", url, "with job_id:", job_id, "and bash_id:", bash_id);
+
+    // Send job_id and bash_id in the request body
+    const response = yield call(
+      axios.post,
+      url,
+      { job_id, bash_id },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       }
+    );
+
+    // Log the API response data
+    console.log("API response===================>:", response.data);
+
+    const candidateData = response.data.data|| [];
+
+    // // If job_id is provided, do additional filtering
+    // if (job_id) {
+    //   const jobResponse = yield call(axios.get, `${BASE_URL}/jobManagement`);
+    //   const jobManagement = jobResponse.data;
+    //   const job = jobManagement.activeJobs.find(
+    //     (jobItem) => jobItem.id === parseInt(job_id, 10)
+    //   );
+    //   if (job && job.skills && job.skills.length > 0) {
+    //     candidateData = candidateData.filter((candidate) =>
+    //       candidate.skills?.some((skill) => job.skills.includes(skill))
+    //     );
+    //   }
+    // }
+
+    yield put(fetchCandidatesSuccess(candidateData));
+  } catch (error) {
+    console.error("Error in fetchCandidatesSaga:", error.message);
+    yield put(fetchCandidatesFailure(error.message));
+  }
+}
+
+function* fetchOpentoworkCandidatesSaga(action) {
+  try {
+    const token = yield select((state) => state.auth.token);
+    // Destructure values from the action payload
+    let { job_id, bash_id } = action.payload || {};
+
+    // If job_id or bash_id are missing in the payload, try getting them from the jobs slice
+    if (!job_id || !bash_id) {
+      const jobState = yield select((state) => state.jobs);
+      // Adjust these property names as per your Redux jobs state structure.
+      job_id = job_id || jobState.selectedJobId;
+      bash_id = bash_id || jobState.selectedBashId;
     }
-    
+
+    const url = `${BASE_URL}/open_to_work`;
+    console.log("Fetching candidates from URL:", url, "with job_id:", job_id, "and bash_id:", bash_id);
+
+    // Send job_id and bash_id in the request body
+    const response = yield call(
+      axios.post,
+      url,
+      { job_id, bash_id },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    // Log the API response data
+    console.log("API response===================fgfghfhfghf>:", response.data);
+
+    const candidateData = response.data.data|| [];
+
+    // // If job_id is provided, do additional filtering
+    // if (job_id) {
+    //   const jobResponse = yield call(axios.get, `${BASE_URL}/jobManagement`);
+    //   const jobManagement = jobResponse.data;
+    //   const job = jobManagement.activeJobs.find(
+    //     (jobItem) => jobItem.id === parseInt(job_id, 10)
+    //   );
+    //   if (job && job.skills && job.skills.length > 0) {
+    //     candidateData = candidateData.filter((candidate) =>
+    //       candidate.skills?.some((skill) => job.skills.includes(skill))
+    //     );
+    //   }
+    // }
+
     yield put(fetchCandidatesSuccess(candidateData));
   } catch (error) {
     console.error("Error in fetchCandidatesSaga:", error.message);
@@ -153,6 +226,7 @@ function* applyForJobSaga(action) {
 
 export function* watchCandidates() {
   yield takeLatest(fetchCandidatesRequest.type, fetchCandidatesSaga);
+  yield takeLatest(fetchOpentoworkCandidatesRequest.type, fetchOpentoworkCandidatesSaga );
   yield takeLatest(fetchCandidateTestsRequest.type, fetchCandidateTestsSaga); // NEW
   yield takeLatest(updateCandidateInvitationRequest.type, updateCandidateInvitationSaga);
   yield takeLatest(applyForJobRequest.type, applyForJobSaga);

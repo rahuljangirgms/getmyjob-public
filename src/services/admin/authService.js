@@ -21,11 +21,19 @@ export const forgotPassword = async (email) => {
 };
 
 // Reset Password API Request
-export const resetPassword = async (token, newPassword) => {
+export const resetPassword = async (payload) => {
     try {
-        const response = await apiClient.post('admin/reset_password', { token, password: newPassword });
+        const response = await apiClient.post('admin/reset_password', payload);
         return response.data;
     } catch (error) {
         throw error.response?.data || error.message;
     }
+};
+
+
+
+export const logout = () => {
+    localStorage.removeItem("authToken");
+    localStorage.removeItem("userInfo");
+    localStorage.removeItem("permissions");
 };

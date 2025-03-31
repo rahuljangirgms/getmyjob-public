@@ -44,6 +44,7 @@ jspm_packages/
 
 #api Urls
 apiUrls/
+build
 
 
 # Snowpack dependency directory (https://snowpack.dev/)

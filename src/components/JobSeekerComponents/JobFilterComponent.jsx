@@ -1,13 +1,35 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { IoFilter } from "react-icons/io5";
 import { AiOutlineClose } from "react-icons/ai";
+import { useDispatch, useSelector } from 'react-redux';
+import {filterJobsRequest} from './../../store/slices/jobSeeker/job_Filter/jobFilterSlice';
 
 function JobFilterComponent() {
-  const [sortBy, setSortBy] = useState("relevancy");
-  const [jobType, setJobType] = useState("full-time");
-  const [salary, setSalary] = useState([1, 25]);
-  const [workLocation, setWorkLocation] = useState("remote");
+  const [sortBy, setSortBy] = useState("");
+  const [jobType, setJobType] = useState("");
+  const [salary, setSalary] = useState([0, 0]);
+  const [workLocation, setWorkLocation] = useState(""); 
   const [showFilters, setShowFilters] = useState(false);
+
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    // Only send API request if user has interacted
+    if (sortBy || jobType || salary[0] !== 0 || salary[1] !== 0 || workLocation) {
+      dispatch(
+        filterJobsRequest({
+          sortBy,
+          jobType,
+          salaryRange: salary,
+          workLocation,
+        })
+      );
+    }
+  }, [sortBy, jobType, salary, workLocation, dispatch]);
+
+
+
 
   return (
     <div>
@@ -36,17 +58,20 @@ function JobFilterComponent() {
       </div>
       
       {/* Filter Section */}
-      <div className={`w-full max-w-md mx-auto bg-white rounded-3xl p-6 space-y-6 border-2 border-gray-200 ${showFilters ? "block" : "hidden"} md:block`}>
+      <div className={`w-full max-w-md mx-auto bg-white rounded-3xl p-6 space-y-1 border-2 border-gray-200 ${showFilters ? "block" : "hidden"} md:block`}>
         {/* Sort By */}
         <div>
-        <div className="flex flex-row justify-between">
-        <h3 className="text-md font-medium text-gray-700">Sort by</h3>
-        {showFilters &&  <AiOutlineClose size={25} className="text-red-600 cursor-pointer " onClick={() => setShowFilters(!showFilters)}/>}
+        <div className="flex flex-row justify-end">
+        {/* <h3 className="text-md font-medium text-gray-700">Sort by</h3> */}
+        {showFilters ? 
+            <AiOutlineClose size={25} className="text-red-600 cursor-pointer " onClick={() => setShowFilters(!showFilters)}/> : null
+        }
         </div>
+        
 
-          <div className="flex gap-2 border-b-2 border-gray-200 py-4">
+          {/* <div className="flex gap-2 border-b-2 border-gray-200 py-4">
             <button
-              onClick={() => setSortBy("relevancy")}
+              onClick={() => setSortBy("Oldest")}
               className={`px-4 py-1.5 rounded-full text-sm transition-all duration-200 border ${
                 sortBy === "relevancy"
                   ? "bg-blue-100 text-blue-700 border-blue-700 font-medium"
@@ -65,7 +90,7 @@ function JobFilterComponent() {
             >
               Newest
             </button>
-          </div>
+          </div> */}
         </div>
         
         {/* Job Type */}

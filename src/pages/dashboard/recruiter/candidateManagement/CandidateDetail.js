@@ -1,12 +1,11 @@
-// CandidateDetail.jsx
 import React, { useState, useEffect } from "react";
 import { useParams, Link, useNavigate, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchCandidatesRequest, updateCandidateInvitationRequest,  fetchCandidateTestsRequest, } from "../../../../store/slices/recruiter/candidateSlice";
+import { fetchCandidatesRequest, updateCandidateInvitationRequest } from "../../../../store/slices/recruiter/candidateSlice";
 import { fetchJobsRequest } from "../../../../store/slices/recruiter/jobSlice";
 import CandidatePerformanceCard from "../../../../components/buttons/recruitercomponent/CandidatePerformanceCard";
 
-// Helper functions remain the same:
+// Helper functions remain unchanged:
 function parseExperienceRange(requiredExperience) {
   if (typeof requiredExperience !== "string") return null;
   if (requiredExperience === "10-above") {
@@ -44,7 +43,11 @@ function calculateTotalExperience(experienceArray) {
 
   experienceArray.forEach((exp) => {
     const startDate = new Date(exp.from);
-    const endDate = exp.to.toLowerCase() === "present" ? new Date() : new Date(exp.to);
+    // Guard against missing "to" value
+    const endDate =
+      exp.to && typeof exp.to === "string"
+        ? (exp.to.toLowerCase() === "present" ? new Date() : new Date(exp.to))
+        : new Date();
 
     if (!earliestStart || startDate < earliestStart) {
       earliestStart = startDate;
@@ -69,15 +72,13 @@ function calculateTotalExperience(experienceArray) {
   };
 }
 
-
-
 const CandidateDetail = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
 
-  // Parse jobId from query string
+  // Parse jobId from query string (if needed)
   const searchParams = new URLSearchParams(location.search);
   const jobId = searchParams.get("jobId");
 
@@ -90,8 +91,8 @@ const CandidateDetail = () => {
   const [showResume, setShowResume] = useState(false);
   const [showInterviewRounds, setShowInterviewRounds] = useState(false);
 
-  // Redux state
-  const { candidates,candidateTests, loading, error } = useSelector((state) => state.candidates);
+  // Redux state (assume candidates is set to the API candidate data)
+  const { candidates, candidateTests, loading, error } = useSelector((state) => state.candidates);
   const { jobs } = useSelector((state) => state.jobs) || {};
   const allJobs = [
     ...(jobs?.activeJobs || []),
@@ -100,17 +101,19 @@ const CandidateDetail = () => {
   ];
 
   useEffect(() => {
+    // If candidates haven't been fetched, request them
     if (!candidates || candidates.length === 0) {
       dispatch(fetchCandidatesRequest({}));
     }
     dispatch(fetchJobsRequest());
   }, [dispatch, candidates]);
-  useEffect(() => {
-    if (id && jobId) {
-      dispatch(fetchCandidateTestsRequest({ candidateId: id, jobId }));
-    }
-  }, [dispatch, id, jobId]);
 
+  // (If you need candidate tests, you can add that effect here)
+  // useEffect(() => {
+  //   if (id && jobId) {
+  //     dispatch(fetchCandidateTestsRequest({ candidateId: id, jobId }));
+  //   }
+  // }, [dispatch, id, jobId]);
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error}</p>;
@@ -127,60 +130,63 @@ const CandidateDetail = () => {
     );
   }
 
-  // Destructure candidate fields (new fields: interviewRounds, interviewScore, roundsLeft)
+  // Bind the API response fields to your component.
+  // If a field is not present, you can fallback to an empty string.
   const {
     name,
-    title,
+    // If the API doesn't send a separate "title", you might consider using "designation" or leave it blank
+    designation, 
     location: candidateLocation,
     email,
-    about,
+    summary,
     experience,
-    education,
+    educations,
     certifications,
     skills,
     appliedJobs,
     jobinvitation,
-    resumeUrl,
-    interviewRounds, // array of round scores, e.g. [{ score: 80 }, { score: 70 }]
-    interviewScore,  // overall interview score (e.g. average)
-    roundsLeft,      // number of remaining rounds
+    resume,
+    // interviewRounds, interviewScore, roundsLeft might or might not be part of your API response.
   } = candidate;
 
   // Calculate total experience from candidate experience data
-  let totalExpObj = { totalMonths: 0, totalDuration: "", overallRange: "" };
-  if (Array.isArray(experience) && experience.length > 0) {
-    totalExpObj = calculateTotalExperience(experience);
-  } else if (typeof experience === "string") {
-    const years = parseFloat(experience) || 0;
-    totalExpObj = {
-      totalMonths: years * 12,
-      totalDuration: `${years.toFixed(1)} years`,
-      overallRange: "",
-    };
-  }
+  const totalExpObj =
+    Array.isArray(experience) && experience.length > 0
+      ? calculateTotalExperience(experience)
+      : typeof experience === "string"
+      ? {
+          totalMonths: parseFloat(experience) * 12,
+          totalDuration: `${parseFloat(experience).toFixed(1)} years`,
+          overallRange: "",
+        }
+      : { totalMonths: 0, totalDuration: "", overallRange: "" };
 
-  // Get the job's required skills and experience (from the first applied job)
-  let requiredSkills = [];
-  let requiredExperience = "";
-  if (appliedJobs && appliedJobs.length > 0) {
-    const appliedJobId = parseInt(appliedJobs[0]);
-    const matchedJob = allJobs.find((job) => job.id === appliedJobId);
-    if (matchedJob) {
-      requiredSkills = matchedJob.skills || [];
-      requiredExperience = matchedJob.experience || "";
+  // For educations, if your API response has a nested data object, extract the needed fields.
+  const renderEducations = () => {
+    if (Array.isArray(educations) && educations.length > 0) {
+      return educations.map((edu, i) => {
+        const ed = edu.data || edu; // if there's a nested 'data' property
+        return (
+          <div key={i} className="mb-2">
+            <strong>{ed.qualification || "N/A"}</strong> — {ed.college || ed.collegeCity || "N/A"}
+          </div>
+        );
+      });
     }
-  }
+    return <p>No education listed.</p>;
+  };
 
-  // Calculate experience match percentage
-  let experienceRangeMatch = 0;
-  const range = parseExperienceRange(requiredExperience);
-  if (range && typeof totalExpObj.totalMonths === "number") {
-    experienceRangeMatch = partialExperienceScore(
-      totalExpObj.totalMonths,
-      range.lowerMonths,
-      range.upperMonths
-    );
-  }
+  // Similarly for certifications, map the API fields to your display.
+  const renderCertifications = () => {
+    if (Array.isArray(certifications) && certifications.length > 0) {
+      return certifications.map((cert, i) => (
+        <div key={i} className="mb-2">
+          <strong>{cert.name || "N/A"}</strong> — {cert.provider || "N/A"}
+        </div>
+      ));
+    }
+    return <p>No certifications listed.</p>;
+  };
 
   // Handler to send an invitation (updates candidate record)
   const handleSendInvite = () => {
@@ -222,9 +228,7 @@ const CandidateDetail = () => {
       )}
     </div>
   );
-  const candidateTestSession = candidateTests.find(
-    (test) => test.candidateId.toString() === id && test.jobId.toString() === jobId
-  );
+
   return (
     <div className="p-6 bg-white rounded shadow-sm">
       <Link to="/recruiter/dashboard/candidates" className="text-blue-600 hover:underline inline-block mb-4 text-sm">
@@ -234,7 +238,8 @@ const CandidateDetail = () => {
       <div className="flex flex-col md:flex-row md:items-center md:justify-between">
         <div className="mb-4 md:mb-0">
           <h1 className="text-xl md:text-2xl font-bold">{name}</h1>
-          <p className="text-gray-600 text-sm mb-2">{title}</p>
+          {/* Use candidate.designation if available, otherwise leave blank */}
+          {designation && <p className="text-gray-600 text-sm mb-2">{designation}</p>}
           <p className="text-sm text-gray-500">{candidateLocation}</p>
           <p className="text-sm text-gray-500 mb-2">{email}</p>
         </div>
@@ -253,62 +258,20 @@ const CandidateDetail = () => {
       {/* Candidate Performance Card */}
       <div className="my-6">
         <CandidatePerformanceCard
-          requiredSkills={requiredSkills}
-          requiredExperience={requiredExperience}
+          requiredSkills={[]} // if you have required skills from job, bind them here
+          requiredExperience={""} // similarly, bind required experience if available
           candidateSkills={skills || []}
           candidateExperience={totalExpObj.totalDuration}
           candidateExpObj={totalExpObj}
         />
       </div>
 
-      {/* Interview Rounds Section */}
-      <AccordionSection
-        title="Interview Rounds"
-        isOpen={showInterviewRounds}
-        onClick={() => setShowInterviewRounds(!showInterviewRounds)}
-      >
-        {candidateTestSession && candidateTestSession.interviewRounds && candidateTestSession.interviewRounds.length > 0 ? (
-          candidateTestSession.interviewRounds.map((round, index) => (
-            <div key={index} className="mb-2">
-              <strong>Round {index + 1}:</strong> Score: {round.score}%
-            </div>
-          ))
-        ) : (
-          <p>No interview rounds conducted yet.</p>
-        )}
-        <div className="mt-4">
-          <p>
-            <strong>Remaining Rounds:</strong>{" "}
-            {candidateTestSession && candidateTestSession.roundsLeft != null
-              ? candidateTestSession.roundsLeft
-              : "N/A"}
-          </p>
-          <p>
-            <strong>Overall Interview Score:</strong>{" "}
-            {candidateTestSession && candidateTestSession.interviewScore != null
-              ? candidateTestSession.interviewScore
-              : "N/A"}%
-          </p>
-        </div>
-        {candidateTestSession && candidateTestSession.interviewScore >= 70 && (
-          <div className="mt-4">
-            <button
-              onClick={() =>
-                navigate(`/recruiter/dashboard/interview?candidateId=${candidate.id}&jobId=${jobId}`)
-              }
-              className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition-colors"
-            >
-              Schedule Interview
-            </button>
-          </div>
-        )}
-      </AccordionSection>
-
-      {/* Other Accordion Sections */}
+      {/* About Section */}
       <AccordionSection title="About" isOpen={showAbout} onClick={() => setShowAbout(!showAbout)}>
-        {about || "No summary provided."}
+        {summary || "No summary provided."}
       </AccordionSection>
 
+      {/* Experience Section */}
       <AccordionSection title="Experience" isOpen={showExperience} onClick={() => setShowExperience(!showExperience)}>
         {Array.isArray(experience) && experience.length > 0 ? (
           <>
@@ -317,62 +280,43 @@ const CandidateDetail = () => {
                 <strong>Total Experience:</strong> {totalExpObj.totalDuration}
                 <br />
                 <em>{totalExpObj.overallRange}</em>
-                {range && (
-                  <p className="text-xs text-gray-600 mt-1">
-                    Candidate meets {experienceRangeMatch}% of this job's experience range.
-                  </p>
-                )}
               </div>
             )}
             {experience.map((exp, index) => (
               <div key={index} className="mb-4">
-                <h3 className="font-medium">{exp.role}</h3>
+                <h3 className="font-medium">{exp.designation || "Role not specified"}</h3>
                 <p className="text-gray-500 text-xs">
-                  {exp.from} - {exp.to} &bull; {exp.location}
+                  {exp.from} - {exp.to ? exp.to : "Present"} &bull; {exp.location || "No location"}
                 </p>
                 <p className="mt-1">{exp.description}</p>
               </div>
             ))}
           </>
         ) : (
-          <p>
-            {typeof experience === "string" ? totalExpObj.totalDuration : "No experience listed."}
-          </p>
+          <p>{typeof experience === "string" ? totalExpObj.totalDuration : "No experience listed."}</p>
         )}
       </AccordionSection>
 
+      {/* Skills Section */}
       <AccordionSection title="Skills" isOpen={showSkills} onClick={() => setShowSkills(!showSkills)}>
         {Array.isArray(skills) && skills.length > 0 ? skills.join(", ") : "No skills listed."}
       </AccordionSection>
 
+      {/* Education Section */}
       <AccordionSection title="Education" isOpen={showEducation} onClick={() => setShowEducation(!showEducation)}>
-        {Array.isArray(education) && education.length > 0 ? (
-          education.map((edu, i) => (
-            <div key={i} className="mb-2">
-              <strong>{edu.degree}</strong> — {edu.institution} ({edu.year})
-            </div>
-          ))
-        ) : (
-          <p>No education listed.</p>
-        )}
+        {renderEducations()}
       </AccordionSection>
 
+      {/* Certifications Section */}
       <AccordionSection title="Certifications" isOpen={showCertifications} onClick={() => setShowCertifications(!showCertifications)}>
-        {Array.isArray(certifications) && certifications.length > 0 ? (
-          certifications.map((cert, i) => (
-            <div key={i} className="mb-2">
-              <strong>{cert.title}</strong> — {cert.issuer} ({cert.year})
-            </div>
-          ))
-        ) : (
-          <p>No certifications listed.</p>
-        )}
+        {renderCertifications()}
       </AccordionSection>
 
+      {/* Resume Section */}
       <AccordionSection title="Resume" isOpen={showResume} onClick={() => setShowResume(!showResume)}>
-        {resumeUrl ? (
+        {resume ? (
           <div style={{ height: "800px" }}>
-            <iframe src={resumeUrl} title="Candidate Resume" width="100%" height="100%" />
+            <iframe src={resume} title="Candidate Resume" width="100%" height="100%" />
           </div>
         ) : (
           <p>No resume uploaded.</p>
