@@ -124,6 +124,7 @@ import PermissionRoute from './routes/PermissionRoute'
 import AdminSignIn from './pages/authentication/admin/admin-signin'
 import AdminSignUp from './pages/authentication/admin/admin-signup'
 import ForgotPassword from './pages/authentication/admin/admin-forgot-password'
+import AccessDenied from './pages/authentication/admin/access-denied'
 import Dashboard from './pages/dashboard/admin/Dashboard'
 import Recruiters from './pages/dashboard/admin/modules/recruiters/recruiters'
 import Jobseekers from './pages/dashboard/admin/modules/jobseekers/jobseekers'
@@ -141,6 +142,7 @@ import "./index.css";
 // Adminguards
 import AdminProtectedRoute from './services/Guards/ProtectedRoute'
 import PermissionGuard from './services/Guards/PermissionGuard'
+
 
 const App = () => {
   return (
@@ -360,7 +362,7 @@ const App = () => {
         <Route path="/admin/signin" element={<AdminSignIn />} />
         <Route path="/admin/signup" element={<AdminSignUp />} />
         <Route path="/admin/forgot-password" element={<ForgotPassword />} />
-
+        <Route path="/admin/access-denied" element={<AccessDenied />} />
         {/* Admin Routes */}
 
       </Routes>
