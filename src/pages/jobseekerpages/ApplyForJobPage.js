@@ -9,6 +9,7 @@ import {
   Wallet,
 } from "lucide-react";
 
+import AIButton from "./../../components/JobSeekerComponents/Buttons/AIButton";
 
 const ApplyForJobPage = () => {
   const [selectedValue, setSelectedValue] = useState("option1"); // ✅ State to track selected radio
@@ -71,6 +72,16 @@ const ApplyForJobPage = () => {
               </p>
             </div>
           </div>
+
+          <div className="flex mt-4 md:mt-0 md:ml-auto space-x-2 gap-2 md:gap-0 flex-col md:flex-row">
+            <button className="flex items-center px-4 py-2 border rounded-lg text-sm font-medium text-gray-800 bg-white hover:bg-gray-100 transition-colors">
+              <BookmarkPlus className="mr-2 w-4 h-4" /> Save
+            </button>
+            <AIButton btnTxt={"Prepare for this Job"} />
+            {/* <button className="px-6 py-2 border rounded-lg text-sm font-medium text-white bg-green-600 hover:bg-green-700 transition-colors">
+              Apply
+            </button> */}
+          </div>
         </div>
 
         {/* Main Content & Sidebar */}
@@ -83,13 +94,11 @@ const ApplyForJobPage = () => {
                 Answer Below Questions
               </h2>
 
-              <p class="font-medium text-gray-900 dark:text-white py-4">1.  Are You Willing To Relocate ?</p>
+              <p class="font-medium text-gray-900 dark:text-white py-4">
+                1. Are You Willing To Relocate ?
+              </p>
 
               <div className="flex items-center mb-4">
-
-                
-
-
                 <input
                   id="radio-1"
                   type="radio"
@@ -126,6 +135,10 @@ const ApplyForJobPage = () => {
                 </label>
               </div>
             </div>
+
+            <button className="px-6 py-2 border rounded-lg text-sm font-medium text-white bg-green-600 hover:bg-green-700 transition-colors">
+              Submit my Application
+            </button>
 
             {/* Responsibilities */}
             {/* <div className="bg-white rounded-xl shadow-sm p-6">

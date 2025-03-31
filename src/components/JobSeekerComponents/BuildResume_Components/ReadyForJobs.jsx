@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import ReadyImage from './../../../assets/images/Ready-for-job.jpg'
 import { FaArrowRight } from "react-icons/fa6";
 import { useNavigate } from 'react-router-dom';
@@ -6,6 +6,12 @@ import { useNavigate } from 'react-router-dom';
 function ReadyForJobs() {
 
   const navigate = useNavigate();
+
+  useEffect(()=>{
+    setTimeout(()=>{
+      navigate('/jobseeker/trail-quiz');
+    },3000)
+  },[])
 
   return (
     <div className="w-full max-w-4xl mx-auto animate-fade-up">

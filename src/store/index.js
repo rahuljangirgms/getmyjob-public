@@ -36,6 +36,15 @@ import companyReducer from "./slices/recruiter/companySlice";
 import candidateReducer from "./slices/recruiter/candidateSlice";
 import userReducer from "./slices/recruiter/userSlice";
 import roleReducer from "./slices/recruiter/roleSlice";
+import openToWorkReducer from './slices/jobSeeker/openToWork/openToWorkSlice';
+import genrateResumeReducer from './slices/jobSeeker/genrateResume/genrateResumeSlice';
+import jobSeekerJobListReducer from './slices/jobSeeker/job_List/jobListSlice';
+import jobSeekerJobFilterReducer from './slices/jobSeeker/job_Filter/jobFilterSlice';
+import jobSeekerJobApplyReducer from './slices/jobSeeker/Job_Apply/jobApplySlice';
+import jobSeekerResAnalyzerReducer from './slices/jobSeeker/resume_Analyze/resumeAnalyzeSlice';
+import jobSeekerChangePassReducer from './slices/jobSeeker/changePassword/changePassowordSlice';
+
+
 
 // Create Saga Middleware
 const sagaMiddleware = createSagaMiddleware();
@@ -81,7 +90,20 @@ const store = configureStore({
     masterResumeJson: masterResumeReducer,
     // isProfileCompleted (After Filling Create Profile Forms)
     isProfileComplete: isProfilCompleteReducer,
-
+    // open to work
+    openToWork: openToWorkReducer,
+    // Genrate Resume Here 
+    genrateResume: genrateResumeReducer,
+    //Job Seeker Job List Here
+    jobSeekerJobList: jobSeekerJobListReducer, 
+    // Job Seeker Job Filter
+    jobSeekerJobFilter: jobSeekerJobFilterReducer,
+    // Job Seeker Job Application
+    jobSeekerJobApply: jobSeekerJobApplyReducer,
+    // Job Seeker Resume Analyzer
+    resumeAnalyzer: jobSeekerResAnalyzerReducer,  
+    // Job Seeker Change Password
+    jobSeekerChangePass: jobSeekerChangePassReducer,
 
 
     profileForms: profileFormReducer,
