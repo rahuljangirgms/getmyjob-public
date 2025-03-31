@@ -6,9 +6,14 @@ import ThemeButton from "./ThemeButton";
 import Notification from "./Notification";
 
 import { Link } from "react-router-dom";
-
+import { useNavigate } from "react-router-dom";
+import { logout } from "../../../../services/admin/authService"; 
 
 export default function Navbar() {
+
+  const navigate = useNavigate();
+
+
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
   // You can manage the pulse notification state here or pass it down from props.
@@ -19,12 +24,17 @@ export default function Navbar() {
   // State to manage pulse effect
   const [showPulseMessage, setShowPulseMessage] = useState(true);
   const [showPulseNotification, setShowPulseNotification] = useState(true);
-
+  const [showLogoutModal, setShowLogoutModal] = useState(false);
 
   useEffect(() => {
     document.documentElement.classList.toggle("dark", theme === "dark");
     localStorage.setItem("theme", theme);
   }, [theme]);
+
+  const handleLogoutConfirm = () => {
+    logout();
+    navigate("/admin/signin");
+  };
 
   return (
 
@@ -238,7 +248,7 @@ export default function Navbar() {
                   </ul> */}
               <ul class="py-1 text-gray-500 dark:text-gray-400" aria-labelledby="dropdown">
                 <li>
-                  <a href="#" class="block py-2 px-4 text-sm hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-300 dark:hover:text-red-700">Sign out</a>
+                  <a onClick={() => setShowLogoutModal(true)} href="#" class="block py-2 px-4 text-sm hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-300 dark:hover:text-red-700">Sign out</a>
                 </li>
               </ul>
             </div>
@@ -450,6 +460,40 @@ export default function Navbar() {
           </li>
         </ul>
       </div>
+
+        {/* Logout Modal */}
+      {showLogoutModal && (
+        <div
+          id="logoutModal"
+          tabIndex="-1"
+          className="fixed top-0 left-0 right-0 z-50 flex items-center justify-center w-full h-full bg-black/30"
+        >
+          <div className="bg-white rounded-lg shadow dark:bg-gray-700 w-full max-w-md p-6">
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+              Confirm Logout
+            </h3>
+            <p className="mt-2 text-sm text-gray-500 dark:text-gray-300">
+              Are you sure you want to sign out?
+            </p>
+
+            <div className="flex justify-end gap-4 mt-6">
+              <button
+                onClick={() => setShowLogoutModal(false)}
+                className="px-4 py-2 text-sm text-gray-700 bg-gray-100 rounded hover:bg-gray-200 dark:bg-gray-600 dark:text-white dark:hover:bg-gray-500"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleLogoutConfirm}
+                className="px-4 py-2 text-sm text-white bg-red-600 rounded hover:bg-red-700"
+              >
+                Sign out
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
     </nav>
   );
 }

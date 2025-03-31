@@ -40,7 +40,7 @@ const userLogs = [
 
 const UserLog = () => {
   return (
-    <div className="max-w-4xl mx-auto p-6 bg-white dark:bg-gray-800 rounded-xl shadow-md">
+    <div className=" max-w-4xl mx-auto  p-6 bg-white dark:bg-gray-800 rounded-xl shadow-md">
       <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-4">
         User Log
       </h2>
